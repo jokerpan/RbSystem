@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- <base href="https://webapi.amap.com/ui/1.0/ui/overlay/SvgMarker/examples/" /> -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" type="text/css">
+
+    <style>
+      html,body,#container{
+        height: 100%
+      }
+      .input-item{
+        height: 2.2rem;
+      }
+      .btn{
+        width: 6rem;
+        margin: 0 1rem 0 2rem;
+      }
+      .input-text{
+        width: 4rem;
+        margin-right:1rem;
+      }
+
+      #map-styles .input-item {
+        height: 2rem;
+      }
+
+      #map-styles .input-item span{
+        display: inline-block;
+        width: 4rem;
+      }
+
+      #map-styles .input-item .input-text {
+        color: #0288d1;
+        margin-left: 1rem;
+        margin-right: 0rem;
+        width: 6rem;
+      }
+
+      .imgstyle{
+        width: 22px;
+        height: 23px;
+      }
+      /* 滑动特效 */
+      .animationbtn{
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+      }
+     .background{
+        position: fixed;
+        bottom: 10rem;
+        right: -14rem;
+      }
+
+     /* .amap-icon img:hover{
+        width:25px;
+        height: 25px;
+      } */
+
+     /* .amap-icon img{transition:all 0.3s;}
+      .amap-icon img:hover{transfrom:scale{2,2};} */
+
+      /* .background:hover{
+         outline: none;
+         animation:mymove 5s infinite;
+        -webkit-animation:mymove 5s infinite;
+      }
+      .background:active{
+         animation:none;
+      }
+
+      @keyframes mymove
+      {
+        from {right:-14rem;}
+        to {right:1rem;}
+      }
+
+      @-webkit-keyframes mymove
+      {
+        from {right:-14rem;}
+        to {right:1rem;}
+      } */
+
+    </style>
+    <title>鼠标工具绘制</title>
+  </head>
+  <body>
+    <!-- 翻转---等待原型 -->
+    <!-- <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+        <div class="flippable appcon ac-bicycle">
+            <div class="front">
+                <span>B</span>
+                <i class="fa fa-bicycle"></i>
+            </div>
+            <div class="back">
+                Bicycle
+            </div>
+        </div>
+    </div> -->
+    <!-- 地图 -->
+    <div id='container'></div>
+    <!-- 图层控制 -->
+<!--    <div class="info">
+        <input id="" type="button" class="btn" value="添加图层"  onclick="addLayer()"/>
+        <input id="" type="button" class="btn" value="移除图层"   onclick="rmLayer()"/>
+    </div> -->
+
+
+    <!-- 换肤动画-->
+    <div id="volet_clos">
+      <div id="volet">
+         <div id="map-styles">
+           <div class="input-item"><input type='radio' name='mapStyle' value='dark' ><span>幻影黑</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='light'><span>月光银</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='whitesmoke' checked><span>远山黛</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='fresh'><span>草色青</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='grey'><span>雅士灰</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='graffiti'><span>涂鸦</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='macaron'><span>马卡龙</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='blue'><span>靛青蓝</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='darkblue'><span>极夜蓝</span></div>
+           <div class="input-item"><input type='radio' name='mapStyle' value='wine'><span>酱籽</span></div>
+         </div>
+        <a href="#volet" class="ouvrir" aria-hidden="true">换肤</a>
+        <a href="#volet_clos" class="fermer" aria-hidden="true">收起</a>
+      </div>
+    </div>
+
+
+
+   <!-- <script src="https://cache.amap.com/lbs/static/es5.min.js"></script> -->
+    <!-- <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script> -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+	  <script type="text/javascript" src='https://webapi.amap.com/maps?v=1.4.15&key=486bdaf9ff24488ff9064da3f3da77b1'></script>
+    <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+    <script type="text/javascript">
+    // 翻转
+    // $(".flippable").click(function() {
+    //     $(this).toggleClass("flipme");
+    // });
+
+    // =====================图片图层======================
+    // var imageLayer = new AMap.ImageLayer({
+    //     url: '../image/bg.png',
+    //     bounds: new AMap.Bounds(
+    //         [116.429697,39.853614],
+    //         [116.617838,39.908808]
+    //     ),
+    //     zooms: [5,20]
+    // });
+
+    // =====================创建地图======================
+    var markers,map = new AMap.Map('container',{
+        zoom: 13,
+        center: [116.53381,39.88339],
+        resizeEnable: true,
+        mapStyle: "amap://styles/whitesmoke" ,//地图换肤样式
+        //图片图层
+        // layers: [
+        //     new AMap.TileLayer(),
+        //     imageLayer
+        // ]
+    });
+
+
+
+
+    // =====================控制图层的显示和隐藏======================
+    function addLayer() {
+        imageLayer.setMap(map);
+    }
+    function rmLayer() {
+        imageLayer.setMap(null);
+    }
+
+    //====================为地图换肤=======================
+    //绑定radio点击事件
+    var radios = document.querySelectorAll("#map-styles input");
+    radios.forEach(function(ratio) {
+      ratio.onclick = setMapStyle;
+    });
+    function setMapStyle() {
+      var styleName = "amap://styles/" + this.value;
+      map.setMapStyle(styleName);
+    }
+
+
+
+    //====================通过数据加载绘制折线图=============================
+    // var path = [new AMap.LngLat(116,39), new AMap.LngLat(116,40), new AMap.LngLat(117,39)] //标准写法
+    // var path = [ [116,39], [116,40], [117,39] ]; //简写
+    // var polyline = new AMap.Polyline({
+    //     path : path,
+    // })
+    // map.add(polyline);
+
+    //========================ajax请求=================================
+    //绘制折线
+    $.ajax({
+        url:'/map/getPipeline',
+        type:"get",
+        dataType: 'json',
+        contentType : 'application/json',
+        success:function(data){
+            var result = data.result;
+            var path=[];
+            for(var item in result){
+               path.push([result[item].lng,result[item].lat])
+            }
+            var polyline = new AMap.Polyline({
+                path : path,
+            })
+            map.add(polyline);
+        }.bind(this),
+        error:function(){
+            alert("请求失败");
+        }
+    });
+
+
+
+    </script>
+  </body>
+</html>

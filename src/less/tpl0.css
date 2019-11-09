@@ -1,0 +1,109 @@
+
+/* 第六种 */
+/* #cards>div{
+	height: 200px;
+	overflow: scroll;
+}
+#cards>div:nth-child(1){
+	float:left;
+    width: 64%;
+	margin-right: 2%;
+	margin-bottom: 20px;
+    
+}
+
+#cards>div:nth-child(2){
+	float:left;
+    width: 33%;
+	margin-bottom: 20px;
+    min-height: 200px;
+}
+
+#cards>div:nth-child(3){
+	float:left;
+    width: 64%;
+	margin-right: 2%;
+    min-height: 200px;
+	margin-bottom: 20px;
+}
+
+#cards>div:nth-child(4){
+	float:left;
+    width: 33%;
+    min-height: 200px;
+	margin-bottom: 20px;
+}
+
+#cards>div:nth-child(5){
+	float:left;
+    width: 64%;
+	margin-right: 2%;
+    min-height: 200px;
+	margin-bottom: 20px;
+}
+
+#cards>div:nth-child(6){
+	float:left;
+    width: 33%;
+    min-height: 200px;
+	margin-bottom: 20px;
+}
+ */
+
+/* 第一种 */
+.line1-box{
+	display: flex;
+	justify-content:center;
+	box-sizing: border-box;
+	flex-wrap: wrap;
+	align-content:center;
+}
+.line2-box{
+	display: flex;
+	justify-content:center;
+	box-sizing: border-box;
+	flex-wrap: nowrap;
+	flex-direction:row;
+}
+
+.card{
+	width: 100px;
+	height: 200px;
+	box-sizing: border-box;
+	margin-top: 20px;
+	margin-left: 20px;
+	flex:1;
+	box-shadow:0 0 12px #ddd;
+}
+.card1{
+	flex:2;
+	height: 400px;
+}
+.card2{
+	flex:1;
+	height: 400px;
+	margin-right: 20px;
+}
+.card20{
+	width: 100%;
+	margin-top:0;
+	margin-left: 0;
+	height: 190px;
+}
+.card21{
+	width: 100%;
+	margin-left: 0;
+	margin-top: 20px;
+	height: 190px;
+}
+.card3{
+	flex:1;
+}
+.card4{
+	flex:1;
+}
+.card5{
+	flex:1;
+	margin-right: 20px;
+}
+

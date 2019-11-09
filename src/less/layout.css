@@ -1,0 +1,15 @@
+  .layout{
+     width: calc(100% - 14px);
+     margin: 0 auto;
+  }
+
+  .topnav{
+    height: 60px;
+    line-height: 60px;
+    background-color: #fff;
+    box-shadow:0 0 1px #b9b1b1;
+  }
+
+  .topGutter{
+    margin-top: 20px;
+  }
