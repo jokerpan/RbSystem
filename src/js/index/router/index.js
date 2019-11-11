@@ -23,6 +23,10 @@ export default new Router({
         {
             path: '/list/scriptList',
             component: resolve => {require(['@/js/index/components/list/scriptList'],resolve)}
+        },
+        {
+            path: '/list/auditManage',
+            component: resolve => {require(['@/js/index/components/list/auditManage'],resolve)}
         }
     ]
 })

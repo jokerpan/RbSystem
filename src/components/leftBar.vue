@@ -34,6 +34,10 @@
                         <i class="iconfont icon-icon-test8"></i>
                         <span>脚本</span>
                     </el-menu-item>
+                    <el-menu-item index="/list/auditManage">
+                        <i class="iconfont icon-icon-test8"></i>
+                        <span>审核人员管理</span>
+                    </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>

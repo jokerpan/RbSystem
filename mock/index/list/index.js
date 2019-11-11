@@ -8,7 +8,7 @@ const common = {
 
 router.use('/server/getServerList', (req, res) => {
     res.json(Mock.mock({
-        "result": 
+        "result|5": 
             {
                 "result|5" :[{
                     "ip": "@ip()",
@@ -21,6 +21,20 @@ router.use('/server/getServerList', (req, res) => {
         ,
         ...common
     }))
+});
+
+router.use('/auditManage/getAudit', (req, res) => {
+    res.json(Mock.mock({
+            "result|5" :[{
+                "userName": "@word()",
+                "password": "@word()"
+            }],
+        ...common
+    }))
+});
+
+router.use('/auditManage/changePsd', (req, res) => {
+    res.json(Mock.mock(common))
 });
 
 router.use('/middleware/setMWInspect', (req, res) => {
