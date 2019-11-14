@@ -23,7 +23,7 @@
             <el-submenu index="/list">
                 <template slot="title">
                     <i class="iconfont icon-icon-test8"></i>
-                    <span>系统资源管理</span>
+                    <span>您当前为：报销人员</span>
                 </template>
                 <el-menu-item-group>
                     <el-menu-item index="/list/homePage">

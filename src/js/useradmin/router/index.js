@@ -6,7 +6,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/alarm/tpl'
+            redirect: '/list/homePage'
         },
         {
             path: '/alarm/tpl',

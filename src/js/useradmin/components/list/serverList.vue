@@ -20,41 +20,28 @@
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="hosptial"
+                    prop="hospital"
                     label="医院"
                     align="center">
             </el-table-column>
             <el-table-column
                     prop="totalmoney"
                     label="总金额"
-                    align="center"
-                    sortable
+                    align="center"     
                     width="150">
-                <template slot-scope="scope">
-                    <el-tag v-if="scope.row.type == 'normal'">正常</el-tag>
-                    <el-tag type="warning" v-else-if="scope.row.type == 'warning'">警告</el-tag>
-                    <el-tag type="danger" v-else>严重</el-tag>
-                </template>
             </el-table-column>
             <el-table-column
                     prop="rbmoney"
                     label="报销金额"
                     align="center"
-                    sortable
                     width="150">
-                <template slot-scope="scope">
-                    <span class="t-do" v-if="scope.row.rbmoney">已处理</span>
-                    <span class="t-undo" v-else>待处理</span>
-                </template>
             </el-table-column>
             <el-table-column
                     align="center"
                     label="操作"
                     width="280">
                 <template slot-scope="scope">
-                    <el-button type="primary" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="!scope.row.rbmoney">确认</el-button>
-                    <el-button type="info" @click="handleEvent(scope.row.nbr, 'cancel')">消除</el-button>
-                    <el-button type="danger" @click="handleEvent(scope.row.nbr, 'upgrade')">升级</el-button>
+                    <el-button type="primary" @click="handleCheck(scope.$index, scope.row)">查看</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -71,19 +58,15 @@
         name: 'views',
         data() {
             return {
-                recordnum:12,
+                recordnum:'',
                 loading: false,
                 tableData: [],
                 page: {
                     currentPage: 1,
-                    pageSize: 15,
+                    pageSize: 5,
                     pageCount: 1
                 },
-                form: {
-                    time: '',
-                    type: '',
-                    rbmoney: ''
-                }
+                
             }
         },
         methods: {
@@ -93,21 +76,13 @@
                 }
                 this.loading = true;
                 this.$ajax.post('./alarm/getView', {
-                    currentPage: this.page.currentPage,
-                    pageSize: this.page.pageSize,
-                    ...this.form
+                    currentPage: this.page.currentPage
                 }).then(res => {
                     this.loading = false;
                     if (res.data.code === 200) {
-                        const tableData = [], result = res.data.result;
-                        for(const time in result) {
-                            tableData.push({
-                                time,
-                                ...result[time]
-                            })
-                        }
-                        this.tableData = tableData;
+                        this.tableData=res.data.data;
                         this.page.pageCount = res.data.pageCount;
+                        this.recordnum = res.data.recordnum;
                     } else {
                         this.$message.error(res.data.msg);
                     }
@@ -115,31 +90,11 @@
                     this.$message.error('请刷新重试');
                 })
             },
-            clearForm() {
-                this.form = {
-                    time: '',
-                    type: '',
-                    rbmoney: ''
-                };
-            },
-            handleEvent(nbr, type) {
-                this.$ajax.post('./alarm/processView', {
-                    nbr,
-                    type
-                }).then(res => {
-                    if(res.data.code === 200) {
-                        this.$notify.success({
-                            title: res.data.msg
-                        });
-                        this.initData();
-                    } else {
-                        this.$message.warning(res.data.msg);
-                    }
-                }).catch(res => {
-                    this.$message.error('请刷新重试');
-                })
-            }
-        },
+         
+           handleDelete(index, row) {
+              console.log(index, row);
+              }
+             },
         created() {
             this.initData();
         }

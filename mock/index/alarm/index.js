@@ -78,20 +78,25 @@ router.use('/alarm/deleteRules', (req, res) => {
     res.json(Mock.mock(common))
 });
 
-router.use('/alarm/getView', (req, res) => {
-    const view = {
-        "nbr": '@integer()',
-        "type|1": ["normal", "warning", "critical"],
-        "source": "@word()",
-        "pos|1": [0, 1]
-    };
+router.use('/alarm/homepage', (req, res) => {
     res.json(Mock.mock({
-        "result": {
-            "事物一": view,
-            "事物二": view,
-            "事物三": view
+        "data": {
+            "rb_state": "@integer(1,5)",          
         },
+        
+        ...common
+    }))
+});
+router.use('/alarm/getView', (req, res) => {
+    res.json(Mock.mock({
+        "data|5": [{
+            "hospital": "@cword()",
+            "time": "@datetime",
+            "totalmoney": "@integer",
+            "rbmoney": "@integer"
+        }],
         "pageCount": '@integer(10, 30)',
+        "recordnum":"14",
         ...common
     }))
 });
