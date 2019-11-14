@@ -32,7 +32,7 @@
             }
         },
         beforeCreate() {
-          if (typeOf(this.$cookie.get('user')) === "undefined") {
+          if (this.$cookie.get('level') != 2) {
             window.location.href = './user';
           }
         }
