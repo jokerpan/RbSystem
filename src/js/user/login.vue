@@ -11,9 +11,6 @@
       <el-form-item label="密码" prop="password">
         <el-input v-model="form.password" type="password"></el-input>
       </el-form-item>
-      <el-form-item label="确认密码" prop="passwordAgain" v-if="type === 2">
-        <el-input v-model="form.passwordAgain" type="password"></el-input>
-      </el-form-item>
       <el-form-item>
         <el-row :gutter="40">
           <el-col :span="16">
@@ -21,7 +18,6 @@
           </el-col>
           <el-col :span="8">
             <span class="t-cell" v-if="type == 2" @click="type = 1">登 录</span>
-            <span class="t-cell" v-else @click="type = 2">注 册</span>
           </el-col>
         </el-row>
       </el-form-item>
@@ -48,18 +44,6 @@
           if (value === '') {
             callback(new Error('请输入密码'));
           } else {
-            if (this.type === 2 && this.form.password !== '') {
-              this.$refs.form.validateField('passwordAgain');
-            }
-            callback();
-          }
-        };
-        const validatePasswordAgain = (rule, value, callback) => {
-          if (value === '') {
-            callback(new Error('请再次输入密码'));
-          } else if (value !== this.form.password) {
-            callback(new Error('两次输入密码不一致!'));
-          } else {
             callback();
           }
         };
@@ -72,26 +56,35 @@
             { min: 6,  message: '密码长度至少6位', trigger: 'blur' }
           ]
         };
-        if(this.type === 2) {
-          result.passwordAgain =  [
-            { required: true, validator: validatePasswordAgain, trigger: 'blur' }
-          ]
-        }
         return result;
       }
     },
     methods: {
       toSubmit() {
-        const url = this.type === 1 ? '/api/user/login' : '/api/user/register';
         this.$refs.form.validate(valid => {
           if (valid) {
-            this.$ajax.post(url, {
+            this.$ajax.post("/api/login.do", {
               userName: this.form.userName,
               password: this.form.password,
             }).then(res => {
-              if (res.data.code === 200) {
-                this.$cookie.set('user', this.form.userName);
-                location.href = '/useradmin';
+              if (res.data.success == 'success') {
+                this.$cookie.set('level', res.data.Data.level);
+                this.$cookie.set('User', res.data.Data.User);
+                this.$cookie.set('Department', res.data.Data.Department);
+                switch(res.data.Data.level) {
+                  case 1:
+                    location.href = '/useradmin';break;
+                  case 2:
+                    location.href = '/audit';break;
+                  case 3:
+                    location.href = '/auditadmin';break;
+                  case 4:
+                    location.href = '/';break;
+                  case 5:
+                    location.href = '/sysadmin';break;
+                  default: break;
+                }
+                //location.href = '/useradmin';
               } else {
                 this.$message.error(res.data.msg);
               }
