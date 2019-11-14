@@ -26,21 +26,21 @@
                     <span>系统资源管理</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="/list/serverList">
+                    <el-menu-item index="/list/homePage">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>服务器</span>
+                        <span>首页</span>
                     </el-menu-item>
                     <el-menu-item index="/list/scriptList">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>脚本</span>
+                        <span>报销单申请</span>
                     </el-menu-item>
                     <el-menu-item index="/list/auditManage">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>审核人员管理</span>
+                        <span>个人信息</span>
                     </el-menu-item>
-                    <el-menu-item index="/list/reimbursementRecord">
+                     <el-menu-item index="/list/serverList">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>报销申请记录</span>
+                        <span>报销记录</span>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>

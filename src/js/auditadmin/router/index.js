@@ -10,23 +10,27 @@ export default new Router({
         },
         {
             path: '/alarm/tpl',
-            component: resolve => {require(['@/js/index/components/alarm/tpl'],resolve)},
+            component: resolve => {require(['@/js/auditadmin/components/alarm/tpl'],resolve)},
         },
         {
             path: '/alarm/view',
-            component: resolve => {require(['@/js/index/components/alarm/views'],resolve)},
+            component: resolve => {require(['@/js/auditadmin/components/alarm/views'],resolve)},
         },
         {
             path: '/list/serverList',
-            component: resolve => {require(['@/js/index/components/list/serverList'],resolve)}
+            component: resolve => {require(['@/js/auditadmin/components/list/serverList'],resolve)}
         },
         {
             path: '/list/scriptList',
-            component: resolve => {require(['@/js/index/components/list/scriptList'],resolve)}
+            component: resolve => {require(['@/js/auditadmin/components/list/scriptList'],resolve)}
         },
         {
             path: '/list/auditManage',
-            component: resolve => {require(['@/js/index/components/list/auditManage'],resolve)}
+            component: resolve => {require(['@/js/auditadmin/components/list/auditManage'],resolve)}
+        },
+        {
+            path: '/list/reimbursementRecord',
+            component: resolve => {require(['@/js/auditadmin/components/list/reimbursementRecord'],resolve)}
         }
     ]
 })

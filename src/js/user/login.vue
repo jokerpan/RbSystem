@@ -91,7 +91,7 @@
             }).then(res => {
               if (res.data.code === 200) {
                 this.$cookie.set('user', this.form.userName);
-                location.href = '/index';
+                location.href = '/useradmin';
               } else {
                 this.$message.error(res.data.msg);
               }

@@ -1,17 +1,10 @@
 <template>
     <div v-loading="loading">
         <el-card>
-        <el-form :inline="true" :model="formInline">
-            <el-form-item label="ip">
-                <el-input v-model="formInline.ip" placeholder="IP地址"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit">查询</el-button>
-            </el-form-item>
-            <el-form-item style="float:right;">
-                <el-button type="primary" icon="el-icon-plus" @click="addServer">新增节点</el-button>
-            </el-form-item>
-        </el-form>
+        
+          <el-badge :value="12" class="item">                              <!--此处12需要有个返回值   -->        
+            <el-button size="small">报销记录条数</el-button>         
+          </el-badge>
         <el-table
             :data="tableData"
             style="width: 100%">
