@@ -16,15 +16,15 @@ router.use('/api/login.do', (req, res) => {
 				"name": "@word()",
 				"id": "@word()",
 				"gender|1": [1,2],
-				"idcard": "@id()",
+				"idCard": "@id()",
 				"register_time": "@datetime()",
-				"telephone": "@integer()"
+				"telephone": "@integer()",
+				"type|1": ["学生","在职职工","离休","退休"]
 			},
 			"Department":{
 				"id": "@integer",
 				"name": "@cword(2,4)"
-			},
-			"rb_state|1": [1,2,3,4,5,6]
+			}
 		},
 		...common
     	

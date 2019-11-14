@@ -71,7 +71,6 @@
                 this.$cookie.set('level', res.data.Data.level);
                 this.$cookie.set('User', res.data.Data.User);
                 this.$cookie.set('Department', res.data.Data.Department);
-                this.$cookie.set('rb_state', res.data.Data.rb_state);
                 switch(res.data.Data.level) {
                   case 1:
                     location.href = '/useradmin';break;
