@@ -1,117 +1,44 @@
 <template>
-    <div v-loading="loading">
-        <el-card>
-            <el-form :inline="true">
+    <div >
+        <el-card v-if="seen">
+            <el-form >
+                <span>转诊单</span>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">批量下载</el-button>
+                    <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" icon="el-icon-plus" @click="addScript">新增脚本</el-button>
-                </el-form-item>
+
+                <el-form-item label="活动时间">
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                 </el-form-item>
+               
             </el-form>
 
-        <el-table
-                :data="tableData"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
-            <el-table-column
-		      type="selection"
-		      width="55">
-		    </el-table-column>
-            <el-table-column
-                    property="fileName"
-                    label="文件名"
-                    align="center"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    property="command"
-                    label="执行命令"
-                    align="center"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    property="parameters"
-                    align="center"
-                    label="参数">
-            </el-table-column>
-            <el-table-column
-                    property="description"
-                    align="center"
-                    label="描述">
-            </el-table-column>
-            <el-table-column
-                    property="operator"
-                    align="center"
-                    label="上传人员">
-            </el-table-column>
-            <el-table-column label="操作" align="center" width="300">
-                <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    <el-button
-                            size="mini"
-                            type="success"
-                            @click="handleDo(scope.$index, scope.row)">批量执行</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-        </el-card>
-        <el-dialog
-                :title="title"
-                :visible.sync="addVisible"
-                width="40%">
-            <el-upload
-                    :limit="limitNumber"
-                    ref="upload"
-                    action="./script/addScript"
-                    :data="formScript"
-                    :auto-upload="false"
-                    :on-success="uploadSuccess"
-                    :on-error="uploadError"
-                    style="margin-bottom: 20px;">
-                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            </el-upload>
-            <el-form ref="ruleForm" :rules="rules" label-position="left" label-width="80px" :model="formScript">
-                <el-form-item label="描述" prop="description">
-                    <el-input v-model="formScript.description"></el-input>
-                </el-form-item>
-                <el-form-item label="命令" prop="command">
-                    <el-input v-model="formScript.command"></el-input>
-                </el-form-item>
-                <el-form-item label="参数" prop="parameters">
-                    <el-input v-model="formScript.parameters"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="addVisible = false">取 消</el-button>
-              <el-button type="primary" @click="upload">确 定</el-button>
-            </span>
-        </el-dialog>
-        <el-dialog
-                title="批量执行"
-                :visible.sync="doVisible"
-                width="40%">
-            <el-select v-model="optionValue" multiple placeholder="可多选">
-                <el-option v-for="item in options" :key="item.ip" :label="item.ip" :value="item.ip">
-                </el-option>
-            </el-select>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="doVisible = false">取 消</el-button>
-              <el-button type="primary" @click="doShell">确 定</el-button>
-            </span>
-        </el-dialog>
+        </el-card> 
     </div>
 </template>
 
-<script>
+<script >
+    export default{
+        name:'scriptList',
+        data(){
+            return{
+                seen:true,
+                form:{
+                    name:'',
+                }
+            }
+        },
+    }
+
+
+</script>>
+<!--<script>
 
     export default {
         name: 'scriptList',
         data() {
             return {
+                seen:true,
                 chooseShell: '',
                 activeTab: 100,
                 optionValue: '',
@@ -262,3 +189,4 @@
         }
     }
 </script>
+-->
