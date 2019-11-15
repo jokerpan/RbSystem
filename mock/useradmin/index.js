@@ -15,4 +15,18 @@ router.use('/api/homepage.do', (req, res) => {
 });
 
 
+router.use('/api/user/changTel.do', (req, res) => {
+    res.json(Mock.mock(common))
+});
+
+
+
+router.use('/api/user/changPsd.do', (req, res) => {
+    res.json(Mock.mock(common))
+});
+
+
+
+
+
 module.exports = router;
