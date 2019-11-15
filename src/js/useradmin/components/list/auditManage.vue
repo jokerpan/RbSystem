@@ -57,7 +57,7 @@
         data() {
               return {
                     seen: true,
-                    addVisible: true,
+                    addVisible: false,
                     tableData: [],
                     loading: true,
                     form: {
