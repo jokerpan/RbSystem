@@ -6,23 +6,16 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/alarm/tpl'
+            redirect: '/list/homePage'
+        },
+        
+        {
+            path: '/list/homePage',
+            component: resolve => {require(['@/js/auditadmin/components/list/homePage'],resolve)}
         },
         {
-            path: '/alarm/tpl',
-            component: resolve => {require(['@/js/auditadmin/components/alarm/tpl'],resolve)},
-        },
-        {
-            path: '/alarm/view',
-            component: resolve => {require(['@/js/auditadmin/components/alarm/views'],resolve)},
-        },
-        {
-            path: '/list/serverList',
-            component: resolve => {require(['@/js/auditadmin/components/list/serverList'],resolve)}
-        },
-        {
-            path: '/list/scriptList',
-            component: resolve => {require(['@/js/auditadmin/components/list/scriptList'],resolve)}
+            path: '/list/reApplyList',
+            component: resolve => {require(['@/js/auditadmin/components/list/reApplyList'],resolve)}
         },
         {
             path: '/list/auditManage',
