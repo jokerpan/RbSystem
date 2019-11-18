@@ -75,7 +75,7 @@
                   case 1:
                     location.href = '/useradmin';break;
                   case 2:
-                    location.href = '/audit';break;
+                    location.href = '/auditor';break;
                   case 3:
                     location.href = '/auditadmin';break;
                   case 4:
