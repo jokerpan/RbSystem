@@ -32,8 +32,8 @@
             }
         },
         beforeCreate() {
-          if (this.$cookie.get('level') != 1) {
-            window.location.href = './user';
+          if (this.$cookie.get('level') != 2) {
+            window.location.href = './auditor';
           }
         }
     }
