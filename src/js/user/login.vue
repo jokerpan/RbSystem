@@ -64,7 +64,7 @@
         this.$refs.form.validate(valid => {
           if (valid) {
             this.$ajax.post("/RbSystem/login.do", {
-              userName: this.form.userName,
+              id: this.form.userName,
               password: this.form.password,
             }).then(res => {
               if (res.data.success == 'success') {
