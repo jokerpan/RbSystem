@@ -117,7 +117,7 @@
                 this.form.depart = JSON.parse(this.$cookie.get('Department'));
             },
             changeTel() {
-                this.$ajax.post('/rbsystem/user/changTel.do',{"id": this.form.user.id, "tel": this.form.user.telephone}).then(res => {
+                this.$ajax.post('/RbSystem/user/changTel.do',{"id": this.form.user.id, "tel": this.form.user.telephone}).then(res => {
                     if (res.data.success == 'success') {
                         this.$message.success("修改电话号码成功");
                         this.$cookie.set("User", this.form.user);
@@ -133,7 +133,7 @@
                 this.visible1 = true;
             },
             changePsd() {
-                this.$ajax.post('/rbsystem/user/changPsd.do',{"id": this.form.user.id, ... this.form1}).then(res => {
+                this.$ajax.post('/RbSystem/user/changPsd.do',{"id": this.form.user.id, ... this.form1}).then(res => {
                     if (res.data.success == 'success') {
                         this.$message.success("修改密码成功");
                         this.visible = false;

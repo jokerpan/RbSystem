@@ -63,7 +63,7 @@
       toSubmit() {
         this.$refs.form.validate(valid => {
           if (valid) {
-            this.$ajax.post("/rbsystem/login.do", {
+            this.$ajax.post("/RbSystem/login.do", {
               userName: this.form.userName,
               password: this.form.password,
             }).then(res => {

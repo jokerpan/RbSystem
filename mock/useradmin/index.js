@@ -6,7 +6,7 @@ const common = {
 };
 
 
-router.use('/rbsystem/homepage.do', (req, res) => {
+router.use('/RbSystem/homepage.do', (req, res) => {
     res.json(Mock.mock(
     	{
     		"rb_state": '@integer(1, 7)'
@@ -15,13 +15,13 @@ router.use('/rbsystem/homepage.do', (req, res) => {
 });
 
 
-router.use('/rbsystem/user/changTel.do', (req, res) => {
+router.use('/RbSystem/user/changTel.do', (req, res) => {
     res.json(Mock.mock(common))
 });
 
 
 
-router.use('/rbsystem/user/changPsd.do', (req, res) => {
+router.use('/RbSystem/user/changPsd.do', (req, res) => {
     res.json(Mock.mock(common))
 });
 
