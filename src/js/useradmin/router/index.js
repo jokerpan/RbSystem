@@ -8,14 +8,7 @@ export default new Router({
             path: '/',
             redirect: '/list/homePage'
         },
-        {
-            path: '/alarm/tpl',
-            component: resolve => {require(['@/js/useradmin/components/alarm/tpl'],resolve)},
-        },
-        {
-            path: '/alarm/view',
-            component: resolve => {require(['@/js/useradmin/components/alarm/views'],resolve)},
-        },
+      
         {
             path: '/list/serverList',
             component: resolve => {require(['@/js/useradmin/components/list/serverList'],resolve)}

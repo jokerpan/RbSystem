@@ -49,6 +49,32 @@
                      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
                 </el-upload>
             </el-form>
+            <el-button>
+            <el-button type="text" @click="dialogVisible = true">添加外伤说明</el-button>
+<el-dialog
+  title="请输入外伤说明"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  </el-input>
+<div style="margin: 20px 0;"></div>
+<el-input
+  type="textarea"
+  placeholder="请输入内容"
+  v-model="textarea"
+  maxlength="300"
+  show-word-limit
+>
+</el-input>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
+</el-button>
+<el-button>清空</el-button>
+<el-button>暂存</el-button>
+<el-button>提交</el-button>
         </el-card> 
         <el-card v-if="seen2">
             <el-form >
@@ -100,19 +126,92 @@
                 </el-upload>
             </el-form>
         </el-card> 
-        <el-card v-if="seen3">
+
+<el-card v-if="seen3">
                 <div class="demo-image">
-  <div class="block" v-for="fit in fits" :key="fit">
-    <span class="demonstration">{{ fit }}</span>
-    <el-image
+          <div class="block" v-for="fit in fits" :key="fit">
+          <span class="demonstration">{{ fit }}</span>
+        <el-image
       style="width: 100px; height: 100px"
       :src="url"
       :fit="fit"></el-image>
+      
   </div>
 </div>
-
+         <span>医事服务费发票</span>
+            <el-form>
+            <el-form-item label="医院">
+                    <el-input v-model="form.oldname2" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="科室">
+                    <el-input v-model="form.oldoffice" disabled></el-input>
+                </el-form-item>
+                 <el-form-item label="金额">
+                <el-input v-model="form.oldoffice" disabled></el-input>
+                 </el-form-item>
+                 <el-form-item label="自付款">
+                    <el-input v-model="form.oldmomey" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="日期">
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                 </el-form-item>
+                 <el-form-item label="说明">
+                    <el-input v-model="form.oldmomey" disabled></el-input>
+                </el-form-item>
+            </el-form>
+            <el-button>修改审核</el-button>
         </el-card>
-        
+       
+       <el-card  v-if= "seen4">
+
+    <span white-space:nowrap>{{ departmentmsg+"单位职工报销单"}}</span>
+    <br>
+    <span >编号：{{idnum}}</span>
+    <br>
+    <span >日期：{{idnum}}</span>
+    <span >报销人：{{idnum}}</span>
+    <span >报销类型：{{idnum}}</span>
+    <span >医院：{{idnum}}</span>
+  <el-table
+    :data="tableData"
+    height="250"
+    border
+    style="width: 100%">
+    <el-table-column
+      prop="content"
+      label="报销内容"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="totalmoney"
+      label="总金额"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="自付款">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="特殊负担">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="部分负担">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="报销金额">
+    </el-table-column>
+   
+  </el-table>
+ <span>总金额: {{ msg1 }}</span>
+    <span>自付款: {{ msg2 }}</span>
+    <span>报销金额: {{ msg3 }}</span>
+    <span>报销人: {{ msg4 }}</span>
+<br>
+<el-button>打印报销单</el-button>
+       </el-card> 
     </div>
 </template>
 
@@ -121,9 +220,14 @@
         name:'scriptList',
         data(){
             return{
-                seen1:true,
+                seen1:false,
                 seen2:false,
                 seen3:false,
+                seen4:true,
+                dialogVisible: false,
+                msg1:1222,
+                idnum:12345,
+                departmentmsg:"二院",
                 form:{
                     name1:'',
                     name2:'',
@@ -136,7 +240,7 @@
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                   
                  
-                fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},{name:'smileface.jpg',url:'C:\Users\lizhiwen\Pictures\Saved Pictures'}]
+                fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
             }
         },
     methods: {

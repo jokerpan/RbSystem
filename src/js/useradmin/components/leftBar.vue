@@ -4,22 +4,7 @@
             <img src="" />
         </div>
         <el-menu :default-active="$route.path" router background-color="#42495B" text-color="#B9BDC9" active-text-color="#fff">
-            <el-submenu index="/alarm">
-                <template slot="title">
-                    <i class="iconfont icon-icon-test4"></i>
-                    <span>报警</span>
-                </template>
-                <el-menu-item-group>
-                    <el-menu-item index="/alarm/tpl">
-                        <i class="iconfont icon-icon-test8"></i>
-                        <span>报警模版</span>
-                    </el-menu-item>
-                    <el-menu-item index="/alarm/view">
-                        <i class="iconfont icon-icon-test8"></i>
-                        <span>报警展示</span>
-                    </el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
+      
             <el-submenu index="/list">
                 <template slot="title">
                     <i class="iconfont icon-icon-test8"></i>
