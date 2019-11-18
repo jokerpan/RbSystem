@@ -53,7 +53,7 @@
 
 <script>
     export default {
-        name: 'serverList',
+        name: 'reApplyList',
         data() {
               return {
                     addVisible: false,
@@ -77,7 +77,7 @@
         methods: {
             initData() {
                 this.loading = true;
-                this.$ajax.get('./auditManage/getAudit').then(res => {
+                this.$ajax.get('./auditManage/getAuditor').then(res => {
                     this.loading = false;
                     if(res.data.code === 200) {
                         this.tableData = res.data.result;

@@ -4,27 +4,24 @@
             <img src="" />
         </div>
         <el-menu :default-active="$route.path" router background-color="#42495B" text-color="#B9BDC9" active-text-color="#fff">
-             <el-submenu index="/list">
+            
+            <el-submenu index="/list">
                 <template slot="title">
                     <i class="iconfont icon-icon-test8"></i>
-                    <span>您当前为：审核负责人</span>
+                    <span>您当前为：审核人员</span>
                 </template>
                 <el-menu-item-group>
                     <el-menu-item index="/list/homePage">
                         <i class="iconfont icon-icon-test8"></i>
                         <span>首页</span>
                     </el-menu-item>
-                    <el-menu-item index="/list/auditManage">
+                    <el-menu-item index="/list/waitforAudit">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>审核人员管理</span>
+                        <span>待审核列表</span>
                     </el-menu-item>
-                    <el-menu-item index="/list/reimbursementRecord">
+                    <el-menu-item index="/list/alreadyAudit">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>报销申请记录</span>
-                    </el-menu-item>
-                     <el-menu-item index="/list/reApplyList">
-                        <i class="iconfont icon-icon-test8"></i>
-                        <span>重新审核申请列表</span>
+                        <span>已审核列表</span>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
