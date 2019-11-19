@@ -2,12 +2,13 @@
     <div >
         <el-card v-if="seen1">
             <el-form >
-                <span>转诊单</span>
-                <el-form-item label="请选择医院">
-                    <el-input v-model="form.name1"></el-input>
+                <div white-space:nowrap style="color:#000;font-size:24px;text-align:center">转诊单</div>
+                    
+                <el-form-item label="请选择医院" :label-width="formLabelWidth">
+                    <el-input  v-model="form.name1"autocomplete="off"></el-input>
                 </el-form-item>
-
-                <el-form-item label="请选择时间">
+                    
+                <el-form-item label="请选择时间":label-width="formLabelWidth">
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
                  </el-form-item>
                <el-upload
@@ -17,22 +18,22 @@
                     :on-remove="handleRemove"
                     :file-list="fileList"
                     list-type="picture">
-                    <el-button size="small" type="primary">点击上传</el-button>
+                    
                     <div slot="tip" class="el-upload__tip">转诊单图片只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             
-
-            <span>医事服务费发票</span>
-            <el-form-item label="请选择医院">
+            <el-button size="small" type="primary">点击选择转诊单图片</el-button>
+            <div style="color:#000;font-size:24px;text-align:center">医事服务费发票（挂号费）</div>
+            <el-form-item label="请选择医院" :label-width="formLabelWidth">
                     <el-input v-model="form.name2"></el-input>
                 </el-form-item>
-                <el-form-item label="请选择科室">
+                <el-form-item label="请选择科室" :label-width="formLabelWidth">
                     <el-input v-model="form.office"></el-input>
                 </el-form-item>
-                 <el-form-item label="请选择时间">
+                 <el-form-item label="请选择时间" :label-width="formLabelWidth">
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
                  </el-form-item>
-                 <el-form-item label="请输入发票金额">
+                 <el-form-item label="请输入发票金额" :label-width="formLabelWidth">
                     <el-input v-model="form.momey"></el-input>
                 </el-form-item>
                  <el-upload
@@ -44,47 +45,48 @@
                     :file-list="fileList"
                     :auto-upload="false"
                     list-type="picture">
-                    <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">转诊单图片只能上传jpg/png文件，且不超过500kb</div>
-                     <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+                    <div slot="tip" class="el-upload__tip">发票图片只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
+                <el-button size="small" type="primary">点击选择发票图片</el-button>
+                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">已选好，点击上传提交</el-button>
             </el-form>
-            <el-button>
-            <el-button type="text" @click="dialogVisible = true">添加外伤说明</el-button>
-<el-dialog
-  title="请输入外伤说明"
-  :visible.sync="dialogVisible"
-  width="30%"
-  :before-close="handleClose">
-  </el-input>
-<div style="margin: 20px 0;"></div>
-<el-input
-  type="textarea"
-  placeholder="请输入内容"
-  v-model="textarea"
-  maxlength="300"
-  show-word-limit
->
-</el-input>
-  <span slot="footer" class="dialog-footer">
+            <br>
+            <div style="text-align:center;">
+            <el-button  @click="dialogVisible = true">添加外伤说明</el-button>
+            <el-dialog
+                title="请输入外伤说明"
+                :visible.sync="dialogVisible"
+                 width="30%"
+                :before-close="handleClose">
+                </el-input>
+            <div style="margin: 20px 0;"></div>
+            <el-input
+             type="textarea"
+            placeholder="请输入内容"
+            v-model="textarea"
+            maxlength="300"
+            show-word-limit>
+            </el-input>
+        <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
+    </span>
 </el-dialog>
-</el-button>
-<el-button>清空</el-button>
-<el-button>暂存</el-button>
-<el-button>提交</el-button>
+        </el-button>
+        <el-button>清空</el-button>
+        <el-button>暂存</el-button>
+        <el-button>提交</el-button>
+    </div>
         </el-card> 
         <el-card v-if="seen2">
-            <el-form >
-                <span>转诊单</span>
-                <el-form-item label="请选择医院">
-                    <el-input v-model="form.oldname1" disabled></el-input>
+                <div white-space:nowrap style="color:#000;font-size:24px;text-align:center">转诊单</div>
+                    
+                <el-form-item label="请选择医院" :label-width="formLabelWidth">
+                    <el-input  v-model="form.name1"autocomplete="off"></el-input>
                 </el-form-item>
-
-                <el-form-item label="请选择时间">
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;" ></el-date-picker>
+                    
+                <el-form-item label="请选择时间":label-width="formLabelWidth">
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
                  </el-form-item>
                <el-upload
                     class="upload-demo"
@@ -93,23 +95,23 @@
                     :on-remove="handleRemove"
                     :file-list="fileList"
                     list-type="picture">
-                    <el-button size="small" type="primary">点击上传</el-button>
+                    
                     <div slot="tip" class="el-upload__tip">转诊单图片只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             
-
-            <span>医事服务费发票</span>
-            <el-form-item label="请选择医院">
-                    <el-input v-model="form.oldname2" disabled></el-input>
+            <el-button size="small" type="primary">点击选择转诊单图片</el-button>
+            <div style="color:#000;font-size:24px;text-align:center">医事服务费发票（挂号费）</div>
+            <el-form-item label="请选择医院" :label-width="formLabelWidth">
+                    <el-input v-model="form.name2"></el-input>
                 </el-form-item>
-                <el-form-item label="请选择科室">
-                    <el-input v-model="form.oldoffice" disabled></el-input>
+                <el-form-item label="请选择科室" :label-width="formLabelWidth">
+                    <el-input v-model="form.office"></el-input>
                 </el-form-item>
-                 <el-form-item label="请选择时间">
+                 <el-form-item label="请选择时间" :label-width="formLabelWidth">
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
                  </el-form-item>
-                 <el-form-item label="请输入发票金额">
-                    <el-input v-model="form.oldmomey" disabled></el-input>
+                 <el-form-item label="请输入发票金额" :label-width="formLabelWidth">
+                    <el-input v-model="form.momey"></el-input>
                 </el-form-item>
                  <el-upload
                     class="upload-demo"
@@ -120,11 +122,38 @@
                     :file-list="fileList"
                     :auto-upload="false"
                     list-type="picture">
-                    <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">转诊单图片只能上传jpg/png文件，且不超过500kb</div>
-                     <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+                    <div slot="tip" class="el-upload__tip">发票图片只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
+                <el-button size="small" type="primary">点击选择发票图片</el-button>
+                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">已选好，点击上传提交</el-button>
             </el-form>
+            <br>
+            <div style="text-align:center;">
+            <el-button  @click="dialogVisible = true">添加外伤说明</el-button>
+            <el-dialog
+                title="请输入外伤说明"
+                :visible.sync="dialogVisible"
+                 width="30%"
+                :before-close="handleClose">
+                </el-input>
+            <div style="margin: 20px 0;"></div>
+            <el-input
+             type="textarea"
+            placeholder="请输入内容"
+            v-model="textarea"
+            maxlength="300"
+            show-word-limit>
+            </el-input>
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    </span>
+</el-dialog>
+        </el-button>
+        <el-button>清空</el-button>
+        <el-button>暂存</el-button>
+        <el-button>提交</el-button>
+    </div>
         </el-card> 
 
 <el-card v-if="seen3">
@@ -162,16 +191,13 @@
             <el-button>修改审核</el-button>
         </el-card>
        
-       <el-card  v-if= "seen4">
+    <el-card  v-if= "seen4">
 
-    <span white-space:nowrap>{{ departmentmsg+"单位职工报销单"}}</span>
+    <div white-space:nowrap style="color:#00F;font-size: 24px;text-align:center">{{ departmentmsg+"单位职工报销单"}}</div>
+    <div style="color:#000;font-size: 15px;text-align:left">编号：{{idnum}}</div>
     <br>
-    <span >编号：{{idnum}}</span>
-    <br>
-    <span >日期：{{idnum}}</span>
-    <span >报销人：{{idnum}}</span>
-    <span >报销类型：{{idnum}}</span>
-    <span >医院：{{idnum}}</span>
+    <div white-space:nowrap style="color:#000;font-size: 15px;text-align:left" >日期：{{idnum}}    报销人：{{idnum}}   报销类型：{{idnum}}  医院：{{idnum}}</div>
+   
   <el-table
     :data="tableData"
     height="250"
@@ -203,15 +229,13 @@
       prop="address"
       label="报销金额">
     </el-table-column>
-   
-  </el-table>
- <span>总金额: {{ msg1 }}</span>
-    <span>自付款: {{ msg2 }}</span>
-    <span>报销金额: {{ msg3 }}</span>
-    <span>报销人: {{ msg4 }}</span>
+   </el-table>
+ <div white-space:nowrap style="color:#000;font-size: 15px;text-align:left">总金额: {{ msg1 }}   自付款: {{ msg2 }} 报销金额: {{ msg3 }}    报销人: {{ msg4 }}</div>    
 <br>
-<el-button>打印报销单</el-button>
-       </el-card> 
+    <div style="color:#000;font-size: 15px;text-align:center">
+    <el-button >打印报销单</el-button>
+    </div>
+    </el-card> 
     </div>
 </template>
 
@@ -220,14 +244,15 @@
         name:'scriptList',
         data(){
             return{
-                seen1:false,
+                seen1:true,
                 seen2:false,
                 seen3:false,
-                seen4:true,
+                seen4:false,
                 dialogVisible: false,
                 msg1:1222,
                 idnum:12345,
                 departmentmsg:"二院",
+                formLabelWidth: '120px',
                 form:{
                     name1:'',
                     name2:'',

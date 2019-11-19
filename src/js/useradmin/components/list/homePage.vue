@@ -1,10 +1,15 @@
 <template>
     <div >
      
-    <span>{{ msg }}</span>
-     <a :href="webpage">点击这里</a>
+    <div style="color:#00F;font-size: 24px;text-align:center">{{ msg }}</div>
 
+     <br>
+     <div style="text-align:center">
+     <a :href="webpage"style="display: inline-block;color:#F00;font-size: 50px;;text-decoration:underline">点击这里</a>
+</div>
     </div>
+
+    
 </template> 
 
 
