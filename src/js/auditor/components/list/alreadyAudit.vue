@@ -1,6 +1,6 @@
 <template>
   <el-card v-loading="loading">
-         
+      <p style="text-align: center;font-size:40px">已审核列表</p>   
         <el-form :inline="true" :model="form">
           <el-form-item label="选择报销类型">
             <el-checkbox label="学生报销" name="type"></el-checkbox>

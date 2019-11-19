@@ -3,6 +3,8 @@
      
     <span>{{ msg }}</span>
      <a :href="webpage">点击这里</a>
+     <p>查看审核结果</p>
+    
 
     </div>
 </template> 
@@ -32,7 +34,7 @@
                     if(res.data.success == "success") {
                         switch(res.data.rb_state){
                             case 1:
-                            this.msg = "你当前提交的重新审核申请已批准";break;
+                            this.msg = "你当前提交的重新审核申请已批准,";break;
                             // case 2:
                             // this.msg = "已审核，点击查看信息";break;
                             // case 3:

@@ -1,7 +1,9 @@
 <template>
   <el-card v-loading="loading">
+    <p style="text-align: center;font-size:40px">待审核列表</p>
       <el-row>
-          <el-col :span="8">
+          <el-col :span="30">
+            <div class="block">
               <el-date-picker
                   v-model="value1"
                   type="daterange"
@@ -9,6 +11,7 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">·
               </el-date-picker>
+            </div>
           </el-col>
       </el-row>
          
@@ -29,9 +32,11 @@
           </el-form-item>
                 
           <el-form-item>
-            <el-radio label="待确认"></el-radio>
-            <el-radio label="已确认"></el-radio>
-            <el-radio label="已报销"></el-radio>
+            <el-radio-group v-model="radio">
+             <el-radio label="待确认"></el-radio>
+             <el-radio label="已确认"></el-radio>
+             <el-radio label="已报销"></el-radio>
+            </el-radio-group>
           </el-form-item>
                 
           <el-form-item>
@@ -120,7 +125,9 @@
                     name: '',
                     type: '',
                     pos: ''
-                }
+                },
+                radio: 3,
+                value1: ""
             }
         },
         methods: {
@@ -129,7 +136,7 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                this.$ajax.post('./alarm/getView', {
+                this.$ajax.post('./auditor/getView', {
                     currentPage: this.page.currentPage,
                     pageSize: this.page.pageSize,
                     ...this.form
