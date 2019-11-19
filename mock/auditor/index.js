@@ -6,6 +6,13 @@ const common = {
 };
 
 
+
+// const common = {
+//     "code" : 200,
+//     "msg" : "success"
+// };
+
+
 router.use('/auditor/homepage.do', (req, res) => {
     res.json(Mock.mock(
     	{
@@ -17,7 +24,7 @@ router.use('/auditor/homepage.do', (req, res) => {
 
 router.use('/auditor/getView', (req, res) => {
     res.json(Mock.mock({
-        "data|6": [{
+        "data|5": [{
             "submitTime": "@datetime",
             "applyer": "@cword()",
             "rbType": "@cword()",

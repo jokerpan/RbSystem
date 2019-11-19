@@ -31,7 +31,7 @@
         
          methods: {
             initData() {
-                this.$ajax.get('./auditor/homepage.do').then(res => {
+                this.$ajax.get('/auditor/homepage.do').then(res => {
                     console.log(res);
                     if(res.data.success == "success") {
                         switch(res.data.rb_state){
