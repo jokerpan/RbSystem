@@ -6,10 +6,10 @@ const common = {
 };
 
 
-router.use('/RbSystem/homepage.do', (req, res) => {
+router.use('/auditor/homepage.do', (req, res) => {
     res.json(Mock.mock(
     	{
-    		"rb_state": '@integer(1, 7)'
+    		"rb_state": '@integer(1, 3)'
     	,
     	...common}))
 });
@@ -17,23 +17,19 @@ router.use('/RbSystem/homepage.do', (req, res) => {
 
 router.use('/auditor/getView', (req, res) => {
     res.json(Mock.mock({
-        "data|5": [{
-            "time": "@datetime",
+        "data|6": [{
+            "submitTime": "@datetime",
             "applyer": "@cword()",
-            "rbtype": "@cword()",
-            "totalmoney": "@integer",
-            "curstatus": "@cword()"
+            "rbType": "@cword()",
+            "totalMoney": "@integer",
+            "curStatus": "@cword()"
         }],
         "pageCount": '@integer(10, 30)',
-        "recordnum":"14",
+        "recordnum":"12",
         ...common
     }))
 });
 
-
-router.use('/RbSystem/user/changTel.do', (req, res) => {
-    res.json(Mock.mock(common))
-});
 
 
 

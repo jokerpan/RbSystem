@@ -26,32 +26,32 @@
               class="split"
               v-show="!loading">
             <el-table-column
-              prop="name"
+              prop="submitTime"
               label="提交时间"
               align="center">
             </el-table-column>
             <el-table-column
-              prop="source"
+              prop="applyer"
               label="申请人"
               align="center">
             </el-table-column>
             <el-table-column
-              prop="class"
+              prop="rbType"
               label="报销类型"
               align="center"
               sortable
               width="150">
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
              
-              </template>
+              </template> -->
             </el-table-column>
             <el-table-column
-                      prop="source"
+                      prop="totalMoney"
                       label="总金额"
                       align="center">
             </el-table-column>
             <el-table-column
-                      prop="pos"
+                      prop="curStatus"
                       label="状态"
                       align="center"
                       sortable
@@ -62,13 +62,11 @@
                   </template>
               </el-table-column>
               <el-table-column
-                      align="center"
+                      align="operation"
                       label="操作"
                       width="280">
                   <template slot-scope="scope">
-                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="!scope.row.pos">确认</el-button>
-                      <el-button type="info" @click="handleEvent(scope.row.nbr, 'cancel')">消除</el-button>
-                      <el-button type="danger" @click="handleEvent(scope.row.nbr, 'upgrade')">升级</el-button>
+                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="!scope.row.pos">查看</el-button>
                   </template>
               </el-table-column>
           </el-table>
@@ -83,7 +81,7 @@
 <script>
 
     export default {
-        name: 'views',
+        name: 'alreadyAudit',
         data() {
             return {
                 loading: false,
@@ -101,27 +99,19 @@
             }
         },
         methods: {
-            initData(page) {
+             initData(page) {
                 if(page) {
                     this.page.currentPage = page;
                 }
                 this.loading = true;
                 this.$ajax.post('./alarm/getView', {
-                    currentPage: this.page.currentPage,
-                    pageSize: this.page.pageSize,
-                    ...this.form
+                    currentPage: this.page.currentPage
                 }).then(res => {
                     this.loading = false;
                     if (res.data.code === 200) {
-                        const tableData = [], result = res.data.result;
-                        for(const name in result) {
-                            tableData.push({
-                                name,
-                                ...result[name]
-                            })
-                        }
-                        this.tableData = tableData;
+                        this.tableData=res.data.data;
                         this.page.pageCount = res.data.pageCount;
+                        this.recordnum = res.data.recordnum;
                     } else {
                         this.$message.error(res.data.msg);
                     }
@@ -129,13 +119,7 @@
                     this.$message.error('请刷新重试');
                 })
             },
-            clearForm() {
-                this.form = {
-                    name: '',
-                    type: '',
-                    pos: ''
-                };
-            },
+
             handleEvent(nbr, type) {
                 this.$ajax.post('./alarm/processView', {
                     nbr,
