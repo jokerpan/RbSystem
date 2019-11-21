@@ -46,9 +46,12 @@
                     :auto-upload="false"
                     list-type="picture">
                     <div slot="tip" class="el-upload__tip">发票图片只能上传jpg/png文件，且不超过500kb</div>
+                      <el-button size="small" type="primary">点击选择发票图片</el-button>
+                      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">已选好，点击上传提交</el-button>
+                    <div slot="tip" class="el-upload__tip">发票图片只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
-                <el-button size="small" type="primary">点击选择发票图片</el-button>
-                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">已选好，点击上传提交</el-button>
+                
+                 
             </el-form>
             <br>
             <div style="text-align:center;">

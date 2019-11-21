@@ -1,10 +1,16 @@
 <template>
     <div >
      
-    <span>{{ msg }}</span>
-     <a :href="webpage">点击这里</a>
+    <div style="color:#00F;font-size: 24px;text-align:center">{{"当前有"+num1+"个报销申请人提出申诉请求,"+num2+"个审核人员提出的重新审核申请"}}</div>
 
+     <br>
+     <div style="text-align:center;color:#00F;font-size: 24px;">
+     <a :href="webpage"style="text-decoration:underline;color:#F00">点击这里</a>
+<div>进行查看</div>
+</div>
     </div>
+
+    
 </template> 
 
 
@@ -14,10 +20,11 @@
         name: 'homePage',
         data() {
               return {
-                
+                    
                     msg: "",
-                    webpage: "auditadmin#/list/reApplyList"
-                
+                    webpage: "auditadmin#/list/reApplyList",
+                    num1:"",
+                    num2:"",
 
 
                 }
@@ -30,9 +37,12 @@
                 this.$ajax.get('./api/homepage.do').then(res => {
                     console.log(res);
                     if(res.data.success == "success") {
-                        switch(res.data.rb_state){
-                            case 1:
-                            this.msg = "当前有报销申请人提出的申诉申请，审核人员提出的重新审核申请";break;
+                      //  switch(res.data.rb_state){
+                           // case 1:
+                           
+                            this.num1 = res.data.rb_state;
+                            this.num2 = res.data.rb_state;
+                            //break;
                             // case 2:
                             // this.msg = "已审核，点击查看信息";break;
                             // case 3:
@@ -45,7 +55,7 @@
                             // this.msg = "报销单未报销，点击下载报销单";break;
                             //  case 7:
                             // this.msg = "未完成报销，点击进行报销单申请";break;
-                        }
+                      //  }
 
                                
                     } else {
