@@ -88,7 +88,7 @@ router.use('/alarm/getView', (req, res) => {
             "rbmoney": "@integer"
         }],
         "pageCount": '@integer(10, 30)',
-        "recordnum":"14",
+        "recordnum":"10",
         ...common
     }))
 });

@@ -12,7 +12,11 @@ router.use('/RbSystem/login.do', (req, res) => {
 		"Data": {
 			//"level|1": [1,2,3,4,5],//1:报销人员；2：审核人员；3：审核负责人；4：收单员；5：系统管理员
 
-			"level" : 3,
+
+		
+
+
+			"level" : 1,
 
 
 			"User": {

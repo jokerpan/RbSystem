@@ -41,7 +41,7 @@
                 
           <el-form-item>
             <el-button type="primary" @click="initData(1)">查询</el-button>
-            <el-button @click="clearForm">重置</el-button>
+            <!-- <el-button @click="clearForm">重置</el-button> -->
           </el-form-item>
         </el-form>
           
@@ -85,8 +85,7 @@
                       sortable
                       width="150">
                   <template slot-scope="scope">
-                      <span class="t-do" v-if="scope.row.pos">已处理</span>
-                      <span class="t-undo" v-else>待处理</span>
+                      <span class="waitforAudit">待审核</span>
                   </template>
               </el-table-column>
               <el-table-column
@@ -116,7 +115,7 @@
                 tableData: [],
                 page: {
                     currentPage: 1,
-                    pageSize: 15,
+                    pageSize: 14,
                     pageCount: 1
                 },
                 form: {
@@ -134,16 +133,16 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                this.$ajax.post('./alarm/getView', {
+                this.$ajax.post('auditor/getView', {
                     currentPage: this.page.currentPage
                 }).then(res => {
                     this.loading = false;
-                    if (res.data.code === 200) {
+                    if (res.data.success === "success") {
                         this.tableData=res.data.data;
                         this.page.pageCount = res.data.pageCount;
                         this.recordnum = res.data.recordnum;
                     } else {
-                        this.$message.error(res.data.msg);
+                        this.$message.error(res.data.success);
                     }
                 }).catch(res => {
                     this.$message.error('请刷新重试');
@@ -155,13 +154,13 @@
                     nbr,
                     type
                 }).then(res => {
-                    if(res.data.code === 200) {
+                    if(res.data.success === "success") {
                         this.$notify.success({
-                            title: res.data.msg
+                            title: res.data.success
                         });
                         this.initData();
                     } else {
-                        this.$message.warning(res.data.msg);
+                        this.$message.warning(res.data.success);
                     }
                 }).catch(res => {
                     this.$message.error('请刷新重试');
