@@ -1,23 +1,40 @@
 <template>
   <el-card v-loading="loading">
-    <p style="text-align: center;font-size:40px">重新审核申请列表</p>
+    <p style="text-align: center;font-size:25px">重新审核申请列表</p>
+      <br>
       <el-row>
-          <el-col :span="30">
-            <div class="block">
-              <el-date-picker
-                  v-model="value1"
-                  type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期">·
-              </el-date-picker>
-            </div>
+      <el-col :span="8">
+        <el-date-picker
+      v-model="value1"
+      type="daterange"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期">
+    </el-date-picker>
           </el-col>
-      </el-row>
+          <el-col :span="14">
+              <el-form :inline="true" :model="form">
+                  <el-form-item label="审核人">
+                      <el-select v-model="form.auditname" multiple placeholder="审核人">
+                          <el-option
+                      v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                       <span style="float: left">{{ item.label }}</span>
+                        </el-option>
+                          <el-option label="001" value="aaa"></el-option>
+                          <el-option label="002" value="bbb"></el-option>
+                          <el-option label="003" value="ccc"></el-option>
+                      </el-select>
+                  </el-form-item>
+              </el-form>
+          </el-col>
+    </el-row>
          
         <el-form :inline="true" :model="form">
           <el-form-item label="选择报销类型">
-              <el-radio-group v-model="radio1">
+              <el-radio-group v-model="form.type">
               <el-radio :label="1">学生报销</el-radio>
               <el-radio :label="2">在职职工报销</el-radio>
               <el-radio :label="3">离休职工报销</el-radio>
@@ -29,11 +46,11 @@
           
         <el-form :inline="true" :model="form">
           <el-form-item label="申请人">
-            <el-input v-model="form.name" placeholder="请输入"></el-input>
+            <el-input v-model="form.username" placeholder="请输入"></el-input>
           </el-form-item>
                 
           <el-form-item>
-              <el-radio-group v-model="radio2">
+              <el-radio-group v-model="form.state">
               <el-radio :label="1">未审核</el-radio>
               <el-radio :label="2">待确认</el-radio>
               <el-radio :label="3">已确认</el-radio>
@@ -47,10 +64,8 @@
           </el-form-item>
         </el-form>
           
-          <el-badge :value="12" class="item">                              <!--此处12需要有个返回值   -->        
-            <el-button size="small">报销记录条数</el-button>         
-          </el-badge>
-          
+         
+            <div style="color:#000;font-size: 15px;text-align:left;">共有<font color='red'>{{recordnum}}</font>条需重新审核的报销记录</div>
           <el-table
               :data="tableData"
               class="split"
@@ -69,10 +84,9 @@
               prop="rbType"
               label="报销类型"
               align="center"
-              sortable
               width="150">
               <template slot-scope="scope">
-            
+            <span class="t-do" v-if="scope.row.rbType">待审核</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -84,11 +98,10 @@
                       prop="curStatus"
                       label="当前状态"
                       align="center"
-                      sortable
                       width="150">
                   <template slot-scope="scope">
-                      <span class="t-do" v-if="scope.row.pos">已处理</span>
-                      <span class="t-undo" v-else>待处理</span>
+                      <span class="t-do" v-if="scope.row.curStatus">待处理</span>
+                      <span class="t-undo" v-else>已处理</span>
                   </template>
               </el-table-column>
               <el-table-column
@@ -96,7 +109,8 @@
                       label="操作"
                       width="280">
                   <template slot-scope="scope">
-                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="!scope.row.pos">查看</el-button>
+                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'check')" v-if="scope.row.curStatus">查看</el-button>
+                      <el-button type="success" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="scope.row.curStatus">通过审核</el-button>
                   </template>
               </el-table-column>
           </el-table>
@@ -122,12 +136,13 @@
                     pageCount: 1
                 },
                 form: {
-                    name: '',
+                    auditname: '',
+                    username:'',
                     type: '',
-                    pos: ''
+                    state: ''
                 },
-                radio1: 1,
-                radio2: 1,
+                radio1: 0,
+                radio2: 0,
                 value1: ""
             }
         },

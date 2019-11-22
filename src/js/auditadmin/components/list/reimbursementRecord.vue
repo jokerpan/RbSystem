@@ -18,7 +18,7 @@
           <el-col :span="14">
               <el-form :inline="true" :model="form">
                   <el-form-item label="审核人">
-                      <el-select v-model="form.type" multiple placeholder="审核人">
+                      <el-select v-model="form.auditname"  placeholder="选择审核人">
                           <el-option
                       v-for="item in options"
                         :key="item.value"
@@ -37,7 +37,7 @@
          
         <el-form :inline="true" :model="form">
           <el-form-item label="选择报销类型">           
-            <el-radio-group v-model="radio1">
+            <el-radio-group v-model="form.type">
             <el-radio :label="1">在职职工报销</el-radio>
             <el-radio :label="2">退休职工报销</el-radio>
             <el-radio :label="3">离休职工报销</el-radio>
@@ -49,11 +49,11 @@
           
         <el-form :inline="true" :model="form">
           <el-form-item label="申请人">
-            <el-input v-model="form.name" placeholder="请输入"></el-input>
+            <el-input v-model="form.username" placeholder="请输入"></el-input>
           </el-form-item>
                 
           <el-form-item>
-            <el-radio-group v-model="radio2">
+            <el-radio-group v-model="form.state">
             <el-radio :label="1">未审核</el-radio>
             <el-radio :label="2">待确认</el-radio>
             <el-radio :label="3">已确认</el-radio>
@@ -63,13 +63,11 @@
           </el-form-item>
                 
           <el-form-item>
-            <el-button style ="text-align: : right"type="primary" @click="initData(1)">查询</el-button>
+            <el-button style ="text-align: : right"type="primary" @click="initData(2)">查询</el-button>
           </el-form-item>
         </el-form>
           
-          <el-badge :value="12" class="item">                              <!--此处12需要有个返回值   -->        
-            <el-button size="small">报销记录条数</el-button>         
-          </el-badge>
+            <div style="color:#000;font-size: 15px;text-align:left;">共有<font color='red'>{{recordnum}}</font>条请求撤销报销记录的请求</div>
             <el-table
               :data="tableData"
               class="split"
@@ -87,11 +85,13 @@
             <el-table-column
               prop="rbType"
               label="报销类型"
-              align="center"
-              sortable
+              align="center"           
               width="150">
               <template slot-scope="scope">
-            
+                      <span class="t-do2" v-if="scope.row.rbType=='2'">未审核</span>
+                      <span class="t-do3" v-else-if="scope.row.rbType=='3'">审核中</span>
+                      <span class="t-do4" v-else-if="scope.row.rbType=='4'">待确认</span>
+                      <span class="t-undo" v-else="scope.row.rbType=='5'">等待报销</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -102,11 +102,10 @@
             <el-table-column
                       prop="curStatus"
                       label="当前状态"
-                      align="center"
-                      sortable
+                      align="center"                  
                       width="150">
                   <template slot-scope="scope">
-                      <span class="t-do" v-if="scope.row.pos">已处理</span>
+                      <span class="t-do" v-if="!scope.row.curStatus">已处理</span>
                       <span class="t-undo" v-else>待处理</span>
                   </template>
               </el-table-column>
@@ -115,7 +114,8 @@
                       label="操作"
                       width="280">
                   <template slot-scope="scope">
-                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="!scope.row.pos">查看</el-button>
+                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'check')" v-if="scope.row.curStatus">查看</el-button>
+                        <el-button type="danger" @click="handleEvent(scope.row.nbr, 'revoke')" v-if="scope.row.curStatus">撤销</el-button>
                   </template>
               </el-table-column>
           </el-table>
@@ -143,9 +143,10 @@
                     pageCount: 1
                 },
                 form: {
-                    name: '',
-                    type: '',
-                    pos: ''
+                    auditname: '',
+                    username:'',
+                    type:'',
+                    state: ''
                 },
               
                  options: [{

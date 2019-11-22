@@ -27,7 +27,7 @@ router.use('/auditor/getView', (req, res) => {
         "data|5": [{
             "submitTime": "@datetime",
             "applyer": "@cword()",
-            "rbType": "@cword()",
+            "rbType": "@integer(2,5)",
             "totalMoney": "@integer",
             "curStatus": "@cword()"
         }],

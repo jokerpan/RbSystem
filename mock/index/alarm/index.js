@@ -97,13 +97,14 @@ router.use('/alarm/getView1', (req, res) => {
     res.json(Mock.mock({
        "data|6": [{
             "submitTime": "@datetime",
-            "applyer": "@cword()",
-            "rbType": "@cword()",
-            "totalMoney": "@integer",
+            "applyer": "@cword(2,3)",
+            "rbType": "@integer(2,5)",
+            "totalMoney": "@float()",
             "curStatus": "@cword()"
         }],
         "pageCount": '@integer(10, 30)',
         "recordnum":"14",
+
         ...common
     }))
 });
