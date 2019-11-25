@@ -4,16 +4,29 @@
             <img src="" />
         </div>
         <el-menu :default-active="$route.path" router background-color="#42495B" text-color="#B9BDC9" active-text-color="#fff">
-            <el-submenu index="/list">             
+             <el-submenu index="/list">
+                <template slot="title">
+                    <i class="iconfont icon-icon-test8"></i>
+                    <span>您当前为：系统管理员</span>
+                </template>
                 <el-menu-item-group>
+                    <el-menu-item index="/list/homePage">
+                        <i class="iconfont icon-icon-test8"></i>
+                        <span>首页</span>
+                    </el-menu-item>
                     <el-menu-item index="/list/auditManage">
                         <i class="iconfont icon-icon-test8"></i>
                         <span>审核人员管理</span>
                     </el-menu-item>
                     <el-menu-item index="/list/reimbursementRecord">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>报销申请记录</span>
+                        <span>报销记录管理</span>
                     </el-menu-item>
+                    <el-menu-item index="/list/reApplyList">
+                        <i class="iconfont icon-icon-test8"></i>
+                        <span>报销人员管理</span>
+                    </el-menu-item>
+                    
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>

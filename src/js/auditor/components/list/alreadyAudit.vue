@@ -41,9 +41,6 @@
               align="center"
               sortable
               width="150">
-              <!-- <template slot-scope="scope">
-             
-              </template> -->
             </el-table-column>
             <el-table-column
                       prop="totalMoney"
@@ -65,7 +62,18 @@
                       label="操作"
                       width="280">
                   <template slot-scope="scope">
-                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="!scope.row.pos">查看</el-button>
+                      <el-button type="primary" @click="handleAudit(scope.$index, scope.row)">审核</el-button>
+                       <el-dialog title="审核页面" :visible.sync="auditVisible":center = true>
+                        <el-form :model="form">
+                          <el-form-item label="姓名" :label-width="formLabelWidth">
+                            <el-input v-model="form.name" autocomplete="off" disabled></el-input>
+                          </el-form-item>
+                        </el-form>
+                         <div slot="footer" class="dialog-footer">
+                           <el-button @click="auditVisible = false">取 消</el-button>
+                           <el-button type="primary" @click="auditVisible = false">确 定</el-button>
+                         </div>
+                       </el-dialog>
                   </template>
               </el-table-column>
           </el-table>
@@ -83,8 +91,9 @@
         name: 'alreadyAudit',
         data() {
             return {
-                loading: false,
                 tableData: [],
+                auditVisible: false,
+                loading: true,
                 page: {
                     currentPage: 1,
                     pageSize: 14,
@@ -135,7 +144,14 @@
                 }).catch(res => {
                     this.$message.error('请刷新重试');
                 })
-            }
+            },
+
+            handleAudit(index, row) {
+              this.auditVisible = true;
+              this.form.name = row.applyer;
+            },
+
+
         },
         created() {
             this.initData();

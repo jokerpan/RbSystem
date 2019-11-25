@@ -10,20 +10,20 @@ export default new Router({
         },
         
         {
-            path: '/list/homePage',
-            component: resolve => {require(['@/js/auditadmin/components/list/homePage'],resolve)}
+            path: '/list/reApplyList',
+            component: resolve => {require(['@/js/sysadmin/components/list/reApplyList'],resolve)}
         },
         {
-            path: '/list/reApplyList',
-            component: resolve => {require(['@/js/auditadmin/components/list/reApplyList'],resolve)}
+            path: '/list/homePage',
+            component: resolve => {require(['@/js/sysadmin/components/list/homePage'],resolve)}
         },
         {
             path: '/list/auditManage',
-            component: resolve => {require(['@/js/auditadmin/components/list/auditManage'],resolve)}
+            component: resolve => {require(['@/js/sysadmin/components/list/auditManage'],resolve)}
         },
         {
             path: '/list/reimbursementRecord',
-            component: resolve => {require(['@/js/auditadmin/components/list/reimbursementRecord'],resolve)}
+            component: resolve => {require(['@/js/sysadmin/components/list/reimbursementRecord'],resolve)}
         }
     ]
 })
