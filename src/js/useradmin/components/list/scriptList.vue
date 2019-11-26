@@ -345,7 +345,7 @@
     </div>
 </template>
 
-<script >
+<script>
     export default{
         name:'scriptList',
         data(){
@@ -517,6 +517,4 @@
             this.initData();
         }
     }
-
-
-</script>>
+</script>

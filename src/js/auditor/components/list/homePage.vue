@@ -1,10 +1,14 @@
 <template>
-    <div >
-     
-    <span>{{ msg }}</span>
-     <a :href="webpage">点击这里</a>
+  <div >
 
-    </div>
+     <p style="color:#00F;font-size: 20px;text-align:center">{{ msg }}</p>
+
+     <div style="text-align:center">
+     <a :href="webpage" style="display: inline-block;color:#F00;font-size: 30px;;text-decoration:underline">点击这里</a>
+     <p style="color:#00F;font-size: 20px;text-align:center">查看审核结果</p>
+     </div>
+    
+  </div>
 </template> 
 
 
@@ -27,16 +31,16 @@
         
          methods: {
             initData() {
-                this.$ajax.get('./api/homepage.do').then(res => {
+                this.$ajax.get('/auditor/homepage.do').then(res => {
                     console.log(res);
                     if(res.data.success == "success") {
                         switch(res.data.rb_state){
                             case 1:
-                            this.msg = "你当前提交的重新审核申请已批准";break;
-                            // case 2:
-                            // this.msg = "已审核，点击查看信息";break;
-                            // case 3:
-                            // this.msg = " 正在审核，请等待几分钟后刷新页面";break;
+                            this.msg = "您当前提交的重新审核申请已批准";break;
+                            case 2:
+                            this.msg = "已审核，点击查看信息";break;
+                            case 3:
+                            this.msg = " 正在审核，请等待几分钟后刷新页面";break;
                             // case 4:
                             // this.msg = "审核通过，点击查看信息";break;
                             //  case 5:

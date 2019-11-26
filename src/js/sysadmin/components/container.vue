@@ -33,7 +33,7 @@
         },
         beforeCreate() {
           if (this.$cookie.get('level') != 5) {
-            window.location.href = './user';
+            window.location.href = './sysadmin';
           }
         }
     }

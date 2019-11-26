@@ -6,6 +6,7 @@ const common = {
 };
 
 
+
 router.use('/RbSystem/homepage.do', (req, res) => {
     res.json(Mock.mock({
     	"Data":{
@@ -72,6 +73,15 @@ router.use('/RbSystem/user/getRbForm.do', (req, res) => {
     	},
     	...common}))
 });
+
+
+// router.use('/RbSystem/homepage.do', (req, res) => {
+//     res.json(Mock.mock(
+//     	{
+//     		"rb_state": '@integer(1, 7)'
+//     	,
+//     	...common}))
+// });
 
 router.use('/RbSystem/user/changTel.do', (req, res) => {
     res.json(Mock.mock(common))

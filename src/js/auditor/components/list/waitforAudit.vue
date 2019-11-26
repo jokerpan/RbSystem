@@ -1,7 +1,9 @@
 <template>
   <el-card v-loading="loading">
+    <p style="text-align: center;font-size:40px">待审核列表</p>
       <el-row>
-          <el-col :span="8">
+          <el-col :span="30">
+            <div class="block">
               <el-date-picker
                   v-model="value1"
                   type="daterange"
@@ -9,6 +11,7 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">·
               </el-date-picker>
+            </div>
           </el-col>
       </el-row>
          
@@ -29,14 +32,16 @@
           </el-form-item>
                 
           <el-form-item>
-            <el-radio label="待确认"></el-radio>
-            <el-radio label="已确认"></el-radio>
-            <el-radio label="已报销"></el-radio>
+            <el-radio-group v-model="radio">
+             <el-radio label="待确认"></el-radio>
+             <el-radio label="已确认"></el-radio>
+             <el-radio label="已报销"></el-radio>
+            </el-radio-group>
           </el-form-item>
                 
           <el-form-item>
             <el-button type="primary" @click="initData(1)">查询</el-button>
-            <el-button @click="clearForm">重置</el-button>
+            <!-- <el-button @click="clearForm">重置</el-button> -->
           </el-form-item>
         </el-form>
           
@@ -49,49 +54,57 @@
               class="split"
               v-show="!loading">
             <el-table-column
-              prop="name"
+              prop="submitTime"
               label="提交时间"
               align="center">
             </el-table-column>
             <el-table-column
-              prop="source"
+              prop="applyer"
               label="申请人"
               align="center">
             </el-table-column>
             <el-table-column
-              prop="class"
+              prop="rbType"
               label="报销类型"
               align="center"
               sortable
               width="150">
-              <template slot-scope="scope">
-            
-              </template>
+              <!-- <template slot-scope="scope">
+                  <span class="rbType"></span>
+              </template> -->
             </el-table-column>
             <el-table-column
-                      prop="source"
+                      prop="totalMoney"
                       label="总金额"
                       align="center">
             </el-table-column>
             <el-table-column
-                      prop="pos"
+                      prop="curStatus"
                       label="当前状态"
                       align="center"
                       sortable
                       width="150">
                   <template slot-scope="scope">
-                      <span class="t-do" v-if="scope.row.pos">已处理</span>
-                      <span class="t-undo" v-else>待处理</span>
+                      <span class="waitforAudit">待审核</span>
                   </template>
               </el-table-column>
               <el-table-column
-                      align="center"
+                      align="operation"
                       label="操作"
                       width="280">
                   <template slot-scope="scope">
-                      <el-button type="primary" @click="handleEvent(scope.row.nbr, 'confirm')" v-if="!scope.row.pos">确认</el-button>
-                      <el-button type="info" @click="handleEvent(scope.row.nbr, 'cancel')">消除</el-button>
-                      <el-button type="danger" @click="handleEvent(scope.row.nbr, 'upgrade')">升级</el-button>
+                      <el-button type="primary" @click="handleAudit(scope.$index, scope.row)">审核</el-button>
+                       <el-dialog title="审核页面" :visible.sync="auditVisible":center = true>
+                        <el-form :model="form">
+                          <el-form-item label="姓名" :label-width="formLabelWidth">
+                            <el-input v-model="form.name" autocomplete="off" disabled></el-input>
+                          </el-form-item>
+                        </el-form>
+                         <div slot="footer" class="dialog-footer">
+                           <el-button @click="auditVisible = false">取 消</el-button>
+                           <el-button type="primary" @click="auditVisible = false">确 定</el-button>
+                         </div>
+                       </el-dialog>
                   </template>
               </el-table-column>
           </el-table>
@@ -101,26 +114,31 @@
           </el-pagination>
     </el-card>
 
+
+
 </template>
 
 <script>
 
     export default {
-        name: 'views',
+        name: 'waitforAudit',
         data() {
             return {
-                loading: false,
                 tableData: [],
+                auditVisible: false,
+                loading: true,
                 page: {
                     currentPage: 1,
-                    pageSize: 15,
+                    pageSize: 14,
                     pageCount: 1
                 },
                 form: {
                     name: '',
                     type: '',
                     pos: ''
-                }
+                },
+                radio: 3,
+                value1: ""
             }
         },
         methods: {
@@ -129,58 +147,73 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                this.$ajax.post('./alarm/getView', {
-                    currentPage: this.page.currentPage,
-                    pageSize: this.page.pageSize,
-                    ...this.form
+                this.$ajax.post('auditor/getView', {
+                    currentPage: this.page.currentPage
                 }).then(res => {
                     this.loading = false;
-                    if (res.data.code === 200) {
-                        const tableData = [], result = res.data.result;
-                        for(const name in result) {
-                            tableData.push({
-                                name,
-                                ...result[name]
-                            })
-                        }
-                        this.tableData = tableData;
+                    if (res.data.success === "success") {
+                        this.tableData=res.data.data;
                         this.page.pageCount = res.data.pageCount;
+                        this.recordnum = res.data.recordnum;
                     } else {
-                        this.$message.error(res.data.msg);
+                        this.$message.error(res.data.success);
                     }
                 }).catch(res => {
                     this.$message.error('请刷新重试');
                 })
             },
-            clearForm() {
-                this.form = {
-                    name: '',
-                    type: '',
-                    pos: ''
-                };
-            },
+
             handleEvent(nbr, type) {
                 this.$ajax.post('./alarm/processView', {
                     nbr,
                     type
                 }).then(res => {
-                    if(res.data.code === 200) {
+                    if(res.data.success === "success") {
                         this.$notify.success({
-                            title: res.data.msg
+                            title: res.data.success
                         });
                         this.initData();
                     } else {
-                        this.$message.warning(res.data.msg);
+                        this.$message.warning(res.data.success);
                     }
                 }).catch(res => {
                     this.$message.error('请刷新重试');
                 })
+            },
+        
+
+            handleAudit(index, row) {
+              this.auditVisible = true;
+              this.form.name = row.applyer;
+            },
+
+            OnSubmit() {
+              if (this.form.password === this.form.repeatpsd) {
+                this.$ajax.get('./auditManage/changePsd').then(res => {
+                    if(res.data.code === 200) {
+                        this.$notify.success("修改密码成功");
+                        this.addVisible=false;
+                    } else {
+                        this.$notify.error({title: res.data.msg});
+                    }
+                }).catch(res => {
+                    this.loading = false;
+                    this.$notify.error({title: '请刷新重试'});
+                })
+              } else {
+                this.$notify.error("密码不一致");
+              }
             }
-        },
+
+
+    },
+
         created() {
             this.initData();
         }
     }
+
+
 </script>
 
 <style>

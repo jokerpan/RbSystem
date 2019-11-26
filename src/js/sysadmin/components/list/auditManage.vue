@@ -1,6 +1,6 @@
 <template>
     <div v-loading="loading">
-        <el-card>
+        <el-card v-if="seen">
         <el-table
             :data="tableData"
             style="width: 100%">
@@ -53,9 +53,10 @@
 
 <script>
     export default {
-        name: 'serverList',
+        name: 'auditManage',
         data() {
               return {
+                    seen: true,
                     addVisible: false,
                     tableData: [],
                     loading: true,
@@ -81,6 +82,7 @@
                     this.loading = false;
                     if(res.data.code === 200) {
                         this.tableData = res.data.result;
+
                     } else {
                         this.$notify.error({title: res.data.msg});
                     }
@@ -100,6 +102,7 @@
                 this.$ajax.get('./auditManage/changePsd').then(res => {
                     if(res.data.code === 200) {
                         this.$notify.success("修改密码成功");
+                        this.addVisible=false;
                     } else {
                         this.$notify.error({title: res.data.msg});
                     }

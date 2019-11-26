@@ -78,15 +78,7 @@ router.use('/alarm/deleteRules', (req, res) => {
     res.json(Mock.mock(common))
 });
 
-router.use('/alarm/homepage', (req, res) => {
-    res.json(Mock.mock({
-        "data": {
-            "rb_state": "@integer(1,5)",          
-        },
-        
-        ...common
-    }))
-});
+
 router.use('/alarm/getView', (req, res) => {
     res.json(Mock.mock({
         "data|5": [{
@@ -96,11 +88,26 @@ router.use('/alarm/getView', (req, res) => {
             "rbmoney": "@integer"
         }],
         "pageCount": '@integer(10, 30)',
-        "recordnum":"14",
+        "recordnum":"10",
         ...common
     }))
 });
 
+router.use('/alarm/getView1', (req, res) => {
+    res.json(Mock.mock({
+       "data|6": [{
+            "submitTime": "@datetime",
+            "applyer": "@cword(2,3)",
+            "rbType": "@integer(2,5)",
+            "totalMoney": "@float()",
+            "curStatus": "@cword()"
+        }],
+        "pageCount": '@integer(10, 30)',
+        "recordnum":"14",
+
+        ...common
+    }))
+});
 router.use('/alarm/processView', (req, res) => {
     res.json(Mock.mock(common))
 });
