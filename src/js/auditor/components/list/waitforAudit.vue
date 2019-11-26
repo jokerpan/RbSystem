@@ -17,11 +17,13 @@
          
         <el-form :inline="true" :model="form">
           <el-form-item label="选择报销类型">
-            <el-checkbox label="学生报销" name="type"></el-checkbox>
-            <el-checkbox label="在职职工报销" name="type"></el-checkbox>
-            <el-checkbox label="退休职工报销" name="type"></el-checkbox>
-            <el-checkbox label="离休职工报销" name="type"></el-checkbox>
-            <el-checkbox label="工伤报销" name="type"></el-checkbox>
+            <el-checkbox-group v-model="checkList">
+             <el-checkbox label="学生报销" ></el-checkbox>
+             <el-checkbox label="在职职工报销"></el-checkbox>
+             <el-checkbox label="退休职工报销"></el-checkbox>
+             <el-checkbox label="离休职工报销"></el-checkbox>
+             <el-checkbox label="工伤报销"></el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
         </el-form>
         
@@ -33,9 +35,9 @@
                 
           <el-form-item>
             <el-radio-group v-model="radio">
-             <el-radio label="待确认"></el-radio>
-             <el-radio label="已确认"></el-radio>
-             <el-radio label="已报销"></el-radio>
+             <el-radio :label="1">待确认</el-radio>
+             <el-radio :label="2">已确认</el-radio>
+             <el-radio :label="3">已报销</el-radio>
             </el-radio-group>
           </el-form-item>
                 
@@ -45,9 +47,11 @@
           </el-form-item>
         </el-form>
           
-          <el-badge :value="12" class="item">                              <!--此处12需要有个返回值   -->        
+         <!--  <el-badge :value="12" class="item">                              
             <el-button size="small">报销记录条数</el-button>         
-          </el-badge>
+          </el-badge> -->
+
+          <div style="color:#000;font-size: 15px;text-align:left;">共有<font color='red'>{{recordnum}}</font>条报销记录</div>
           
           <el-table
               :data="tableData"
@@ -137,8 +141,9 @@
                     type: '',
                     pos: ''
                 },
-                radio: 3,
-                value1: ""
+                radio: '1',
+                value1: "",
+                checkList:['']
             }
         },
         methods: {

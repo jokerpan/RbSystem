@@ -3,11 +3,13 @@
       <p style="text-align: center;font-size:40px">已审核列表</p>   
         <el-form :inline="true" :model="form">
           <el-form-item label="选择报销类型">
-            <el-checkbox label="学生报销" name="type"></el-checkbox>
-            <el-checkbox label="在职职工报销" name="type"></el-checkbox>
-            <el-checkbox label="退休职工报销" name="type"></el-checkbox>
-            <el-checkbox label="离休职工报销" name="type"></el-checkbox>
-            <el-checkbox label="工伤报销" name="type"></el-checkbox>
+            <el-checkbox-group v-model="checkList">
+             <el-checkbox label="学生报销" ></el-checkbox>
+             <el-checkbox label="在职职工报销"></el-checkbox>
+             <el-checkbox label="退休职工报销"></el-checkbox>
+             <el-checkbox label="离休职工报销"></el-checkbox>
+             <el-checkbox label="工伤报销"></el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
 
           <el-form-item>
@@ -16,10 +18,8 @@
           </el-form-item>
         </el-form>
         
-          
-          <el-badge :value="12" class="item">                              <!--此处12需要有个返回值   -->        
-            <el-button size="small">报销记录条数</el-button>         
-          </el-badge>
+
+          <div style="color:#000;font-size: 15px;text-align:left;">共有<font color='red'>{{recordnum}}</font>条报销记录</div>
           
           <el-table
               :data="tableData"
@@ -103,7 +103,8 @@
                     name: '',
                     type: '',
                     pos: ''
-                }
+                },
+                checkList:['']
             }
         },
         methods: {
