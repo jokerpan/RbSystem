@@ -59,13 +59,13 @@
         <el-dialog title="密码修改" :visible.sync="visible1">
           <el-form :model="form1">
             <el-form-item label="原密码" label-width="150px">
-              <el-input type="password" v-model="form.psd" autocomplete="off"></el-input>
+              <el-input type="password" v-model="form1.psd" autocomplete="off"></el-input>
             </el-form-item>
            <el-form-item label="新密码" label-width="150px">
-              <el-input type="password" v-model="form.newpsd" autocomplete="off"></el-input>
+              <el-input type="password" v-model="form1.newpsd" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="重复新密码" label-width="150px">
-              <el-input type="password" v-model="form.repeatpsd" autocomplete="off"></el-input>
+              <el-input type="password" v-model="form1.repeatpsd" autocomplete="off"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -117,7 +117,7 @@
                 this.form.depart = JSON.parse(this.$cookie.get('Department'));
             },
             changeTel() {
-                this.$ajax.post('/RbSystem/user/changTel.do',{"id": this.form.user.id, "tel": this.form.user.telephone}).then(res => {
+                this.$ajax.post('/RbSystem/user/changTel.do',{"id": this.form.user.id, "telephone": this.form.user.telephone}).then(res => {
                     if (res.data.success == 'success') {
                         this.$message.success("修改电话号码成功");
                         this.$cookie.set("User", this.form.user);
@@ -136,7 +136,7 @@
                 this.$ajax.post('/RbSystem/user/changPsd.do',{"id": this.form.user.id, ... this.form1}).then(res => {
                     if (res.data.success == 'success') {
                         this.$message.success("修改密码成功");
-                        this.visible = false;
+                        this.visible1 = false;
                     } else {
                         this.$message.error("修改失败，请重试");
                     }
