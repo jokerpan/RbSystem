@@ -54,7 +54,7 @@
                         <span
                           v-if="!disabled"
                           class="el-upload-list__item-delete"
-                          @click="handleRemove(file)"
+                          @click="handleRemove(file,0)"
                         >
                           <i class="el-icon-delete"></i>
                         </span>
@@ -119,7 +119,7 @@
                         <span
                           v-if="!disabled"
                           class="el-upload-list__item-delete"
-                          @click="handleRemove(file)"
+                          @click="handleRemove(file,1,index)"
                         >
                           <i class="el-icon-delete"></i>
                         </span>
@@ -184,7 +184,7 @@
                         <span
                           v-if="!disabled"
                           class="el-upload-list__item-delete"
-                          @click="handleRemove(file)"
+                          @click="handleRemove(file,2,index)"
                         >
                           <i class="el-icon-delete"></i>
                         </span>
@@ -228,7 +228,7 @@
                         <span
                           v-if="!disabled"
                           class="el-upload-list__item-delete"
-                          @click="handleRemove(file)"
+                          @click="handleRemove(file,3,index)"
                         >
                           <i class="el-icon-delete"></i>
                         </span>
@@ -280,7 +280,7 @@
                         <span
                           v-if="!disabled"
                           class="el-upload-list__item-delete"
-                          @click="handleRemove(file)"
+                          @click="handleRemove(file,4)"
                         >
                           <i class="el-icon-delete"></i>
                         </span>
@@ -324,7 +324,7 @@
                         <span
                           v-if="!disabled"
                           class="el-upload-list__item-delete"
-                          @click="handleRemove(file)"
+                          @click="handleRemove(file,5)"
                         >
                           <i class="el-icon-delete"></i>
                         </span>
@@ -346,6 +346,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default{
         name:'scriptList',
         data(){
@@ -359,9 +360,11 @@
                 form: {
                     rb_id: "",
                     hospital:"",
-                    referral: {},
-                    ghf: [],
-                    yymx: [],
+                    referral: {
+                      "pic":""
+                    },
+                    ghf: [{}],
+                    yymx: [{}],
                     wssm: {}
                 },
                 referralFileList:[],
@@ -395,11 +398,15 @@
                     this.$notify.error("上传失败");
                 }
             },
-            handleRemove(file,fileList) {
-                let index = fileList.findIndex( fileItem => {
-                    return fileItem.uid === file.uid
-                  })
-                  fileList.splice(index, 1)
+            handleRemove(file,x,y) {
+              switch(x) {
+                  case 0: this.referralFileList = [];break;
+                  case 1: this.ghfFileList[y] = [];break;
+                  case 2: this.yymxFileList1[y] = [];break;
+                  case 3: this.yymxFileList2[y] = [];break;
+                  case 4: this.wssmFileList1 = [];break;
+                  case 5: this.wssmFileList2 = [];break;
+              }
             },
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
@@ -409,40 +416,40 @@
                 console.log(file);
             },
             initData() {
-                // this.rb_state = this.$cookie.get("rb_state")
-                // this.stepChange();
-                // let data = {};
-                // data.rb_id = this.$cookie.get("rb_id");
-                // if(this.state != "7")
-                // {
-                //     data.rb_state = this.state;
-                // }
-                // this.$ajax.post(`/RbSystem/user/getRbForm.do`, data).then(res => {
-                //     if (res.data.success == "success") {
-                //         this.form = res.data.Data;
-                //         if (this.form.referral.pic != null)
-                //             this.referralFileList.push({"url": this.form.referral.pic});
-                //         this.form.ghf.forEach(item => {
-                //             if(item.pic!=null)
-                //                 this.ghfFileList.push([{"url": item.pic}]);
-                //         });
-                //         this.form.yymx.forEach(item => {
-                //             if (item.detailed_pic!=null)
-                //                 this.yymxFileList1.push([{"url": item.detailed_pic}]);
-                //             if (item.pspt_pic!=null)
-                //                 this.yymxFileList2.push([{"url": item.pspt_pic}]);
-                //         });
-                //         if (this.form.wssm.stamp_pic!=null)
-                //             this.wssmFileList1.push({"url": this.form.wssm.stamp_pic});
-                //         if(this.form.wssm.special_pic!=null)
-                //             this.wssmFileList2.push({"url": this.form.wssm.special_pic});
-                //         this.rb_state = res.data.Data.rb_state;
-                //         this.$cookie.set("rb_id", this.form.rb_id);
-                //         stepChange();
-                //     }
-                // }).catch(res => {
-                //     this.$notify.error({title: '????'});
-                // })
+                this.rb_state = this.$cookie.get("rb_state")
+                this.stepChange();
+                let data = {};
+                data.rb_id = this.$cookie.get("rb_id");
+                if(this.state != "7")
+                {
+                    data.rb_state = this.state;
+                }
+                this.$ajax.post(`/RbSystem/user/getRbForm.do`, data).then(res => {
+                    if (res.data.success == "success") {
+                        this.form = res.data.Data;
+                        if (this.form.referral.pic != null)
+                            this.referralFileList.push({"url": this.form.referral.pic});
+                        this.form.ghf.forEach(item => {
+                            if(item.pic!=null)
+                                this.ghfFileList.push([{"url": item.pic}]);
+                        });
+                        this.form.yymx.forEach(item => {
+                            if (item.detailed_pic!=null)
+                                this.yymxFileList1.push([{"url": item.detailed_pic}]);
+                            if (item.pspt_pic!=null)
+                                this.yymxFileList2.push([{"url": item.pspt_pic}]);
+                        });
+                        if (this.form.wssm.stamp_pic!=null)
+                            this.wssmFileList1.push({"url": this.form.wssm.stamp_pic});
+                        if(this.form.wssm.special_pic!=null)
+                            this.wssmFileList2.push({"url": this.form.wssm.special_pic});
+                        this.rb_state = res.data.Data.rb_state;
+                        this.$cookie.set("rb_id", this.form.rb_id);
+                        this.stepChange();
+                    }
+                }).catch(res => {
+                    this.$notify.error({title: '????'});
+                })
             },
             stepChange() {
                 switch(this.rb_state) {
@@ -479,7 +486,6 @@
                 }
             },
             onSubmit(active){
-                console.log(this.referralFileList);
                 if (this.referralFileList[0].url)
                     this.form.referral.pic = this.referralFileList[0].url;
                 for (let i = 0; i < this.ghfFileList.length; i++){
@@ -496,11 +502,13 @@
                     this.form.wssm.stamp_pic = this.wssmFileList1[0].url;
                 if (this.wssmFileList2[0].url)
                     this.form.wssm.special_pic = this.wssmFileList2[0].url;
+
                 let data = {
                     "active": active,
-                    "rb": this.form
+                    ...this.form
                 }
-                this.$ajax.post("/RbSystem/user/postRbForm.do", data).then(res => {
+                data = JSON.stringify(data);
+                this.$axios.post(`/RbSystem/user/postRbForm.do`,{"rbStr":data}).then(res => {
                     if (res.data.success == "success"){
                         this.$notify.success({title: '提交成功'});
                         this.rb_state = res.data.Data.rb_state;
