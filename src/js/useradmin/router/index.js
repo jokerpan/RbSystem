@@ -6,24 +6,24 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/list/homePage'
+            redirect: '/homePage'
         },
       
         {
-            path: '/list/serverList',
-            component: resolve => {require(['@/js/useradmin/components/list/serverList'],resolve)}
+            path: '/serverList',
+            component: resolve => {require(['@/js/useradmin/components/serverList'],resolve)}
         },
         {
-            path: '/list/scriptList',
-            component: resolve => {require(['@/js/useradmin/components/list/scriptList'],resolve)}
+            path: '/form',
+            component: resolve => {require(['@/js/useradmin/components/form'],resolve)}
         },
         {
-            path: '/list/auditManage',
-            component: resolve => {require(['@/js/useradmin/components/list/auditManage'],resolve)}
+            path: '/auditManage',
+            component: resolve => {require(['@/js/useradmin/components/auditManage'],resolve)}
         },
         {
-            path: '/list/homePage',
-            component: resolve => {require(['@/js/useradmin/components/list/homePage'],resolve)}
+            path: '/homePage',
+            component: resolve => {require(['@/js/useradmin/components/homePage'],resolve)}
         },
     ]
 })

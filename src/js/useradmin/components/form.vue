@@ -28,38 +28,13 @@
                   :file-list= "referralFileList"
                   action="/RbSystem/upload.do"
                   list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="(file,fileList)=>{return handleRemove(file,fileList,0)}"
                   :on-success="(res,file,fileList)=>{return uploadSuccess(res,file,fileList,0)}"
                   >
                    <i slot="default" class="el-icon-plus"></i>
                    <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                    <div slot="file" slot-scope="{file}">
-                      <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url" alt=""
-                      >
-                      <span class="el-upload-list__item-actions">
-                        <span
-                          class="el-upload-list__item-preview"
-                          @click="handlePictureCardPreview(file)"
-                        >
-                          <i class="el-icon-zoom-in"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleDownload(file)"
-                        >
-                          <i class="el-icon-download"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleRemove(file,0)"
-                        >
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
+                
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
@@ -93,38 +68,12 @@
                   :file-list= "ghfFileList[index]"
                   action="/RbSystem/upload.do"
                   list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="(file,fileList)=>{return handleRemove(file,fileList,1,index)}"
                   :on-success="(res,file,fileList)=>{return uploadSuccess(res,file,fileList,1,index)}"
                   >
                    <i slot="default" class="el-icon-plus"></i>
                    <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                    <div slot="file" slot-scope="{file}">
-                      <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url" alt=""
-                      >
-                      <span class="el-upload-list__item-actions">
-                        <span
-                          class="el-upload-list__item-preview"
-                          @click="handlePictureCardPreview(file)"
-                        >
-                          <i class="el-icon-zoom-in"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleDownload(file)"
-                        >
-                          <i class="el-icon-download"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleRemove(file,1,index)"
-                        >
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
@@ -158,38 +107,12 @@
                   :file-list= "yymxFileList1[index]"
                   action="/RbSystem/upload.do"
                   list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="(file,fileList)=>{return handleRemove(file,fileList,2,index)}"
                   :on-success="(res,file,fileList)=>{return uploadSuccess(res,file,fileList,2,index)}"
                   >
                    <i slot="default" class="el-icon-plus"></i>
                    <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                    <div slot="file" slot-scope="{file}">
-                      <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url" alt=""
-                      >
-                      <span class="el-upload-list__item-actions">
-                        <span
-                          class="el-upload-list__item-preview"
-                          @click="handlePictureCardPreview(file)"
-                        >
-                          <i class="el-icon-zoom-in"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleDownload(file)"
-                        >
-                          <i class="el-icon-download"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleRemove(file,2,index)"
-                        >
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
@@ -202,38 +125,12 @@
                   :file-list= "yymxFileList2[index]"
                   action="/RbSystem/upload.do"
                   list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="(file,fileList)=>{return handleRemove(file,fileList,3,index)}"
                   :on-success="(res,file,fileList)=>{return uploadSuccess(res,file,fileList,3,index)}"
                   >
                    <i slot="default" class="el-icon-plus"></i>
                    <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                    <div slot="file" slot-scope="{file}">
-                      <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url" alt=""
-                      >
-                      <span class="el-upload-list__item-actions">
-                        <span
-                          class="el-upload-list__item-preview"
-                          @click="handlePictureCardPreview(file)"
-                        >
-                          <i class="el-icon-zoom-in"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleDownload(file)"
-                        >
-                          <i class="el-icon-download"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleRemove(file,3,index)"
-                        >
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
@@ -254,38 +151,12 @@
                   :file-list= "wssmFileList1"
                   action="/RbSystem/upload.do"
                   list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="(file,fileList)=>{return handleRemove(file,fileList,4)}"
                   :on-success="(res,file,fileList)=>{return uploadSuccess(res,file,fileList,4)}"
                   >
                    <i slot="default" class="el-icon-plus"></i>
                    <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                    <div slot="file" slot-scope="{file}">
-                      <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url" alt=""
-                      >
-                      <span class="el-upload-list__item-actions">
-                        <span
-                          class="el-upload-list__item-preview"
-                          @click="handlePictureCardPreview(file)"
-                        >
-                          <i class="el-icon-zoom-in"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleDownload(file)"
-                        >
-                          <i class="el-icon-download"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleRemove(file,4)"
-                        >
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
@@ -298,45 +169,23 @@
                   :file-list= "wssmFileList2"
                   action="/RbSystem/upload.do"
                   list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="(file,fileList)=>{return handleRemove(file,fileList,5)}"
                   :on-success="(res,file,fileList)=>{return uploadSuccess(res,file,fileList,5)}"
                   >
                    <i slot="default" class="el-icon-plus"></i>
                    <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                    <div slot="file" slot-scope="{file}">
-                      <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url" alt=""
-                      >
-                      <span class="el-upload-list__item-actions">
-                        <span
-                          class="el-upload-list__item-preview"
-                          @click="handlePictureCardPreview(file)"
-                        >
-                          <i class="el-icon-zoom-in"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleDownload(file)"
-                        >
-                          <i class="el-icon-download"></i>
-                        </span>
-                        <span
-                          v-if="!disabled"
-                          class="el-upload-list__item-delete"
-                          @click="handleRemove(file,5)"
-                        >
-                          <i class="el-icon-delete"></i>
-                        </span>
-                      </span>
-                    </div>
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
                 </el-upload>
               </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="onSubmit(0)">提交</el-button>
+              <el-form-item v-if="seen1">
+                <el-button type="primary" @click="onConfirm(1)">确定报销</el-button>
+                <el-button type="primary" @click="onConfirm(2)">修改后提交</el-button>
+              </el-form-item>
+              <el-form-item v-if="seen2">
+                <el-button type="primary" @click="onSubmit(2)">提交</el-button>
                 <el-button type="primary" @click="onSubmit(1)">暂存</el-button>
               </el-form-item>
           </el-card>
@@ -352,6 +201,8 @@
         data(){
             return{
                 seen: false,
+                seen1: false,
+                seen2: false,
                 active: 0,
                 rb_state: '',
                 dialogImageUrl: '',
@@ -398,7 +249,8 @@
                     this.$notify.error("上传失败");
                 }
             },
-            handleRemove(file,x,y) {
+            handleRemove(file,fileList,x,y) {
+              console.log(x,y);
               switch(x) {
                   case 0: this.referralFileList = [];break;
                   case 1: this.ghfFileList[y] = [];break;
@@ -407,6 +259,12 @@
                   case 4: this.wssmFileList1 = [];break;
                   case 5: this.wssmFileList2 = [];break;
               }
+              console.log(this.referralFileList);
+              console.log(this.ghfFileList);
+              console.log(this.yymxFileList1);
+              console.log(this.yymxFileList2);
+              console.log(this.wssmFileList1);
+              console.log(this.wssmFileList2);
             },
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
@@ -453,13 +311,13 @@
             },
             stepChange() {
                 switch(this.rb_state) {
-                    case "1": this.active = 0; this.seen=false; break;
-                    case "2": this.active = 1; this.seen=false; break;
-                    case "3": this.active = 2; this.seen=false; break;
-                    case "4": this.active = 3; this.seen=true; break;
-                    case "5": this.active = 3; this.seen=true; break;
-                    case "6": this.active = 4; this.seen=true; break;
-                    case "7": this.active = 5; this.seen=true; break;
+                    case 1: this.active = 0; this.seen=false; this.seen1=false; this.seen2=true; break;
+                    case 2: this.active = 1; this.seen=false; this.seen1=false; this.seen2=false; break;
+                    case 3: this.active = 2; this.seen=false; this.seen1=false; this.seen2=false; break;
+                    case 4: this.active = 3; this.seen=true; this.seen1=false; this.seen2=false; break;
+                    case 5: this.active = 3; this.seen=true; this.seen1=true; this.seen2=false; break;
+                    case 6: this.active = 4; this.seen=true; this.seen1=false; this.seen2=false; break;
+                    case 7: this.active = 5; this.seen=true; this.seen1=false; this.seen2=false; break;
                 }
             },
             addCard(index) {
@@ -486,39 +344,51 @@
                 }
             },
             onSubmit(active){
-                if (this.referralFileList[0].url)
-                    this.form.referral.pic = this.referralFileList[0].url;
+                this.form.referral.pic = this.referralFileList[0] ? this.referralFileList[0].url : "";
+
                 for (let i = 0; i < this.ghfFileList.length; i++){
-                    if (this.ghfFileList[i][0].url)
-                        this.form.ghf[i].pic = this.ghfFileList[i][0].url;
+                    this.form.ghf[i].pic = this.form.ghf[i][0] ? this.ghfFileList[i][0].url : "";
                 }
                 for (let i = 0; i < this.yymxFileList1.length; i++){
-                    if (this.yymxFileList1[i][0].url)
-                        this.form.yymx[i].detailed_pic = this.yymxFileList1[i][0].url;
-                    if (this.yymxFileList2[i][0].url)
-                        this.form.yymx[i].pspt_pic = this.yymxFileList2[i][0].url;
+                      this.form.yymx[i].detailed_pic = this.yymxFileList1[i][0] ? this.yymxFileList1[i][0].url : "";
+                      this.form.yymx[i].pspt_pic = this.yymxFileList2[i][0] ? this.yymxFileList2[i][0].url : "";
                 }
-                if (this.wssmFileList1[0].url)
-                    this.form.wssm.stamp_pic = this.wssmFileList1[0].url;
-                if (this.wssmFileList2[0].url)
-                    this.form.wssm.special_pic = this.wssmFileList2[0].url;
+                this.form.wssm.stamp_pic = this.wssmFileList1[0] ? this.wssmFileList1[0].url : "";
+                this.form.wssm.special_pic = this.wssmFileList2[0] ? this.wssmFileList2[0].url : "";
 
                 let data = {
                     "active": active,
                     ...this.form
                 }
                 data = JSON.stringify(data);
-                this.$axios.post(`/RbSystem/user/postRbForm.do`,{"rbStr":data}).then(res => {
+                this.$ajax.post(`/RbSystem/user/postRbForm.do`,{"rbStr":data}).then(res => {
                     if (res.data.success == "success"){
                         this.$notify.success({title: '提交成功'});
                         this.rb_state = res.data.Data.rb_state;
                         this.form.rb_id = res.data.Data.rb_id;
                         this.$cookie.set("rb_id", this.form.rb_id);
-
+                        this.stepChange();
                     }
                 }).catch(res => {
                     this.$notify.error({title: '请刷新重试'});
                 })
+            },
+            onConfirm(active) {
+              let data = {
+                "rb_id": this.form.rb_id,
+                "active": active
+              }
+              this.$ajax.post(`/RbSystem/user/confirmRbForm.do`,data).then(res => {
+                  if (res.data.success == "success"){
+                      this.$notify.success({title: '提交成功'});
+                      this.rb_state = res.data.Data.rb_state;
+                      this.form.rb_id = res.data.Data.rb_id;
+                      this.$cookie.set("rb_id", this.form.rb_id);
+                      this.stepChange();
+                  }
+              }).catch(res => {
+                  this.$notify.error({title: '请刷新重试'});
+              })
             }
         },
         created(){

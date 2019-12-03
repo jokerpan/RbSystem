@@ -21,7 +21,7 @@
               return {
                 
                     msg: "",
-                    webpage: "useradmin#/list/scriptList",
+                    webpage: "useradmin#/form",
                     data: {
                       msg:''
                     }

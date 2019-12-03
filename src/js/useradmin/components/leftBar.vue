@@ -11,19 +11,19 @@
                     <span>您当前为：报销人员</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="/list/homePage">
+                    <el-menu-item index="/homePage">
                         <i class="iconfont icon-icon-test8"></i>
                         <span>首页</span>
                     </el-menu-item>
-                    <el-menu-item index="/list/scriptList">
+                    <el-menu-item index="/form">
                         <i class="iconfont icon-icon-test8"></i>
                         <span>报销单申请</span>
                     </el-menu-item>
-                    <el-menu-item index="/list/auditManage">
+                    <el-menu-item index="/auditManage">
                         <i class="iconfont icon-icon-test8"></i>
                         <span>个人信息</span>
                     </el-menu-item>
-                     <el-menu-item index="/list/serverList">
+                     <el-menu-item index="/serverList">
                         <i class="iconfont icon-icon-test8"></i>
                         <span>报销记录</span>
                     </el-menu-item>
