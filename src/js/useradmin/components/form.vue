@@ -19,7 +19,7 @@
                 <el-input v-model="form.hospital"></el-input>
               </el-form-item>
               <el-form-item label="转诊单日期">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;"></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
               </el-form-item>
               <el-form-item label="转诊单发票">
                 <el-upload
@@ -50,7 +50,7 @@
                 <el-input v-model="item.department"></el-input>
               </el-form-item>
               <el-form-item label="挂号费日期">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;"></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
               </el-form-item>
               <el-form-item label="总金额">
                 <el-input v-model="item.cost"></el-input>
@@ -86,7 +86,7 @@
                     <el-button style="float: right; padding: 3px 0" type="text" @click="addCard(1)">增加</el-button>
                 </div>
               <el-form-item label="用药明细日期">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;"></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
               </el-form-item>
               <el-form-item label="总金额">
                 <el-input v-model="item.cost"></el-input>
