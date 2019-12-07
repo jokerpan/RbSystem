@@ -1,21 +1,36 @@
 <template>
   <el-card v-loading="loading">
       <p style="text-align: center;font-size:40px">已审核列表</p>   
-        <el-form :inline="true" :model="form">
-          <el-form-item label="选择报销类型">
-            <el-checkbox-group v-model="checkList">
-             <el-checkbox label="学生报销" ></el-checkbox>
-             <el-checkbox label="在职职工报销"></el-checkbox>
-             <el-checkbox label="退休职工报销"></el-checkbox>
-             <el-checkbox label="离休职工报销"></el-checkbox>
-             <el-checkbox label="工伤报销"></el-checkbox>
-            </el-checkbox-group>
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="活动时间">
+              <el-col :span="4">
+                <el-form-item prop="start_date">
+                  <el-date-picker type="date" placeholder="选择日期" v-model="formInline.start_date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col class="line" :span="1">-</el-col>
+              <el-col :span="4">
+                <el-form-item prop="end_date">
+                  <el-date-picker placeholder="选择时间" v-model="formInline.end_date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-form-item label="选择报销人员类型">
+                <el-checkbox-group v-model="formInline.checkList">
+                 <el-checkbox label="1" >学生报销</el-checkbox>
+                 <el-checkbox label="2">在职职工报销</el-checkbox>
+                 <el-checkbox label="3">退休职工报销</el-checkbox>
+                 <el-checkbox label="4">离休职工报销</el-checkbox>
+                </el-checkbox-group>
+              </el-form-item>
           </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="initData(1)">查询</el-button>
-            <!-- <el-button @click="clearForm">重置</el-button> -->
-          </el-form-item>
+           <el-form-item label="申请人">
+              <el-input v-model="formInline.user_name" placeholder="请输入"></el-input>
+            </el-form-item>
+                  
+            <el-form-item>
+              <el-button type="primary" @click="initData(1)">查询</el-button>
+              <!-- <el-button @click="clearForm">重置</el-button> -->
+            </el-form-item>
         </el-form>
         
 

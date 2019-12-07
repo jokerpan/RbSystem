@@ -22,25 +22,68 @@ router.use('/auditor/homepage.do', (req, res) => {
 });
 
 
-router.use('/auditor/getView', (req, res) => {
+
+router.use('/RbSystem/admin/getRbList1.do', (req, res) => {
     res.json(Mock.mock({
-        "data|5": [{
-            "submitTime": "@datetime",
-            "applyer": "@cword()",
-            "rbType": "@integer(2,5)",
-            "totalMoney": "@integer",
-            "curStatus": "@cword()"
+        "Data|5": [{
+            "s_time": "@datetime",
+            "rb_state": "@integer(2,3)",
+            "rb_id": "@integer(2,5)",
+            "user_type": "@integer(1,4)",
+            "Admin": {
+                "id":"@cword()"
+            },
+            "hospital":"@cword()"
         }],
-        "pageCount": '@integer(10, 30)',
-        "recordnum":"12",
+        "totalPage": '@integer(10, 30)',
+        "totalNum":"12",
         ...common
     }))
 });
 
+router.use('/RbSystem/admin/startRbCheck.do', (req, res) => {
+    res.json(Mock.mock({
+        "Data":{
+            "rb_state": 1,
+            "rb_id": '@word',
+            "hospital": "@cword",
+            "referral": {
+                "id": "@word",
+                "date": "@date",
+                "pic": ''
+            },
+            "ghf|3": [{
+                "id": "@word",
+                "department": "@cword",
+                "date": "@date",
+                "cost":"@integer(0,500000)",
+                "self_paid": "@integer(0,50000)",
+                "note": "@word",
+                "pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+            }],
+            "yymx|3": [{
+                "id": "@word",
+                "date": "@date",
+                "cost":"@integer(0,500000)",
+                "special_paid": "@integer(0,500000)",
+                "part_paid": "@integer(0,500000)",
+                "self_paid": "@integer(0,50000)",
+                "note": "@word",
+                "detailed_pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+                "pspt_pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+            }],
+            "wssm": {
+                "id": "@word",
+                "note": "@word",
+                "stamp_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+                "special_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+            }
+        },
+        ...common}))
+});
 
 
-
-router.use('/RbSystem/user/changPsd.do', (req, res) => {
+router.use('/RbSystem/admin/postRbCheck.do', (req, res) => {
     res.json(Mock.mock(common))
 });
 
