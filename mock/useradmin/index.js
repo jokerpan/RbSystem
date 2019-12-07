@@ -36,7 +36,7 @@ router.use('/RbSystem/user/postRbForm.do', (req, res) => {
 router.use('/RbSystem/user/confirmRbForm.do', (req, res) => {
     res.json(Mock.mock({
         "Data":{
-            "rb_state": '@integer(1, 6)',
+            "rb_state": 1,
             "rb_id": '@word'
         },
         ...common}))
@@ -60,13 +60,13 @@ router.use('/RbSystem/user/getMyRbRecord.do', (req, res) => {
 router.use('/RbSystem/user/getRbForm.do', (req, res) => {
     res.json(Mock.mock({
     	"Data":{
-    		"rb_state": '@integer(1, 7)',
+    		"rb_state": 1,
     		"rb_id": '@word',
     		"hospital": "@cword",
     		"referral": {
     			"id": "@word",
     			"date": "@date",
-    			"pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+    			"pic": ''
     		},
     		"ghf|3": [{
     			"id": "@word",

@@ -19,7 +19,7 @@
                 <el-input v-model="form.hospital"></el-input>
               </el-form-item>
               <el-form-item label="转诊单日期">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp" ></el-date-picker>
               </el-form-item>
               <el-form-item label="转诊单发票">
                 <el-upload
@@ -50,7 +50,7 @@
                 <el-input v-model="item.department"></el-input>
               </el-form-item>
               <el-form-item label="挂号费日期">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
               </el-form-item>
               <el-form-item label="总金额">
                 <el-input v-model="item.cost"></el-input>
@@ -86,7 +86,7 @@
                     <el-button style="float: right; padding: 3px 0" type="text" @click="addCard(1)">增加</el-button>
                 </div>
               <el-form-item label="用药明细日期">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
               </el-form-item>
               <el-form-item label="总金额">
                 <el-input v-model="item.cost"></el-input>
@@ -276,30 +276,28 @@
             initData() {
                 this.rb_state = this.$cookie.get("rb_state")
                 this.stepChange();
-                let data = {};
-                data.rb_id = this.$cookie.get("rb_id");
-                if(this.state != "7")
-                {
-                    data.rb_state = this.state;
-                }
+                let data = {
+                  "rb_id": this.$cookie.get("rb_id"),
+                  "rb_state": this.rb_state
+                };
                 this.$ajax.post(`/RbSystem/user/getRbForm.do`, data).then(res => {
                     if (res.data.success == "success") {
                         this.form = res.data.Data;
-                        if (this.form.referral.pic != null)
+                        if (this.form.referral.pic != "")
                             this.referralFileList.push({"url": this.form.referral.pic});
                         this.form.ghf.forEach(item => {
-                            if(item.pic!=null)
+                            if(item.pic!="")
                                 this.ghfFileList.push([{"url": item.pic}]);
                         });
                         this.form.yymx.forEach(item => {
-                            if (item.detailed_pic!=null)
+                            if (item.detailed_pic!="")
                                 this.yymxFileList1.push([{"url": item.detailed_pic}]);
-                            if (item.pspt_pic!=null)
+                            if (item.pspt_pic!="")
                                 this.yymxFileList2.push([{"url": item.pspt_pic}]);
                         });
-                        if (this.form.wssm.stamp_pic!=null)
+                        if (this.form.wssm.stamp_pic!="")
                             this.wssmFileList1.push({"url": this.form.wssm.stamp_pic});
-                        if(this.form.wssm.special_pic!=null)
+                        if(this.form.wssm.special_pic!="")
                             this.wssmFileList2.push({"url": this.form.wssm.special_pic});
                         this.rb_state = res.data.Data.rb_state;
                         this.$cookie.set("rb_id", this.form.rb_id);
@@ -343,7 +341,8 @@
 
                 }
             },
-            onSubmit(active){
+            onSubmit(flag){
+              console.log(flag);
                 this.form.referral.pic = this.referralFileList[0] ? this.referralFileList[0].url : "";
 
                 for (let i = 0; i < this.ghfFileList.length; i++){
@@ -356,11 +355,8 @@
                 this.form.wssm.stamp_pic = this.wssmFileList1[0] ? this.wssmFileList1[0].url : "";
                 this.form.wssm.special_pic = this.wssmFileList2[0] ? this.wssmFileList2[0].url : "";
 
-                let data = {
-                    "active": active,
-                    ...this.form
-                }
-                data = JSON.stringify(data);
+                this.form.active = flag;
+                let data = JSON.stringify(this.form);
                 this.$ajax.post(`/RbSystem/user/postRbForm.do`,{"rbStr":data}).then(res => {
                     if (res.data.success == "success"){
                         this.$notify.success({title: '提交成功'});
