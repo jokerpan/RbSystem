@@ -34,14 +34,14 @@
         
          methods: {
             initData() {
-                this.$ajax.get('./api/homepage.do').then(res => {
+                this.$ajax.get('./RbSystem/auditadmin/homepage.do').then(res => {
                     console.log(res);
                     if(res.data.success == "success") {
                       //  switch(res.data.rb_state){
                            // case 1:
                            
-                            this.num1 = res.data.rb_state;
-                            this.num2 = res.data.rb_state;
+                            this.num1 = res.data.num;
+                            this.num2 = res.data.num;
                             //break;
                             // case 2:
                             // this.msg = "已审核，点击查看信息";break;

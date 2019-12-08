@@ -16,7 +16,7 @@ router.use('/RbSystem/login.do', (req, res) => {
 		
 
 
-			"level" :2,
+			"level" :3,
 
 
 			"User": {
