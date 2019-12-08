@@ -75,13 +75,13 @@ router.use('/RbSystem/admin/startRbCheck.do', (req, res) => {
             "hospital": "@cword",
             "referral": {
                 "id": "@word",
-                "date": "@date",
+                "date": "@date(T)",
                 "pic": ''
             },
             "ghf|3": [{
                 "id": "@word",
                 "department": "@cword",
-                "date": "@date",
+                "date": "@date(T)",
                 "cost":"@integer(0,500000)",
                 "self_paid": "@integer(0,50000)",
                 "note": "@word",
@@ -89,7 +89,7 @@ router.use('/RbSystem/admin/startRbCheck.do', (req, res) => {
             }],
             "yymx|3": [{
                 "id": "@word",
-                "date": "@date",
+                "date": "@date(T)",
                 "cost":"@integer(0,500000)",
                 "special_paid": "@integer(0,500000)",
                 "part_paid": "@integer(0,500000)",

@@ -1,5 +1,5 @@
 <template>
-  <el-card v-loading="loading">
+  <el-card class="g-all">
     <p style="text-align: center;font-size:40px">待审核列表</p>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="活动时间">
@@ -103,10 +103,10 @@
                   <span>转诊单</span>
               </div>
             <el-form-item label="医院">
-              <el-input v-model="form.hospital"></el-input>
+              <el-input v-model="form.hospital" disabled></el-input>
             </el-form-item>
             <el-form-item label="转诊单日期">
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
             </el-form-item>
             <el-form-item label="转诊单发票">
               <div class="demo-image__preview">
@@ -123,13 +123,13 @@
                   <span>挂号费{{index}}</span>
               </div>
             <el-form-item label="科室">
-              <el-input v-model="item.department"></el-input>
+              <el-input v-model="item.department" disabled></el-input>
             </el-form-item>
             <el-form-item label="挂号费日期">
-                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
             </el-form-item>
             <el-form-item label="总金额">
-              <el-input v-model="item.cost"></el-input>
+              <el-input v-model="item.cost" disabled></el-input>
             </el-form-item>
             <el-form-item label="自付金额">
               <el-input v-model="item.self_paid"></el-input>
@@ -150,13 +150,16 @@
                   <span>用药明细{{index}}</span>
               </div>
             <el-form-item label="用药明细日期">
-                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
             </el-form-item>
             <el-form-item label="总金额">
-              <el-input v-model="item.cost"></el-input>
+              <el-input v-model="item.cost" disabled></el-input>
             </el-form-item>
             <el-form-item label="部分金额">
               <el-input v-model="item.part_paid"></el-input>
+            </el-form-item>
+            <el-form-item label="特殊金额">
+              <el-input v-model="item.special_paid"></el-input>
             </el-form-item>
             <el-form-item label="自付金额">
               <el-input v-model="item.self_paid"></el-input>
@@ -256,14 +259,7 @@
                     yymx: [{}],
                     wssm: {}
                 },
-                // referralFileList:[],
-                // ghfFileList:[],
-                // yymxFileList1:[],
-                // yymxFileList2:[],
-                // wssmFileList1:[],
-                // wssmFileList2:[],
-                // dialogImageUrl: '',
-                // dialogVisible: false,
+               
                 srcList:[]
                 
             }
@@ -304,23 +300,22 @@
                     if (res.data.success == "success") {
                         this.form = res.data.Data;
                         if (this.form.referral.pic != "")
-                            this.srcList.push({"url": this.form.referral.pic});
+                            this.srcList.push(this.form.referral.pic);
                         this.form.ghf.forEach(item => {
                             if(item.pic!="")
-                                this.srcList.push([{"url": item.pic}]);
+                                this.srcList.push(item.pic);
                         });
                         this.form.yymx.forEach(item => {
                             if (item.detailed_pic!="")
-                                this.srcList.push([{"url": item.detailed_pic}]);
+                                this.srcList.push(item.detailed_pic);
                             if (item.pspt_pic!="")
-                                this.srcList.push([{"url": item.pspt_pic}]);
+                                this.srcList.push(item.pspt_pic);
                         });
                         if (this.form.wssm.stamp_pic!="")
-                            this.srcList.push({"url": this.form.wssm.stamp_pic});
+                            this.srcList.push(this.form.wssm.stamp_pic);
                         if(this.form.wssm.special_pic!="")
-                            this.srcList.push({"url": this.form.wssm.special_pic});
-
-                        this.dialogVisible1 = true;
+                            this.srcList.push(this.form.wssm.special_pic);
+                            this.dialogVisible1 = true;
                     } else {
                         this.$message.error("请求失败");
                     }
