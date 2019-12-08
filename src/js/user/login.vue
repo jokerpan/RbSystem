@@ -79,7 +79,7 @@
                   case 3:
                     location.href = '/auditadmin';break;
                   case 4:
-                    location.href = '/';break;
+                    location.href = '/reciever';break;
                   case 5:
                     location.href = '/sysadmin';break;
                   default: break;
