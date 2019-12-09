@@ -70,8 +70,8 @@
               align="center">
             </el-table-column>
             <el-table-column
-                prop="curStatus"
-                label="rb_state"
+                prop="rb_state"
+                label="报销状态"
                 align="center"
                 sortable
                 width="150">
@@ -233,6 +233,8 @@
                   2:"待审核",
                   3:"审核中"
                 },
+                totalNum:'',
+                totalPage:'',
                 tableData: [],
                 loading: true,
                 page: {
@@ -324,8 +326,6 @@
                 })
             },
 
-
-
         
 
             postCheck(result) {
@@ -339,12 +339,7 @@
                     "rbStr": data
                 }).then(res => {
                     if (res.data.success === "success") {
-                        this.referralFileList = [];
-                        this.ghfFileList = [];
-                        this.yymxFileList1 = [];
-                        this.yymxFileList2 = [];
-                        this.wssmFileList1 = [];
-                        this.wssmFileList2 = [];
+                        this.srcList = [];
                         this.dialogVisible1 = false;
                         this.$message.success("提交成功");
                         this.initData();
