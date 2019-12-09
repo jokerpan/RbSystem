@@ -109,7 +109,7 @@
         components: { QRCode },
         methods: {
             initData() {
-                this.$ajax.get('/RbSystem/user/getQR.do').then(res => {
+                this.$ajax.post('/RbSystem/user/getQR.do',{"rb_id": this.$cookie.get("rb_id")}).then(res => {
                     if(res.data.success === "success") {
                         this.form=res.data.Data;
                         this.$nextTick(()=>this.qrcode());
