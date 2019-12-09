@@ -15,13 +15,14 @@
               </el-form-item>
             </el-col>
             <el-form-item label="选择报销人员类型">
-              <el-checkbox-group v-model="formInline.checkList">
+              <el-checkbox-group v-model="formInline.user_type">
                <el-checkbox label="1">学生报销</el-checkbox>
                <el-checkbox label="2">在职职工报销</el-checkbox>
                <el-checkbox label="3">退休职工报销</el-checkbox>
                <el-checkbox label="4">离休职工报销</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
+
         </el-form-item>
          <el-form-item label="申请人">
             <el-input v-model="formInline.user_name" placeholder="请输入姓名"></el-input>
@@ -244,10 +245,9 @@
                 },
                 formInline: {
                     user_name: '',
-                    checkList:[],
+                    user_type:[],
                     start_date: "",
-                    end_date:"",
-                    rb_state:"",
+                    end_date:""
                 },
                 recordnum:'',
                 dialogVisible1:false,
@@ -275,7 +275,7 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                this.$ajax.post('/RbSystem/user/getMyRbRecord.do', {
+                this.$ajax.post('/RbSystem/admin/getRbList1.do', {
                     curPage: this.page.currentPage,
                     ...this.formInline
                 }).then(res => {

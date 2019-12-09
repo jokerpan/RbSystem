@@ -3,7 +3,7 @@
       <p style="text-align: center;font-size:40px">已审核列表</p>   
          <el-form :inline="true" :model="formInline" class="demo-form-inline">
            <el-form-item label="选择报销人员类型">
-             <el-checkbox-group v-model="formInline.checkList">
+             <el-checkbox-group v-model="formInline.user_type">
                <el-checkbox label="1">学生报销</el-checkbox>
                <el-checkbox label="2">在职职工报销</el-checkbox>
                <el-checkbox label="3">退休职工报销</el-checkbox>
@@ -298,10 +298,10 @@
                 },
                 formInline: {
                     user_name: '',
-                    checkList:[],
+                    user_type:[],
                     start_date: "",
                     end_date:"",
-                    rb_state:"",
+                    rb_state:[],
                 },
                 recordnum:'',
                 dialogVisible1:false,
