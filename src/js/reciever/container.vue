@@ -3,7 +3,7 @@
       <div style="width: 50%; margin: auto;">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="报销单编号">
-          <el-input v-model="formInline.rb_id" placeholder="请输入"></el-input>
+          <el-input v-model="formInline.QRCode" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="queryById(1)">查询</el-button>
@@ -136,7 +136,7 @@
         data() {
             return {
                 formInline: {
-                  "rb_id": ''
+                  "QRCode": ''
                 },
                 form: {
                     rb_id: "",
@@ -153,7 +153,7 @@
         },
         methods:{
           queryById() {
-            this.$ajax.post("/RbSystem/getRbDetail.do", this.formInline).then(res => {
+            this.$ajax.post("/RbSystem/admin/getRecieve.do", this.formInline).then(res => {
               if (res.data.success === "success") {
                   this.srcList = [];
                   this.form = res.data.Data;
@@ -187,6 +187,9 @@
             this.$ajax.post(`/RbSystem/admin/recieve.do`,data).then(res => {
                 if (res.data.success == "success"){
                     this.$notify.success({title: '收单成功'});
+                    this.formInline.QRCode = "";
+                    this.form = {};
+                    this.srcList=[];
                 }else {
                   this.$notify.error({title: '操作失败'});
                 }
