@@ -351,7 +351,7 @@
                 let data = {
                     "rb_id": row.rb_id
                 };
-                this.$ajax.post('/RbSystem/admin/startRbCheck.do',data).then(res => {
+                this.$ajax.post('/RbSystem/getRbDetail.do',data).then(res => {
                     this.loading = false;
                     if (res.data.success == "success") {
                         this.form = res.data.Data;
