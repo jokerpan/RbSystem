@@ -44,6 +44,29 @@ router.use('/RbSystem/admin/getRbList1.do', (req, res) => {
     ))
 });
 
+
+router.use('/RbSystem/admin/getRbList2.do', (req, res) => {
+    res.json(Mock.mock({
+        "Data":{
+            "RbList|5": [{
+                "s_time": "@datetime",
+                "rb_state": "@integer(2,3)",
+                "rb_id": "@integer(2,5)",
+                "user_type": "@integer(1,4)",
+                "Admin": {
+                    "id":"@cword()"
+                },
+                "hospital":"@cword()"
+            }],
+            "totalPage": '@integer(10, 30)',
+            "totalNum":"12"
+        },
+        ...common
+    }
+    ))
+});
+
+
 router.use('/RbSystem/admin/startRbCheck.do', (req, res) => {
     res.json(Mock.mock({
         "Data":{
@@ -52,13 +75,13 @@ router.use('/RbSystem/admin/startRbCheck.do', (req, res) => {
             "hospital": "@cword",
             "referral": {
                 "id": "@word",
-                "date": "@date",
+                "date": "@date(T)",
                 "pic": ''
             },
             "ghf|3": [{
                 "id": "@word",
                 "department": "@cword",
-                "date": "@date",
+                "date": "@date(T)",
                 "cost":"@integer(0,500000)",
                 "self_paid": "@integer(0,50000)",
                 "note": "@word",
@@ -66,7 +89,7 @@ router.use('/RbSystem/admin/startRbCheck.do', (req, res) => {
             }],
             "yymx|3": [{
                 "id": "@word",
-                "date": "@date",
+                "date": "@date(T)",
                 "cost":"@integer(0,500000)",
                 "special_paid": "@integer(0,500000)",
                 "part_paid": "@integer(0,500000)",

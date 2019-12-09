@@ -1,22 +1,22 @@
 <template>
-  <el-card v-loading="loading">
+  <el-card class="g-all">
     <p style="text-align: center;font-size:40px">待审核列表</p>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="活动时间">
             <el-col :span="4">
               <el-form-item prop="start_date">
-                <el-date-picker type="date" placeholder="选择日期" v-model="formInline.start_date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择起始日期" v-model="formInline.start_date" style="width: 100%;" value-format="timestamp"></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col class="line" :span="1">-</el-col>
             <el-col :span="4">
               <el-form-item prop="end_date">
-                <el-date-picker placeholder="选择时间" v-model="formInline.end_date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker placeholder="选择结束日期" v-model="formInline.end_date" style="width: 100%;" value-format="timestamp"></el-date-picker>
               </el-form-item>
             </el-col>
             <el-form-item label="选择报销人员类型">
               <el-checkbox-group v-model="formInline.checkList">
-               <el-checkbox label="1" >学生报销</el-checkbox>
+               <el-checkbox label="1">学生报销</el-checkbox>
                <el-checkbox label="2">在职职工报销</el-checkbox>
                <el-checkbox label="3">退休职工报销</el-checkbox>
                <el-checkbox label="4">离休职工报销</el-checkbox>
@@ -24,7 +24,7 @@
             </el-form-item>
         </el-form-item>
          <el-form-item label="申请人">
-            <el-input v-model="formInline.user_name" placeholder="请输入"></el-input>
+            <el-input v-model="formInline.user_name" placeholder="请输入姓名"></el-input>
           </el-form-item>
                 
           <el-form-item>
@@ -32,9 +32,7 @@
             <!-- <el-button @click="clearForm">重置</el-button> -->
           </el-form-item>
     </el-form>
-         <!--  <el-badge :value="12" class="item">                              
-            <el-button size="small">报销记录条数</el-button>         
-          </el-badge> -->
+         
 
           <div style="color:#000;font-size: 15px;text-align:left;">共有<font color='red'>{{recordnum}}</font>条报销记录</div>
           
@@ -101,161 +99,111 @@
             <div>
               <el-form ref="form" :model="form" label-width="150px">
                   <el-card>
-                      <div slot="header">
-                          <span>转诊单</span>
-                      </div>
-                    <el-form-item label="医院">
-                      <el-input v-model="form.hospital"></el-input>
-                    </el-form-item>
-                    <el-form-item label="转诊单日期">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="转诊单发票">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "referralFileList"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                      
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
-                    </el-form-item>
-                  </el-card>
-                  <el-card v-for="(item, index) in form.ghf">
-                      <div slot="header" class="clearfix">
-                          <span>挂号费{{index}}</span>
-                      </div>
-                    <el-form-item label="科室">
-                      <el-input v-model="item.department"></el-input>
-                    </el-form-item>
-                    <el-form-item label="挂号费日期">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="总金额">
-                      <el-input v-model="item.cost"></el-input>
-                    </el-form-item>
-                    <el-form-item label="自付金额">
-                      <el-input v-model="item.self_paid"></el-input>
-                    </el-form-item>
-                    <el-form-item label="审核说明">
-                      <el-input v-model="item.note"></el-input>
-                    </el-form-item>
-                    <el-form-item label="挂号费发票">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "ghfFileList[index]"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
-                    </el-form-item>
-                  </el-card>
-                  <el-card v-for="(item, index) in form.yymx">
-                      <div slot="header" class="clearfix">
-                          <span>用药明细{{index}}</span>
-                      </div>
-                    <el-form-item label="用药明细日期">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="总金额">
-                      <el-input v-model="item.cost"></el-input>
-                    </el-form-item>
-                    <el-form-item label="部分金额">
-                      <el-input v-model="item.part_paid"></el-input>
-                    </el-form-item>
-                    <el-form-item label="自付金额">
-                      <el-input v-model="item.self_paid"></el-input>
-                    </el-form-item>
-                    <el-form-item label="审核说明">
-                      <el-input v-model="item.note"></el-input>
-                    </el-form-item>
-                    <el-form-item label="用药明细发票">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "yymxFileList1[index]"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
-                    </el-form-item>
-                    <el-form-item label="用药明细发票2">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "yymxFileList2[index]"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
-                    </el-form-item>
-                  </el-card>
-                  <el-card>
-                      <div slot="header" class="clearfix">
-                          <span>外伤说明</span>
-                      </div>
-                    <el-form-item label="说明">
-                      <el-input v-model="form.wssm.note"></el-input>
-                    </el-form-item>
-                    <el-form-item label="外伤说明发票">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "wssmFileList1"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
-                    </el-form-item>
-                    <el-form-item label="外伤说明发票2">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "wssmFileList2"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
-                    </el-form-item>
-                </el-card>
+              <div slot="header">
+                  <span>转诊单</span>
+              </div>
+            <el-form-item label="医院">
+              <el-input v-model="form.hospital" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="转诊单日期">
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
+            </el-form-item>
+            <el-form-item label="转诊单发票">
+              <div class="demo-image__preview">
+              <el-image 
+                style="width: 100px; height: 100px"
+                :src="form.referral.pic" 
+                :preview-src-list="srcList">
+              </el-image>
+              </div>
+            </el-form-item>
+          </el-card>
+          <el-card v-for="(item, index) in form.ghf">
+              <div slot="header" class="clearfix">
+                  <span>挂号费{{index}}</span>
+              </div>
+            <el-form-item label="科室">
+              <el-input v-model="item.department" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="挂号费日期">
+                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
+            </el-form-item>
+            <el-form-item label="总金额">
+              <el-input v-model="item.cost" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="自付金额">
+              <el-input v-model="item.self_paid"></el-input>
+            </el-form-item>
+            <el-form-item label="审核说明">
+              <el-input v-model="item.note"></el-input>
+            </el-form-item>
+            <el-form-item label="挂号费发票">
+              <el-image 
+                style="width: 100px; height: 100px"
+                :src="item.pic" 
+                :preview-src-list="srcList">
+              </el-image>
+            </el-form-item>
+          </el-card>
+          <el-card v-for="(item, index) in form.yymx">
+              <div slot="header" class="clearfix">
+                  <span>用药明细{{index}}</span>
+              </div>
+            <el-form-item label="用药明细日期">
+                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
+            </el-form-item>
+            <el-form-item label="总金额">
+              <el-input v-model="item.cost" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="部分金额">
+              <el-input v-model="item.part_paid"></el-input>
+            </el-form-item>
+            <el-form-item label="特殊金额">
+              <el-input v-model="item.special_paid"></el-input>
+            </el-form-item>
+            <el-form-item label="自付金额">
+              <el-input v-model="item.self_paid"></el-input>
+            </el-form-item>
+            <el-form-item label="审核说明">
+              <el-input v-model="item.note"></el-input>
+            </el-form-item>
+            <el-form-item label="用药明细发票">
+              <el-image 
+                style="width: 100px; height: 100px"
+                :src="item.detailed_pic" 
+                :preview-src-list="srcList">
+              </el-image>
+            </el-form-item>
+            <el-form-item label="用药明细发票2">
+              <el-image 
+                style="width: 100px; height: 100px"
+                :src="item.pspt_pic" 
+                :preview-src-list="srcList">
+              </el-image>
+            </el-form-item>
+          </el-card>
+          <el-card>
+              <div slot="header" class="clearfix">
+                  <span>外伤说明</span>
+              </div>
+            <el-form-item label="说明">
+              <el-input v-model="form.wssm.note"></el-input>
+            </el-form-item>
+            <el-form-item label="外伤说明发票">
+              <el-image 
+                style="width: 100px; height: 100px"
+                :src="form.wssm.stamp_pic" 
+                :preview-src-list="srcList">
+              </el-image>
+            </el-form-item>
+            <el-form-item label="外伤说明发票2">
+              <el-image 
+                style="width: 100px; height: 100px"
+                :src="form.wssm.special_pic" 
+                :preview-src-list="srcList">
+              </el-image>
+            </el-form-item>
+        </el-card>
                   </el-form>
               </div>
             <span slot="footer" class="dialog-footer">
@@ -311,14 +259,8 @@
                     yymx: [{}],
                     wssm: {}
                 },
-                referralFileList:[],
-                ghfFileList:[],
-                yymxFileList1:[],
-                yymxFileList2:[],
-                wssmFileList1:[],
-                wssmFileList2:[],
-                dialogImageUrl: '',
-                dialogVisible: false,
+               
+                srcList:[]
                 
             }
         },
@@ -358,23 +300,22 @@
                     if (res.data.success == "success") {
                         this.form = res.data.Data;
                         if (this.form.referral.pic != "")
-                            this.referralFileList.push({"url": this.form.referral.pic});
+                            this.srcList.push(this.form.referral.pic);
                         this.form.ghf.forEach(item => {
                             if(item.pic!="")
-                                this.ghfFileList.push([{"url": item.pic}]);
+                                this.srcList.push(item.pic);
                         });
                         this.form.yymx.forEach(item => {
                             if (item.detailed_pic!="")
-                                this.yymxFileList1.push([{"url": item.detailed_pic}]);
+                                this.srcList.push(item.detailed_pic);
                             if (item.pspt_pic!="")
-                                this.yymxFileList2.push([{"url": item.pspt_pic}]);
+                                this.srcList.push(item.pspt_pic);
                         });
                         if (this.form.wssm.stamp_pic!="")
-                            this.wssmFileList1.push({"url": this.form.wssm.stamp_pic});
+                            this.srcList.push(this.form.wssm.stamp_pic);
                         if(this.form.wssm.special_pic!="")
-                            this.wssmFileList2.push({"url": this.form.wssm.special_pic});
-
-                        this.dialogVisible1 = true;
+                            this.srcList.push(this.form.wssm.special_pic);
+                            this.dialogVisible1 = true;
                     } else {
                         this.$message.error("请求失败");
                     }
