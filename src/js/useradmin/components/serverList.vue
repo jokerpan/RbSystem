@@ -38,7 +38,7 @@
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="Admin.id"
+                    prop="admin.id"
                     label="审核员"
                     align="center">
             </el-table-column>

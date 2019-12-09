@@ -3,7 +3,7 @@
       <p style="text-align: center;font-size:40px">已审核列表</p>   
          <el-form :inline="true" :model="formInline" class="demo-form-inline">
            <el-form-item label="选择报销人员类型">
-             <el-checkbox-group v-model="formInline.checkList">
+             <el-checkbox-group v-model="formInline.user_type">
                <el-checkbox label="1">学生报销</el-checkbox>
                <el-checkbox label="2">在职职工报销</el-checkbox>
                <el-checkbox label="3">退休职工报销</el-checkbox>
@@ -125,8 +125,8 @@
               align="center">
             </el-table-column>
             <el-table-column
-                prop="curStatus"
-                label="rb_state"
+                prop="rb_state"
+                label="报销状态"
                 align="center"
                 sortable
                 width="150">
@@ -159,10 +159,10 @@
                   <span>转诊单</span>
               </div>
             <el-form-item label="医院">
-              <el-input v-model="form.hospital"></el-input>
+              <el-input v-model="form.hospital" disabled></el-input>
             </el-form-item>
             <el-form-item label="转诊单日期">
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
             </el-form-item>
             <el-form-item label="转诊单发票">
               <div class="demo-image__preview">
@@ -179,13 +179,13 @@
                   <span>挂号费{{index}}</span>
               </div>
             <el-form-item label="科室">
-              <el-input v-model="item.department"></el-input>
+              <el-input v-model="item.department" disabled></el-input>
             </el-form-item>
             <el-form-item label="挂号费日期">
-                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
             </el-form-item>
             <el-form-item label="总金额">
-              <el-input v-model="item.cost"></el-input>
+              <el-input v-model="item.cost" disabled></el-input>
             </el-form-item>
             <el-form-item label="自付金额">
               <el-input v-model="item.self_paid"></el-input>
@@ -206,10 +206,10 @@
                   <span>用药明细{{index}}</span>
               </div>
             <el-form-item label="用药明细日期">
-                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="item.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
             </el-form-item>
             <el-form-item label="总金额">
-              <el-input v-model="item.cost"></el-input>
+              <el-input v-model="item.cost" disabled></el-input>
             </el-form-item>
             <el-form-item label="部分金额">
               <el-input v-model="item.part_paid"></el-input>
@@ -298,10 +298,10 @@
                 },
                 formInline: {
                     user_name: '',
-                    checkList:[],
+                    user_type:[],
                     start_date: "",
                     end_date:"",
-                    rb_state:"",
+                    rb_state:[],
                 },
                 recordnum:'',
                 dialogVisible1:false,
@@ -315,14 +315,8 @@
                     yymx: [{}],
                     wssm: {}
                 },
-                referralFileList:[],
-                ghfFileList:[],
-                yymxFileList1:[],
-                yymxFileList2:[],
-                wssmFileList1:[],
-                wssmFileList2:[],
-                dialogImageUrl: '',
-                dialogVisible: false,
+               
+               srcList: []
 
             }
         },
@@ -357,26 +351,26 @@
                 let data = {
                     "rb_id": row.rb_id
                 };
-                this.$ajax.post('/RbSystem/admin/startRbCheck.do',data).then(res => {
+                this.$ajax.post('/RbSystem/getRbDetail.do',data).then(res => {
                     this.loading = false;
                     if (res.data.success == "success") {
                         this.form = res.data.Data;
                         if (this.form.referral.pic != "")
-                            this.srcList.push({"url": this.form.referral.pic});
+                            this.srcList.push(this.form.referral.pic);
                         this.form.ghf.forEach(item => {
                             if(item.pic!="")
-                                this.srcList.push([{"url": item.pic}]);
+                                this.srcList.push(item.pic);
                         });
                         this.form.yymx.forEach(item => {
                             if (item.detailed_pic!="")
-                                this.srcList.push([{"url": item.detailed_pic}]);
+                                this.srcList.push(item.detailed_pic);
                             if (item.pspt_pic!="")
-                                this.srcList.push([{"url": item.pspt_pic}]);
+                                this.srcList.push(item.pspt_pic);
                         });
                         if (this.form.wssm.stamp_pic!="")
-                            this.srcList.push({"url": this.form.wssm.stamp_pic});
+                            this.srcList.push(this.form.wssm.stamp_pic);
                         if(this.form.wssm.special_pic!="")
-                            this.srcList.push({"url": this.form.wssm.special_pic});
+                            this.srcList.push(this.form.wssm.special_pic);
 
                         this.dialogVisible1 = true;
                     } else {
@@ -402,12 +396,12 @@
                     "rbStr": data
                 }).then(res => {
                     if (res.data.success === "success") {
-                        this.referralFileList = [];
-                        this.ghfFileList = [];
-                        this.yymxFileList1 = [];
-                        this.yymxFileList2 = [];
-                        this.wssmFileList1 = [];
-                        this.wssmFileList2 = [];
+                        this.srcList = [];
+                        // this.ghfFileList = [];
+                        // this.yymxFileList1 = [];
+                        // this.yymxFileList2 = [];
+                        // this.wssmFileList1 = [];
+                        // this.wssmFileList2 = [];
                         this.dialogVisible1 = false;
                         this.$message.success("提交成功");
                         this.initData();

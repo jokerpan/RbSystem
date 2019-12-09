@@ -13,12 +13,27 @@ const common = {
 // };
 
 
-router.use('/auditor/homepage.do', (req, res) => {
-    res.json(Mock.mock(
-    	{
-    		"rb_state": '@integer(1, 3)'
-    	,
-    	...common}))
+router.use('/RbSystem/homepage.do', (req, res) => {
+    res.json(Mock.mock({
+        "Data":{
+            "rbList|5": [{
+                "o_time": "@datetime",
+                "rb_state": "@integer(2,3)",
+                "rb_id": "@integer(2,5)",
+                "undo": {
+                    "id":"@cword()",
+                    "note1":"@cword()",
+                    "note2":"@cword()",
+                    "note3":"@cword()"
+                },
+                "hospital":"@cword()"
+            }],
+            "totalPage": '@integer(10, 30)',
+            "totalNum":"12"
+        },
+        ...common
+    }
+    ))
 });
 
 

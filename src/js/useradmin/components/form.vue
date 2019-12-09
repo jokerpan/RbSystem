@@ -235,11 +235,14 @@
                     rb_id: "",
                     hospital:"",
                     referral: {
-                      "pic":""
+                      "pic":"",
+                      "date":""
                     },
                     ghf: [{}],
                     yymx: [{}],
-                    wssm: {}
+                    wssm: {
+                      "note":""
+                    }
                 },
                 referralFileList:[],
                 ghfFileList:[],
@@ -329,6 +332,8 @@
                         this.rb_state = res.data.Data.rb_state;
                         this.$cookie.set("rb_id", this.form.rb_id);
                         this.stepChange();
+                    } else {
+                      this.$notify.error({title: '请刷新重试'});
                     }
                 }).catch(res => {
                     this.$notify.error({title: '????'});
@@ -393,6 +398,8 @@
                         this.form.rb_id = res.data.Data.rb_id;
                         this.$cookie.set("rb_id", this.form.rb_id);
                         this.stepChange();
+                    } else{
+                      this.$notify.error({title: '请重新提交'});
                     }
                 }).catch(res => {
                     this.$notify.error({title: '请刷新重试'});
@@ -408,6 +415,8 @@
                       this.$notify.success({title: '提交成功'});
                       this.rb_state = res.data.Data.rb_state;
                       this.stepChange();
+                  } else {
+                    this.$notify.error({title: '请重新提交'});
                   }
               }).catch(res => {
                   this.$notify.error({title: '请刷新重试'});
