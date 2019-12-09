@@ -243,7 +243,7 @@
                     start_date: "",
                     end_date:"",
                 },
-                recordnum:12,
+                recordnum:'',
                 dialogVisible1:false,
                 form: {
                     rb_id: "",
@@ -293,6 +293,7 @@
                 let data = {
                     "rb_id": row.rb_id
                 };
+                this.srcList=[];
                 this.$ajax.post('/RbSystem/admin/startRbCheck.do',data).then(res => {
                     this.loading = false;
                     if (res.data.success == "success") {

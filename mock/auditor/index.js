@@ -44,6 +44,29 @@ router.use('/RbSystem/admin/getRbList1.do', (req, res) => {
     ))
 });
 
+
+router.use('/RbSystem/admin/getRbList2.do', (req, res) => {
+    res.json(Mock.mock({
+        "Data":{
+            "RbList|5": [{
+                "s_time": "@datetime",
+                "rb_state": "@integer(2,3)",
+                "rb_id": "@integer(2,5)",
+                "user_type": "@integer(1,4)",
+                "Admin": {
+                    "id":"@cword()"
+                },
+                "hospital":"@cword()"
+            }],
+            "totalPage": '@integer(10, 30)',
+            "totalNum":"12"
+        },
+        ...common
+    }
+    ))
+});
+
+
 router.use('/RbSystem/admin/startRbCheck.do', (req, res) => {
     res.json(Mock.mock({
         "Data":{

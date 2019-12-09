@@ -10,7 +10,7 @@ const common = {
 router.use('/RbSystem/homepage.do', (req, res) => {
     res.json(Mock.mock({
     	"Data":{
-    		"rb_state": '@integer(1, 6)',
+    		"rb_state": 4,
     		"rb_id": '@word'
     	},
     	...common}))
@@ -36,7 +36,7 @@ router.use('/RbSystem/user/postRbForm.do', (req, res) => {
 router.use('/RbSystem/user/confirmRbForm.do', (req, res) => {
     res.json(Mock.mock({
         "Data":{
-            "rb_state": 1,
+            "rb_state": 6,
             "rb_id": '@word'
         },
         ...common}))
@@ -60,7 +60,7 @@ router.use('/RbSystem/user/getMyRbRecord.do', (req, res) => {
 router.use('/RbSystem/user/getRbForm.do', (req, res) => {
     res.json(Mock.mock({
     	"Data":{
-    		"rb_state": 1,
+    		"rb_state": 4,
     		"rb_id": '@word',
     		"hospital": "@cword",
     		"referral": {
@@ -134,6 +134,36 @@ router.use('/RbSystem/getRbDetail.do', (req, res) => {
                 "note": "@word",
                 "stamp_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
                 "special_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+            }
+        },
+        ...common}))
+});
+
+
+router.use('/RbSystem/user/getQR.do', (req, res) => {
+    res.json(Mock.mock({
+        "Data":{
+            "QRCode": '@word',
+            "rb_id": '@word',
+            "u_id": '@word',
+            "u_name": '@cword(2,3)',
+            "u_type": '@word',
+            "hospital": "@cword",
+            "c_time":"@date(T)",
+            "u_department":"@cword(4,5)",
+            "total_cost":"@integer",
+            "total_self_paid":"@integer",
+            "ghf": {
+                "total_cost":"@integer",
+                "self_paid":"@integer",
+                "self_pro":"@integer",
+                "count":"@integer"
+            },
+            "yymx": {
+                "total_cost":"@integer",
+                "self_paid":"@integer",
+                "self_pro":"@integer",
+                "count":"@integer"
             }
         },
         ...common}))

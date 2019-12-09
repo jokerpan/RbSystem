@@ -294,6 +294,7 @@
                 let data = {
                     "rb_id": row.rb_id
                 };
+                this.srcList = [];
                 this.$ajax.post('/RbSystem/admin/startRbCheck.do',data).then(res => {
                     this.loading = false;
                     if (res.data.success == "success") {
