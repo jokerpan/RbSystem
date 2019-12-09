@@ -30,7 +30,7 @@
     name: 'login',
     data() {
       return {
-        type: 1,
+        type: 2,
         form: {
           userName: '',
           password: '',
