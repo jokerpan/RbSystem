@@ -18,8 +18,8 @@ export default new Router({
             component: resolve => {require(['@/js/useradmin/components/form'],resolve)}
         },
         {
-            path: '/auditManage',
-            component: resolve => {require(['@/js/useradmin/components/auditManage'],resolve)}
+            path: '/rbtable',
+            component: resolve => {require(['@/js/useradmin/components/rbtable'],resolve)}
         },
         {
             path: '/homePage',
