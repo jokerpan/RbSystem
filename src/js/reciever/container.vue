@@ -1,5 +1,6 @@
 <template>
     <div class="g-all">
+      <div style="width: 50%; margin: auto;">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="报销单编号">
           <el-input v-model="formInline.rb_id" placeholder="请输入"></el-input>
@@ -112,12 +113,17 @@
                 :preview-src-list="srcList">
               </el-image>
             </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="recieve">收单</el-button>
+            </el-form-item>
         </el-card>
+
           </el-form>
       </div>
       <div class="g-ft">
           COPYRIGHT 1998-2018 版权所有 北京东方龙马软件发展有限公司 京ICP备14000200号-1
       </div>
+    </div>
     </div>
 </template>
 
@@ -149,6 +155,7 @@
           queryById() {
             this.$ajax.post("/RbSystem/getRbDetail.do", this.formInline).then(res => {
               if (res.data.success === "success") {
+                  this.srcList = [];
                   this.form = res.data.Data;
                   if (this.form.referral.pic != "")
                       this.srcList.push(this.form.referral.pic);
@@ -171,6 +178,20 @@
               }
             }).catch(res => {
               this.$message.error('请刷新重试');
+            })
+          },
+          recieve() {
+            let data = {
+              "rb_id": this.form.rb_id
+            }
+            this.$ajax.post(`/RbSystem/admin/recieve.do`,data).then(res => {
+                if (res.data.success == "success"){
+                    this.$notify.success({title: '收单成功'});
+                }else {
+                  this.$notify.error({title: '操作失败'});
+                }
+            }).catch(res => {
+                this.$notify.error({title: '请刷新重试'});
             })
           }
         },

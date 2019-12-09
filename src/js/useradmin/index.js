@@ -8,6 +8,7 @@ import router from './router'
 import axios from 'axios'
 import cookie from 'js-cookie'
 import Qs from 'Qs'
+import Print from 'vue-print-nb'
 
 axios.defaults.transformRequest = [function (data) {
     return Qs.stringify(data);
@@ -16,8 +17,9 @@ axios.defaults.transformRequest = [function (data) {
 
 Vue.prototype.$ajax = axios;
 Vue.prototype.$cookie = cookie;
-
+Vue.use(Print)
 Vue.use(ElementUI)
+
 
 /* eslint-disable no-new */
 new Vue({

@@ -182,11 +182,31 @@
               </el-form-item>
               <el-form-item v-if="seen1">
                 <el-button type="primary" @click="onConfirm(1)">确定报销</el-button>
-                <el-button type="primary" @click="onConfirm(2)">修改后提交</el-button>
+                <el-popover
+                  placement="top"
+                  width="160"
+                  v-model="visible1">
+                  <p>
+                  <el-form ref="form2" :model="complain">
+                    <el-form-item>
+                      <el-input placeholder="说明" v-model="complain.note1"></el-input>
+                    </el-form-item>
+                  </el-form>
+                  </p>
+                  <div style="text-align: right; margin: 0">
+                    <el-button size="mini" type="text" @click="visible1 = false">取消</el-button>
+                    <el-button type="primary" size="mini" @click="onComplaint">确定</el-button>
+                  </div>
+                  <el-button slot="reference" type="danger">申诉</el-button>
+                </el-popover>
+                <el-button  v-if="seen3" type="primary"  @click="onConfirm(2)">修改后提交</el-button>
               </el-form-item>
               <el-form-item v-if="seen2">
                 <el-button type="primary" @click="onSubmit(2)">提交</el-button>
                 <el-button type="primary" @click="onSubmit(1)">暂存</el-button>
+              </el-form-item>
+              <el-form-item v-if="seen4">
+                <el-button type="primary" @click="jump">查看报销单</el-button>
               </el-form-item>
           </el-card>
             </el-form>
@@ -203,11 +223,14 @@
                 seen: false,
                 seen1: false,
                 seen2: false,
+                seen3: false,
+                seen4: false,
                 active: 0,
                 rb_state: '',
                 dialogImageUrl: '',
                 dialogVisible: false,
                 disabled: false,
+                visible1:false,
                 form: {
                     rb_id: "",
                     hospital:"",
@@ -223,7 +246,10 @@
                 yymxFileList1:[],
                 yymxFileList2:[],
                 wssmFileList1:[],
-                wssmFileList2:[]
+                wssmFileList2:[],
+                complain:{
+                  "note1": ""
+                }
             }
         },
         methods: {
@@ -275,6 +301,7 @@
             },
             initData() {
                 this.rb_state = this.$cookie.get("rb_state")
+                console.log(this.rb_state);
                 this.stepChange();
                 let data = {
                   "rb_id": this.$cookie.get("rb_id"),
@@ -308,14 +335,16 @@
                 })
             },
             stepChange() {
+              console.log(this.rb_state);
                 switch(this.rb_state) {
-                    case 1: this.active = 0; this.seen=false; this.seen1=false; this.seen2=true; break;
-                    case 2: this.active = 1; this.seen=false; this.seen1=false; this.seen2=false; break;
-                    case 3: this.active = 2; this.seen=false; this.seen1=false; this.seen2=false; break;
-                    case 4: this.active = 3; this.seen=true; this.seen1=false; this.seen2=false; break;
-                    case 5: this.active = 3; this.seen=true; this.seen1=true; this.seen2=false; break;
-                    case 6: this.active = 4; this.seen=true; this.seen1=false; this.seen2=false; break;
-                    case 7: this.active = 5; this.seen=true; this.seen1=false; this.seen2=false; break;
+                    case 1: this.active = 0; this.seen=false; this.seen1=false; this.seen2=true;this.seen3=false; this.seen4=false;break;
+                    case 2: this.active = 1; this.seen=false; this.seen1=false; this.seen2=false;this.seen3=false;  this.seen4=false;break;
+                    case 3: this.active = 2; this.seen=false; this.seen1=false; this.seen2=false; this.seen3=false; this.seen4=false;break;
+                    case 4: this.active = 3; this.seen=true; this.seen1=true; this.seen2=false;this.seen3=false;  this.seen4=false;break;
+                    case 5: this.active = 3; this.seen=true; this.seen1=true; this.seen2=false; this.seen3=true; this.seen4=false;break;
+                    case 6: this.active = 4; this.seen=true; this.seen1=false; this.seen2=false;this.seen3=false; this.seen4=true; break;
+                    case 7: this.active = 5; this.seen=true; this.seen1=false; this.seen2=false; this.seen3=false; this.seen4=false;break;
+                    default: this.active = 4; this.seen=true; this.seen1=false; this.seen2=false;this.seen3=false; this.seen4=false;break;
                 }
             },
             addCard(index) {
@@ -378,13 +407,30 @@
                   if (res.data.success == "success"){
                       this.$notify.success({title: '提交成功'});
                       this.rb_state = res.data.Data.rb_state;
-                      this.form.rb_id = res.data.Data.rb_id;
-                      this.$cookie.set("rb_id", this.form.rb_id);
                       this.stepChange();
                   }
               }).catch(res => {
                   this.$notify.error({title: '请刷新重试'});
               })
+            },
+            onComplaint() {
+              let data = {
+                "rb_id": this.form.rb_id,
+                ...this.complain
+              }
+              this.$ajax.post(`/RbSystem/user/complaint.do `,data).then(res => {
+                  if (res.data.success == "success"){
+                      this.$notify.success({title: '操作成功'});
+                      this.visible1 = false;
+                  }else {
+                    this.$notify.error({title: '操作失败'});
+                  }
+              }).catch(res => {
+                  this.$notify.error({title: '请刷新重试'});
+              })
+            },
+            jump() {
+              location.href="./useradmin#/rbtable"
             }
         },
         created(){
