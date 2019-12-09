@@ -43,6 +43,14 @@ router.use('/auditManage/changePsd', (req, res) => {
     res.json(Mock.mock(common))
 });
 
+router.use('/RbSystem/admin/agreeUndo.do', (req, res) => {
+    res.json(Mock.mock(common))
+});
+
+router.use('/RbSystem/admin/argueUndo.do', (req, res) => {
+    res.json(Mock.mock(common))
+});
+
 router.use('/middleware/setMWInspect', (req, res) => {
     setTimeout(() => {
         res.json(Mock.mock(common))

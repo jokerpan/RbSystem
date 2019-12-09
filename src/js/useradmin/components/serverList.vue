@@ -349,7 +349,7 @@
    
         },
         created() {
-            this.getForm();
+            this.getForm(1);
         }
     }
 </script>

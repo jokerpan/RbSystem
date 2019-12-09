@@ -15,7 +15,7 @@
               </el-form-item>
             </el-col>
             <el-form-item label="选择报销人员类型">
-              <el-checkbox-group v-model="formInline.checkList">
+              <el-checkbox-group v-model="formInline.user_type">
                <el-checkbox label="1" >学生报销</el-checkbox>
                <el-checkbox label="2">在职职工报销</el-checkbox>
                <el-checkbox label="3">退休职工报销</el-checkbox>
@@ -53,36 +53,28 @@
               label="审核人"
               align="center">
             </el-table-column>
-            <el-table-column
+             <el-table-column
+              prop="rb_state"
+              label="报销状态"
+              align="center">
+              <template slot-scope="scope"><span>{{rb_state[scope.row.rb_state]}}</span></template>>
+            </el-table-column>
+             <el-table-column
               prop="user_type"
-              label="人员类型"
-              align="center"
-              sortable
-              width="150">
-              <template slot-scope="scope">
-                  <span>{{user_type[scope.row.user_type]}}</span>
-              </template>
+              label="用户类型"
+              align="center">
+              <template slot-scope="scope"><span>{{user_type[scope.row.user_type]}}</span></template>>
             </el-table-column>
             <el-table-column
               prop="hospital"
               label="医院"
               align="center">
             </el-table-column>
-            <el-table-column
-                prop="curStatus"
-                label="rb_state"
-                align="center"
-                sortable
-                width="150">
-              <template slot-scope="scope">
-                  <span>{{rb_state[scope.row.rb_state]}}</span>
-              </template>
-            </el-table-column>
              <el-table-column
                     align="center"
                     label="操作">
                 <template slot-scope="scope">
-                    <el-button type="primary" style="float:right;" @click="handleCheck(scope.row)">查看</el-button>
+                    <el-button type="primary" @click="handleCheck(scope.row)">查看</el-button>
                 </template>
             </el-table-column>
           </el-table>
@@ -108,21 +100,13 @@
                         <el-date-picker type="date" placeholder="日期" v-model="form.referral.date" style="width: 100%;" value-format="timestamp" disabled></el-date-picker>
                     </el-form-item>
                     <el-form-item label="转诊单发票">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "referralFileList"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                      
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
+                     <div class="demo-image__preview">
+              <el-image 
+                style="width: 100px; height: 100px"
+                :src="form.referral.pic" 
+                :preview-src-list="srcList">
+              </el-image>
+              </div>
                     </el-form-item>
                   </el-card>
                   <el-card v-for="(item, index) in form.ghf">
@@ -145,20 +129,11 @@
                       <el-input v-model="item.note" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="挂号费发票" disabled>
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "ghfFileList[index]"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
+                      <el-image 
+                style="width: 100px; height: 100px"
+                :src="item.pic" 
+                :preview-src-list="srcList">
+              </el-image>
                     </el-form-item>
                   </el-card>
                   <el-card v-for="(item, index) in form.yymx">
@@ -181,36 +156,18 @@
                       <el-input v-model="item.note" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="用药明细发票">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "yymxFileList1[index]"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
+                     <el-image 
+                style="width: 100px; height: 100px"
+                :src="item.detailed_pic" 
+                :preview-src-list="srcList">
+              </el-image>
                     </el-form-item>
                     <el-form-item label="用药明细发票2">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "yymxFileList2[index]"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
+                      <el-image 
+                style="width: 100px; height: 100px"
+                :src="item.pspt_pic" 
+                :preview-src-list="srcList">
+              </el-image>
                     </el-form-item>
                   </el-card>
                   <el-card>
@@ -221,43 +178,33 @@
                       <el-input v-model="form.wssm.note" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="外伤说明发票">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "wssmFileList1"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
+                       <el-image 
+                style="width: 100px; height: 100px"
+                :src="form.wssm.stamp_pic" 
+                :preview-src-list="srcList">
+              </el-image>
                     </el-form-item>
                     <el-form-item label="外伤说明发票2">
-                      <el-upload
-                        class="upload-demo"
-                        :limit="1"
-                        :file-list= "wssmFileList2"
-                        action="/RbSystem/upload.do"
-                        list-type="picture-card"
-                        :http-request="info"
-                        >
-                         <i slot="default" class="el-icon-plus"></i>
-                         <div slot="tip" class="el-upload__tip">最多上传一张jpg/png文件，且不超过500kb</div>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                          </el-dialog>
-                      </el-upload>
+                      <el-image 
+                style="width: 100px; height: 100px"
+                :src="form.wssm.special_pic" 
+                :preview-src-list="srcList">
+              </el-image>
                     </el-form-item>
                 </el-card>
                   </el-form>
               </div>
+       
+              <div class="sub-title">请输入允许撤销原因后再点击按钮提交</div>
+              <el-input
+               type="textarea"
+                autosize
+               placeholder="请输入内容"
+                 v-model="note3">
+                  </el-input>
             <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="postCheck(7)">确认撤销审核</el-button>
-              
+              <el-button type="primary" @click="postCheck(6)">确认撤销</el-button>
+           
             </span>
         </el-dialog>
     </el-card>
@@ -269,7 +216,7 @@
 <script>
 
     export default {
-        name: 'waitforAudit',
+        name: 'reApplyList',
         data() {
             return {
                 user_type:{
@@ -284,6 +231,7 @@
                 },
                 tableData: [],
                 loading: true,
+                srcList:[],
                 page: {
                     currentPage: 1,
                     pageSize: 5,
@@ -291,12 +239,11 @@
                 },
                 formInline: {
                     user_name: '',
-                    checkList:[],
+                    user_type:[],
                     start_date: "",
                     end_date:"",
-                    rb_state:"",
                 },
-                recordnum:'',
+                recordnum:12,
                 dialogVisible1:false,
                 form: {
                     rb_id: "",
@@ -308,14 +255,7 @@
                     yymx: [{}],
                     wssm: {}
                 },
-                referralFileList:[],
-                ghfFileList:[],
-                yymxFileList1:[],
-                yymxFileList2:[],
-                wssmFileList1:[],
-                wssmFileList2:[],
-                dialogImageUrl: '',
-                dialogVisible: false,
+                note3:'',
                 
             }
         },
@@ -328,15 +268,18 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
+                let data1={
+                  "curPage":this.page.currentPage,
+                  ...this.formInline
+                };
                 this.$ajax.post('/RbSystem/admin/getRbList1.do', {
-                    curPage: this.page.currentPage,
-                    ...this.formInline
+                    "rbsf":data1
                 }).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
-                        this.tableData=res.data.Data;
-                        this.page.pageCount = res.data.totalPage;
-                        this.recordnum = res.data.totalNum;
+                        this.tableData=res.data.Data.RbList;
+                        this.page.pageCount = res.data.Data.totalPage;
+                        this.recordnum = res.data.Data.totalNum;
                     } else {
                         this.$message.error(res.data.success);
                     }
@@ -353,23 +296,24 @@
                 this.$ajax.post('/RbSystem/admin/startRbCheck.do',data).then(res => {
                     this.loading = false;
                     if (res.data.success == "success") {
+
                         this.form = res.data.Data;
                         if (this.form.referral.pic != "")
-                            this.referralFileList.push({"url": this.form.referral.pic});
+                            this.srcList.push(this.form.referral.pic);
                         this.form.ghf.forEach(item => {
                             if(item.pic!="")
-                                this.ghfFileList.push([{"url": item.pic}]);
+                                this.srcList.push(item.pic);
                         });
                         this.form.yymx.forEach(item => {
                             if (item.detailed_pic!="")
-                                this.yymxFileList1.push([{"url": item.detailed_pic}]);
+                                 this.srcList.push(item.detailed_pic);
                             if (item.pspt_pic!="")
-                                this.yymxFileList2.push([{"url": item.pspt_pic}]);
+                                this.srcList.push(item.pspt_pic);
                         });
                         if (this.form.wssm.stamp_pic!="")
-                            this.wssmFileList1.push({"url": this.form.wssm.stamp_pic});
+                             this.srcList.push(this.form.wssm.stamp_pic);
                         if(this.form.wssm.special_pic!="")
-                            this.wssmFileList2.push({"url": this.form.wssm.special_pic});
+                             this.srcList.push(this.form.wssm.special_pic);
 
                         this.dialogVisible1 = true;
                     } else {
@@ -388,21 +332,16 @@
                 
                 let data = {
                   "result": result,
-                  ...this.form
+                  ...this.note3
                 }
+                if(result==6){
                 data = JSON.stringify(data);
-                this.$ajax.post('/RbSystem/admin/postRbCheck.do', {
-                    "rbStr": data
-                }).then(res => {
+                this.$ajax.post('/RbSystem/admin/agreeUndo.do',data
+                ).then(res => {
                     if (res.data.success === "success") {
-                        this.referralFileList = [];
-                        this.ghfFileList = [];
-                        this.yymxFileList1 = [];
-                        this.yymxFileList2 = [];
-                        this.wssmFileList1 = [];
-                        this.wssmFileList2 = [];
+                       this.srcList = [];
                         this.dialogVisible1 = false;
-                        this.$message.success("撤销审核成功");
+                        this.$message.success("撤销操作提交成功");
                         this.initData();
                     } else {
                         this.$message.error(res.data.success);
@@ -411,7 +350,11 @@
                     this.$message.error('请刷新重试');
                 })
             }
+               
+            
 
+            }
+            
 
     },
 

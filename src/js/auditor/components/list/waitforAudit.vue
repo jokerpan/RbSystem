@@ -331,15 +331,15 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                this.$ajax.post('/RbSystem/admin/getRbList1.do', {
+                this.$ajax.post('/RbSystem/user/getMyRbRecord.do', {
                     curPage: this.page.currentPage,
                     ...this.formInline
                 }).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
-                        this.tableData=res.data.Data;
-                        this.page.pageCount = res.data.totalPage;
-                        this.recordnum = res.data.totalNum;
+                        this.tableData=res.data.Data.RbList;
+                        this.page.pageCount = res.data.Data.totalPage;
+                        this.recordnum = res.data.Data.totalNum;
                     } else {
                         this.$message.error(res.data.success);
                     }
