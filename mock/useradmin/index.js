@@ -106,13 +106,13 @@ router.use('/RbSystem/getRbDetail.do', (req, res) => {
             "hospital": "@cword",
             "referral": {
                 "id": "@word",
-                "date": "@date",
+                "date": "@date(T)",
                 "pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
             },
             "ghf|3": [{
                 "id": "@word",
                 "department": "@cword",
-                "date": "@date",
+                "date": "@date(T)",
                 "cost":"@integer(0,500000)",
                 "self_paid": "@integer(0,50000)",
                 "note": "@word",
@@ -120,7 +120,7 @@ router.use('/RbSystem/getRbDetail.do', (req, res) => {
             }],
             "yymx|3": [{
                 "id": "@word",
-                "date": "@date",
+                "date": "@date(T)",
                 "cost":"@integer(0,500000)",
                 "special_paid": "@integer(0,500000)",
                 "part_paid": "@integer(0,500000)",

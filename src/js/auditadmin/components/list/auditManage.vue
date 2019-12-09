@@ -1,5 +1,6 @@
 <template>
     <div v-loading="loading">
+         <p style="text-align: center;font-size:40px">报销系统中的审核人列表</p>
         <el-card v-if="seen">
         <el-table
             :data="tableData"
@@ -15,7 +16,7 @@
               align="center">
             </el-table-column>
             <el-table-column
-              property="password"
+              property="psd"
               align="center"
               label="密码">
             </el-table-column>
@@ -33,10 +34,10 @@
         <el-dialog title="修改密码" :visible.sync="addVisible">
           <el-form :model="form" :rules="rules">
             <el-form-item label="原密码" :label-width="formLabelWidth">
-              <el-input v-model="form.oldpsd" autocomplete="off" disabled></el-input>
+              <el-input v-model="form.psd" autocomplete="off" disabled></el-input>
             </el-form-item>
             <el-form-item label="新密码" :label-width="formLabelWidth">
-              <el-input v-model="form.password" autocomplete="off"></el-input>
+              <el-input v-model="form.newpsd" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="重复密码" :label-width="formLabelWidth">
               <el-input v-model="form.repeatpsd" autocomplete="off"></el-input>
@@ -61,12 +62,12 @@
                     tableData: [],
                     loading: true,
                     form: {
-                      oldpsd:'',
-                      password:'',
+                      psd:'',
+                      newpsd:'',
                       repeatpsd:''
                     },
                     rulses: {
-                      password: [
+                      newpsd: [
                         {required: true, message: '请填写密码', trigger: 'blur'}
                       ],
                       repeatpsd: [
@@ -78,13 +79,13 @@
         methods: {
             initData() {
                 this.loading = true;
-                this.$ajax.get('./auditManage/getAudit').then(res => {
+                this.$ajax.get('./RbSystem/auditManage/getAudit').then(res => {
                     this.loading = false;
-                    if(res.data.code === 200) {
+                    if(res.data.success === 'success') {
                         this.tableData = res.data.result;
 
                     } else {
-                        this.$notify.error({title: res.data.msg});
+                        this.$notify.error({title: res.data.success});
                     }
                 }).catch(res => {
                     this.loading = false;
@@ -94,17 +95,19 @@
 
             handleEdit(index, row) {
               this.addVisible = true;
-              this.form.oldpsd = row.password;
+              this.form.psd = row.psd;
+              this.form.userName = row.userName;
             },
 
             OnSubmit() {
-              if (this.form.password === this.form.repeatpsd) {
-                this.$ajax.get('./auditManage/changePsd').then(res => {
-                    if(res.data.code === 200) {
+              if (this.form.newpsd === this.form.repeatpsd) {
+                this.$ajax.post('./auditManage/changePsd',this.form).then(res => {
+                    if(res.data.success === 'success') {
                         this.$notify.success("修改密码成功");
+                        this.initData();
                         this.addVisible=false;
                     } else {
-                        this.$notify.error({title: res.data.msg});
+                        this.$notify.error({title: res.data.success});
                     }
                 }).catch(res => {
                     this.loading = false;

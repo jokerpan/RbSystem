@@ -1,9 +1,8 @@
 const router = require('express').Router();
 const Mock = require('mockjs');
 
-const common = {
-    "code" : 200,
-    "msg" : "success"
+const common = { 
+    "success" : "success"
 };
 
 router.use('/server/getServerList', (req, res) => {
@@ -23,17 +22,32 @@ router.use('/server/getServerList', (req, res) => {
     }))
 });
 
-router.use('/auditManage/getAudit', (req, res) => {
+router.use('/RbSystem/auditManage/getAudit', (req, res) => {
     res.json(Mock.mock({
             "result|5" :[{
                 "userName": "@word()",
-                "password": "@word()"
+                "psd": "@word()"
             }],
         ...common
     }))
 });
 
+router.use('/RbSystem/auditadmin/homepage.do', (req, res) => {
+    res.json(Mock.mock(
+        {
+            "num": '@integer(1, 3)'
+        ,
+        ...common}))
+});
 router.use('/auditManage/changePsd', (req, res) => {
+    res.json(Mock.mock(common))
+});
+
+router.use('/RbSystem/admin/agreeUndo.do', (req, res) => {
+    res.json(Mock.mock(common))
+});
+
+router.use('/RbSystem/admin/argueUndo.do', (req, res) => {
     res.json(Mock.mock(common))
 });
 
