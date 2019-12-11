@@ -105,7 +105,7 @@
               align="center">
             </el-table-column>
             <el-table-column
-              prop="Admin.id"
+              prop="admin_id"
               label="审核人"
               align="center">
             </el-table-column>
@@ -329,9 +329,12 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                this.$ajax.post('/RbSystem/admin/getRbList2.do', {
-                    curPage: this.page.currentPage,
-                    ...this.formInline
+                let data1={
+                  "curPage":this.page.currentPage,
+                  ...this.formInline
+                };
+                this.$ajax.post('/RbSystem/admin/getRbList1.do', {
+                   "rbsf":data1
                 }).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
@@ -351,6 +354,7 @@
                 let data = {
                     "rb_id": row.rb_id
                 };
+                this.srcList=[];
                 this.$ajax.post('/RbSystem/getRbDetail.do',data).then(res => {
                     this.loading = false;
                     if (res.data.success == "success") {
