@@ -329,12 +329,12 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                let data1={
+                let data2={
                   "curPage":this.page.currentPage,
                   ...this.formInline
                 };
-                this.$ajax.post('/RbSystem/admin/getRbList1.do', {
-                   "rbsf":data1
+                this.$ajax.post('/RbSystem/admin/getRbList2.do', {
+                   "rbsf":data2
                 }).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
