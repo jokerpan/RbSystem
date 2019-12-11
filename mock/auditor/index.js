@@ -127,7 +127,29 @@ router.use('/RbSystem/admin/postRbCheck.do', (req, res) => {
 });
 
 
+router.use('/RbSystem/admin/getEList.do', (req, res) => {
+    res.json(Mock.mock({
+        "Data":{
+        "EList|4":[{
+            "id":"@word",
+            "password":"@word",
+            "level":"@integer"
+        }]
+    },
+
+    ...common
+    }
 
 
+        ))
+});
+
+router.use('/RbSystem/admin/updateAdmin.do', (req, res) => {
+    res.json(Mock.mock(common))
+});
+
+router.use('/RbSystem/admin/addAdmin.do', (req, res) => {
+    res.json(Mock.mock(common))
+});
 
 module.exports = router;
