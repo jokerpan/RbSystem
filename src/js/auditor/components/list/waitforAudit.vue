@@ -245,7 +245,7 @@
                 },
                 formInline: {
                     user_name: '',
-                    user_type:[],
+                    user_type: '',
                     start_date: "",
                     end_date:""
                 },
