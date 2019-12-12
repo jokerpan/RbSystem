@@ -1,6 +1,6 @@
 <template>
   <el-card v-loading="loading">
-    <p style="text-align: center;font-size:40px">需要撤销的报销记录</p>
+    <p style="text-align: center;font-size:40px">报销申请记录</p>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="活动时间">
             <el-col :span="4">
@@ -47,9 +47,15 @@
               prop="s_time"
               label="提交时间"
               align="center">
+              <template slot-scope="scope"><span>{{timestampToTime(scope.row.s_time)}}</span></template>>
             </el-table-column>
             <el-table-column
-              prop="Admin.id"
+              prop="user_name"
+              label="申请人"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="admin_id"
               label="审核人"
               align="center">
             </el-table-column>
@@ -63,7 +69,7 @@
               prop="user_type"
               label="用户类型"
               align="center">
-              <template slot-scope="scope"><span>{{user_type[scope.row.user_type]}}</span></template>>
+          
             </el-table-column>
             <el-table-column
               prop="hospital"
@@ -74,7 +80,7 @@
                     align="center"
                     label="操作">
                 <template slot-scope="scope">
-                    <el-button type="primary" @click="handleCheck(scope.row)">查看</el-button>
+                    <el-button type="primary" v-if="scope.row.rb_state!=1" @click="handleCheck(scope.row)">查看</el-button>
                 </template>
             </el-table-column>
           </el-table>
@@ -195,17 +201,7 @@
                   </el-form>
               </div>
        
-              <div class="sub-title">请输入允许撤销原因后再点击按钮提交</div>
-              <el-input
-               type="textarea"
-                autosize
-               placeholder="请输入内容"
-                 v-model="note3">
-                  </el-input>
-            <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="postCheck(6)">确认撤销</el-button>
            
-            </span>
         </el-dialog>
     </el-card>
 
@@ -219,15 +215,21 @@
         name: 'reApplyList',
         data() {
             return {
-                user_type:{
-                  1:'学生',
-                  2:"在职",
-                  3:"退休",
-                  4:"离休"
-                },
+              
                 rb_state: {
+                  1:"未提交",
                   2:"待审核",
-                  3:"审核中"
+                  3:"审核中",
+                  4:"审核通过",
+                  5:"审核未通过",
+                  6:"待报销",
+                  7:"已完成",
+                  8:"用户申诉",
+                  9:"审核人驳回",
+                  10:"负责人审批",
+                  11:"负责人同意重新审核",
+                  12:"负责人驳回",
+                  13:"重新审核完成"
                 },
                 tableData: [],
                 loading: true,
@@ -260,9 +262,16 @@
             }
         },
         methods: {
-            info() {
-                
-            },
+          timestampToTime(timestamp) {  
+            var now = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var year=now.getFullYear();  //取得4位数的年份
+var month=now.getMonth()+1;  //取得日期中的月份，其中0表示1月，11表示12月
+var date=now.getDate();      //返回日期月份中的天数（1到31）
+var hour=now.getHours();     //返回日期中的小时数（0到23）
+var minute=now.getMinutes(); //返回日期中的分钟数（0到59）
+var second=now.getSeconds(); //返回日期中的秒数（0到59）
+return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+          },
             initData(page) {
                 if(page) {
                     this.page.currentPage = page;
@@ -272,8 +281,8 @@
                   "curPage":this.page.currentPage,
                   ...this.formInline
                 };
-                this.$ajax.post('/RbSystem/admin/getRbList1.do', {
-                    "rbsf":data1
+                this.$ajax.post('/RbSystem/admin/getAllRbList.do', {
+                    "rbsf":JSON.stringify(data1)
                 }).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
@@ -294,7 +303,7 @@
                     "rb_id": row.rb_id
                 };
                 this.srcList=[];
-                this.$ajax.post('/RbSystem/admin/startRbCheck.do',data).then(res => {
+                this.$ajax.post('/RbSystem/getRbDetail.do',data).then(res => {
                     this.loading = false;
                     if (res.data.success == "success") {
 
@@ -329,32 +338,7 @@
 
         
 
-            postCheck(result) {
-                
-                let data = {
-                  "result": result,
-                  ...this.note3
-                }
-                if(result==6){
-                data = JSON.stringify(data);
-                this.$ajax.post('/RbSystem/admin/agreeUndo.do',data
-                ).then(res => {
-                    if (res.data.success === "success") {
-                       this.srcList = [];
-                        this.dialogVisible1 = false;
-                        this.$message.success("撤销操作提交成功");
-                        this.initData();
-                    } else {
-                        this.$message.error(res.data.success);
-                    }
-                }).catch(res => {
-                    this.$message.error('请刷新重试');
-                })
-            }
-               
-            
-
-            }
+         
             
 
     },

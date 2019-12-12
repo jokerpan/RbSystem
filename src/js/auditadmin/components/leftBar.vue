@@ -20,7 +20,7 @@
                     </el-menu-item>
                     <el-menu-item index="/list/reimbursementRecord">
                         <i class="iconfont icon-icon-test8"></i>
-                        <span>请求撤销申请列表</span>
+                        <span>报销申请记录</span>
                     </el-menu-item>
                      <el-menu-item index="/list/reApplyList">
                         <i class="iconfont icon-icon-test8"></i>

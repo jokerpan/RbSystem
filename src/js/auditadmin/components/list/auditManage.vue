@@ -155,7 +155,7 @@
               if (this.form1.password === this.form1.repeatpsd) {
                 let admin={
                      "id":this.form1.id,
-                     "password":this.form1.newpsd
+                     "password":this.form1.password
                 }
                 this.$ajax.post('./RbSystem/admin/addAdmin.do',admin).then(res => {
                     if(res.data.success === 'success') {
