@@ -68,9 +68,7 @@ router.use('/RbSystem/admin/getRbList2.do', (req, res) => {
                 "rb_state": "@integer(2,3)",
                 "rb_id": "@integer(2,5)",
                 "user_type": "@integer(1,4)",
-                "Admin": {
-                    "id":"@cword()"
-                },
+                "admin_id": "@cword()",
                 "hospital":"@cword()"
             }],
             "totalPage": '@integer(10, 30)',

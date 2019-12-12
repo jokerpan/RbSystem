@@ -51,7 +51,7 @@
               align="center">
             </el-table-column>
             <el-table-column
-              prop="Admin.id"
+              prop="admin_id"
               label="审核人"
               align="center">
             </el-table-column>
@@ -245,7 +245,7 @@
                 },
                 formInline: {
                     user_name: '',
-                    user_type:[],
+                    user_type: '',
                     start_date: "",
                     end_date:""
                 },
@@ -275,9 +275,12 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
+                let data1={
+                  "curPage":this.page.currentPage,
+                  ...this.formInline
+                };
                 this.$ajax.post('/RbSystem/admin/getRbList1.do', {
-                    curPage: this.page.currentPage,
-                    ...this.formInline
+                   "rbsf":data1
                 }).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
