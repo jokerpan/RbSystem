@@ -18,12 +18,12 @@
             </el-form-item>
                 
             <el-form-item>
-              <el-radio-group v-model="formInline.rb_state">
-            <!-- <el-radio :label="1">未审核</el-radio> -->
-                <el-radio :label="2">待确认</el-radio>
-                <el-radio :label="3">已确认</el-radio>
-                <el-radio :label="4">已报销</el-radio>
-              </el-radio-group>     
+              <el-checkbox-group v-model="formInline.rb_state">
+               <el-checkbox label="4">审核通过</el-checkbox>
+               <el-checkbox label="5">审核未通过</el-checkbox>
+               <el-checkbox label="6">待报销</el-checkbox>
+               <el-checkbox label="7">已完成</el-checkbox>
+              </el-checkbox-group>     
             </el-form-item>
                 
             <el-form-item>
@@ -97,7 +97,8 @@
             <el-table-column
               prop="rb_id"
               label="编号"
-              align="center">
+              align="center"
+              sortable="custom">
             </el-table-column>
             <el-table-column
               prop="s_time"
@@ -112,12 +113,12 @@
             <el-table-column
               prop="user_type"
               label="人员类型"
-              align="center"
-              sortable
-              width="150">
-              <template slot-scope="scope">
-                  <span>{{user_type[scope.row.user_type]}}</span>
-              </template>
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="user_name"
+              label="用户姓名"
+              align="center">
             </el-table-column>
             <el-table-column
               prop="hospital"
@@ -125,11 +126,10 @@
               align="center">
             </el-table-column>
             <el-table-column
-                prop="rb_state"
-                label="报销状态"
-                align="center"
-                sortable
-                width="150">
+              prop="rb_state"
+              label="报销状态"
+              align="center"
+              sortable="custom">
               <template slot-scope="scope">
                   <span>{{rb_state[scope.row.rb_state]}}</span>
               </template>
@@ -263,8 +263,8 @@
                   </el-form>
               </div>
             <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="postCheck(4)">审核通过</el-button>
-              <el-button type="danger" @click="postCheck(5)">审核不通过</el-button>
+              <el-button type="primary" @click="dialogVisible1=false">确定</el-button>
+              <!-- <el-button type="danger" @click="postCheck(5)">审核不通过</el-button> -->
             </span>
         </el-dialog>
 
@@ -279,15 +279,16 @@
         name: 'alreadyAudit',
         data() {
             return {
-                user_type:{
-                  1:'学生',
-                  2:"在职",
-                  3:"退休",
-                  4:"离休"
-                },
-                rb_state: {
+
+                rb_state: {                 
+                  0:"没有报销单申请记录",
+                  1:"未提交",
                   2:"待审核",
-                  3:"审核中"
+                  3:"审核中", 
+                  4:"审核通过", 
+                  5:"审核未通过", 
+                  6:"待报销", 
+                  7:"已完成"
                 },
                 tableData: [],
                 loading: true,
@@ -298,7 +299,7 @@
                 },
                 formInline: {
                     user_name: '',
-                    user_type: '',
+                    user_type: [],
                     start_date: "",
                     end_date:"",
                     rb_state:[],
@@ -329,13 +330,14 @@
                     this.page.currentPage = page;
                 }
                 this.loading = true;
-                let data2={
+                let data1={
                   "curPage":this.page.currentPage,
                   ...this.formInline
                 };
-                this.$ajax.post('/RbSystem/admin/getRbList2.do', {
-                   "rbsf":data2
-                }).then(res => {
+                const data = {
+                  "rbsf": JSON.stringify(data1)
+                }
+                this.$ajax.post('/RbSystem/admin/getRbList2.do', data).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
                         this.tableData=res.data.Data.RbList;

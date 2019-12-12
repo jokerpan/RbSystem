@@ -45,7 +45,7 @@ router.use('/RbSystem/admin/getRbList1.do', (req, res) => {
                 "s_time": "@datetime",
                 "rb_state": "@integer(2,3)",
                 "rb_id": "@integer(2,5)",
-                "user_type": "@integer(1,4)",
+                "user_type": "@cword()",
                 "Admin": {
                     "id":"@cword()"
                 },
@@ -67,7 +67,7 @@ router.use('/RbSystem/admin/getRbList2.do', (req, res) => {
                 "s_time": "@datetime",
                 "rb_state": "@integer(2,3)",
                 "rb_id": "@integer(2,5)",
-                "user_type": "@integer(1,4)",
+                "user_type": "@cword()",
                 "admin_id": "@cword()",
                 "hospital":"@cword()"
             }],

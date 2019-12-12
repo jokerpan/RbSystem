@@ -43,7 +43,8 @@
             <el-table-column
               prop="rb_id"
               label="编号"
-              align="center">
+              align="center"
+              sortable="custom">
             </el-table-column>
             <el-table-column
               prop="s_time"
@@ -58,12 +59,15 @@
             <el-table-column
               prop="user_type"
               label="人员类型"
-              align="center"
-              sortable
-              width="150">
-              <template slot-scope="scope">
+              align="center">
+              <!-- <template slot-scope="scope">
                   <span>{{user_type[scope.row.user_type]}}</span>
-              </template>
+              </template> -->
+            </el-table-column>
+            <el-table-column
+              prop="user_name"
+              label="人员姓名"
+              align="center">
             </el-table-column>
             <el-table-column
               prop="hospital"
@@ -74,17 +78,16 @@
                 prop="rb_state"
                 label="报销状态"
                 align="center"
-                sortable
-                width="150">
-              <template slot-scope="scope">
+                sortable="custom">
+                <template slot-scope="scope">
                   <span>{{rb_state[scope.row.rb_state]}}</span>
-              </template>
+                </template>
             </el-table-column>
              <el-table-column
                     align="center"
                     label="操作">
                 <template slot-scope="scope">
-                    <el-button type="primary" @click="handleCheck(scope.row)">查看</el-button>
+                    <el-button type="primary" @click="handleCheck(scope.row)">审核</el-button>
                 </template>
             </el-table-column>
           </el-table>
@@ -224,18 +227,17 @@
         name: 'waitforAudit',
         data() {
             return {
-                user_type:{
-                  1:'学生',
-                  2:"在职",
-                  3:"退休",
-                  4:"离休"
-                },
+
                 rb_state: {
+                  0:"没有报销单申请记录",
+                  1:"未提交",
                   2:"待审核",
-                  3:"审核中"
+                  3:"审核中", 
+                  4:"审核通过", 
+                  5:"审核未通过", 
+                  6:"待报销", 
+                  7:"已完成"
                 },
-                totalNum:'',
-                totalPage:'',
                 tableData: [],
                 loading: true,
                 page: {
@@ -245,9 +247,9 @@
                 },
                 formInline: {
                     user_name: '',
-                    user_type: '',
+                    user_type: [],
                     start_date: "",
-                    end_date:""
+                    end_date: ""
                 },
                 recordnum:'',
                 dialogVisible1:false,
@@ -279,9 +281,10 @@
                   "curPage":this.page.currentPage,
                   ...this.formInline
                 };
-                this.$ajax.post('/RbSystem/admin/getRbList1.do', {
-                   "rbsf":data1
-                }).then(res => {
+                const data = {
+                  "rbsf": JSON.stringify(data1)
+                }
+                this.$ajax.post('/RbSystem/admin/getRbList1.do', data).then(res => {
                     this.loading = false;
                     if (res.data.success === "success") {
                         this.tableData=res.data.Data.RbList;
@@ -353,9 +356,10 @@
                     this.$message.error('请刷新重试');
                 })
             }
-
-
     },
+
+
+
 
         created() {
             this.initData();
