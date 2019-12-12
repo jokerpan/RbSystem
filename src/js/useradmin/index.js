@@ -9,6 +9,8 @@ import axios from 'axios'
 import cookie from 'js-cookie'
 import Qs from 'Qs'
 import Print from 'vue-print-nb'
+import html2Canvas from 'html2canvas'
+import JsPDF from 'jspdf'
 
 axios.defaults.transformRequest = [function (data) {
     return Qs.stringify(data);

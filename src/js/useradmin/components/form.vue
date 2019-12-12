@@ -6,8 +6,7 @@
             <el-step title="审核中" description="审核员正在审核"></el-step>
             <el-step title="待确定" description="审核员审核完成，有疑义请联系审核员"></el-step>
             <el-step title="等待报销" description="请在七个工作日内提交报单员，逾期作废"></el-step>
-            <el-step title="已完成" description="报销已完成">
-            </el-step>
+            <el-step title="已完成" description="报销已完成"></el-step>
         </el-steps>
         <div>
             <el-form ref="form" :model="form" label-width="200px">
@@ -238,8 +237,24 @@
                       "pic":"",
                       "date":""
                     },
-                    ghf: [{}],
-                    yymx: [{}],
+                    ghf: [{
+                        "department": "",
+                        "date": "",
+                        "cost":"",
+                        "self_paid": "",
+                        "note": "",
+                        "pic":''
+                    }],
+                    yymx: [{
+                        "date": "",
+                        "cost":"",
+                        "special_paid": "",
+                        "part_paid": "",
+                        "self_paid": "",
+                        "note": "",
+                        "detailed_pic":'',
+                        "pspt_pic":''
+                    }],
                     wssm: {
                       "note":""
                     }
@@ -313,7 +328,7 @@
                 this.$ajax.post(`/RbSystem/user/getRbForm.do`, data).then(res => {
                     if (res.data.success == "success") {
                         this.form = res.data.Data;
-                        if (this.form.referral.pic != "")
+                        if (this.form.referral && this.form.referral.pic)
                             this.referralFileList.push({"url": this.form.referral.pic});
                         this.form.ghf.forEach(item => {
                             if(item.pic!="")
@@ -325,9 +340,9 @@
                             if (item.pspt_pic!="")
                                 this.yymxFileList2.push([{"url": item.pspt_pic}]);
                         });
-                        if (this.form.wssm.stamp_pic!="")
+                        if (this.form.wssm && this.form.wssm.stamp_pic)
                             this.wssmFileList1.push({"url": this.form.wssm.stamp_pic});
-                        if(this.form.wssm.special_pic!="")
+                        if(this.form.wssm && this.form.wssm.special_pic)
                             this.wssmFileList2.push({"url": this.form.wssm.special_pic});
                         this.rb_state = res.data.Data.rb_state;
                         this.$cookie.set("rb_id", this.form.rb_id);
@@ -336,20 +351,20 @@
                       this.$notify.error({title: '请刷新重试'});
                     }
                 }).catch(res => {
+                    console.log(res);
                     this.$notify.error({title: '????'});
                 })
             },
             stepChange() {
               console.log(this.rb_state);
                 switch(this.rb_state) {
-                    case 1: this.active = 0; this.seen=false; this.seen1=false; this.seen2=true;this.seen3=false; this.seen4=false;break;
-                    case 2: this.active = 1; this.seen=false; this.seen1=false; this.seen2=false;this.seen3=false;  this.seen4=false;break;
-                    case 3: this.active = 2; this.seen=false; this.seen1=false; this.seen2=false; this.seen3=false; this.seen4=false;break;
-                    case 4: this.active = 3; this.seen=true; this.seen1=true; this.seen2=false;this.seen3=false;  this.seen4=false;break;
-                    case 5: this.active = 3; this.seen=true; this.seen1=true; this.seen2=false; this.seen3=true; this.seen4=false;break;
-                    case 6: this.active = 4; this.seen=true; this.seen1=false; this.seen2=false;this.seen3=false; this.seen4=true; break;
-                    case 7: this.active = 5; this.seen=true; this.seen1=false; this.seen2=false; this.seen3=false; this.seen4=false;break;
-                    default: this.active = 4; this.seen=true; this.seen1=false; this.seen2=false;this.seen3=false; this.seen4=false;break;
+                    case 1:{ this.active = 0; this.seen=false; this.seen1=false; this.seen2=true;this.seen3=false; this.seen4=false;break;}
+                    case 2: {this.active = 1; this.seen=false; this.seen1=false; this.seen2=false;this.seen3=false;  this.seen4=false;break;}
+                    case 3: {this.active = 2; this.seen=false; this.seen1=false; this.seen2=false; this.seen3=false; this.seen4=false;break;}
+                    case 4: {this.active = 3; this.seen=true; this.seen1=true; this.seen2=false;this.seen3=false;  this.seen4=false;break;}
+                    case 5: {this.active = 3; this.seen=true; this.seen1=true; this.seen2=false; this.seen3=true; this.seen4=false;break;}
+                    case 6: {this.active = 4; this.seen=true; this.seen1=false; this.seen2=false;this.seen3=false; this.seen4=true; break;}
+                    case 7: {this.active = 5; this.seen=true; this.seen1=false; this.seen2=false; this.seen3=false; this.seen4=false;break;}
                 }
             },
             addCard(index) {
