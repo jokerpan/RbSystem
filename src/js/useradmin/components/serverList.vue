@@ -249,9 +249,6 @@
             },
             getForm(page) {
                 this.loading = true;
-                if(page) {
-                    this.page.currentPage = page;
-                }
                 let data = {
                     "curPage": this.page.currentPage,
                     ...this.formInline

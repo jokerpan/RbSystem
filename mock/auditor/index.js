@@ -152,4 +152,26 @@ router.use('/RbSystem/admin/addAdmin.do', (req, res) => {
     res.json(Mock.mock(common))
 });
 
+router.use('/RbSystem/admin/getAllRbList.do', (req, res) => {
+    res.json(Mock.mock({
+        "Data":
+            {   "totalPage":'@integer(10, 30)',
+                "totalNum":"12",
+                "RbList|5" :[{
+                    "rb_id": "@integer()",
+                    "rb_state": "@integer(1,6)",
+                    "user_type": "@integer(1,4)",
+                    "user_name": "@word()",
+                    "admin_id":"@integer()",
+                    "hospital": "@cword()",
+                    "s_time":"@date(T)"
+                }],
+
+            }
+        ,
+        ...common
+    }))
+});
+
+
 module.exports = router;
