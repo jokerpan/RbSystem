@@ -252,10 +252,10 @@
                 },
                 formInline: {
                     user_name: '',
-                    checkList:[],
+                    user_type: '',
                     start_date: "",
                     end_date:"",
-                    rb_state:"",
+                    rb_state:[],
                 },
                 recordnum:'',
                 dialogVisible1:false,
