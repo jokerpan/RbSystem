@@ -58,44 +58,45 @@ router.use('/RbSystem/user/getMyRbRecord.do', (req, res) => {
 });
 
 router.use('/RbSystem/user/getRbForm.do', (req, res) => {
-    res.json(Mock.mock({
-    	"Data":{
-    		"rb_state": 4,
-    		"rb_id": '@word',
-    		"hospital": "@cword",
-    		"referral": {
-    			"id": "@word",
-    			"date": "@date",
-    			"pic": ''
-    		},
-    		"ghf|3": [{
-    			"id": "@word",
-    			"department": "@cword",
-    			"date": "@date",
-    			"cost":"@integer(0,500000)",
-    			"self_paid": "@integer(0,50000)",
-    			"note": "@word",
-    			"pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-    		}],
-    		"yymx|3": [{
-    			"id": "@word",
-    			"date": "@date",
-    			"cost":"@integer(0,500000)",
-    			"special_paid": "@integer(0,500000)",
-    			"part_paid": "@integer(0,500000)",
-    			"self_paid": "@integer(0,50000)",
-    			"note": "@word",
-    			"detailed_pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-    			"pspt_pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-    		}],
-    		"wssm": {
-    			"id": "@word",
-    			"note": "@word",
-    			"stamp_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-    			"special_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-    		}
-    	},
-    	...common}))
+    // res.json(Mock.mock({
+    // 	"Data":{
+    // 		"rb_state": 4,
+    // 		"rb_id": '@word',
+    // 		"hospital": "@cword",
+    // 		"referral": {
+    // 			"id": "@word",
+    // 			"date": "@date",
+    // 			"pic": ''
+    // 		},
+    // 		"ghf|3": [{
+    // 			"id": "@word",
+    // 			"department": "@cword",
+    // 			"date": "@date",
+    // 			"cost":"@integer(0,500000)",
+    // 			"self_paid": "@integer(0,50000)",
+    // 			"note": "@word",
+    // 			"pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+    // 		}],
+    // 		"yymx|3": [{
+    // 			"id": "@word",
+    // 			"date": "@date",
+    // 			"cost":"@integer(0,500000)",
+    // 			"special_paid": "@integer(0,500000)",
+    // 			"part_paid": "@integer(0,500000)",
+    // 			"self_paid": "@integer(0,50000)",
+    // 			"note": "@word",
+    // 			"detailed_pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    // 			"pspt_pic":'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+    // 		}],
+    // 		"wssm": {
+    // 			"id": "@word",
+    // 			"note": "@word",
+    // 			"stamp_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    // 			"special_pic": 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+    // 		}
+    // 	},
+    // 	...common}))
+    res.json(Mock.mock({"success":"success","Data":{"wssm":{"id":0,"rb_id":0,"note":null,"stamp_pic":null,"special_pic":null},"ghf":[],"total_cost":0,"isUndo":0,"admin":null,"active":0,"rb_state":1,"total_self_paid":0,"referral":{"id":0,"rb_id":0,"date":null,"pic":null},"yymx":[],"s_time":1575876524000,"hospital":null,"user":{"id":"S01","password":null,"level":0,"name":"王大明","idCard":null,"register_date":null,"type":null,"gender":0,"telphone":null},"rb_id":2}}))
 });
 
 router.use('/RbSystem/getRbDetail.do', (req, res) => {
