@@ -7,7 +7,7 @@
                 <router-view></router-view>
             </div>
             <div class="g-ft">
-                COPYRIGHT 1998-2018 版权所有 北京东方龙马软件发展有限公司 京ICP备14000200号-1
+                公费医疗报销系统
             </div>
         </div>
     </div>

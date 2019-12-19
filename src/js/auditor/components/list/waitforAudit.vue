@@ -101,7 +101,7 @@
             :visible.sync="dialogVisible1"
             width="60%">
             <div>
-              <el-form ref="form" :model="form" label-width="150px">
+              <el-form ref="form" :model="form" label-width="150px" :rules="rules">
                   <el-card>
               <div slot="header">
                   <span>转诊单</span>
@@ -268,6 +268,40 @@
                 
             }
         },
+
+    // computed: {
+    //   rules() {
+        
+    //     const validateNum = (rule, value, callback) => {
+    //        var reg=/^(-?\\d+)(\\.\\d+)?$/; 
+    //        // if (value === '') {
+    //        //  callback(new Error('请输入金额'));
+    //        // } 
+    //        if (reg.test(value)==false) {
+    //          callback(new Error('请输入数字'));
+    //        } 
+    //        else {
+    //          callback();
+    //        }
+    //     };
+    //     const result = {
+          
+    //       part_paid: [
+    //         { required: true, validator: validateNum, trigger: 'blur' },
+    //       ],
+    //       special_paid: [
+    //         { required: true, validator: validateNum, trigger: 'blur' },
+    //       ],
+    //       self_paid: [
+    //         { required: true, validator: validateNum, trigger: 'blur' },
+    //       ]
+
+    //     };
+    //     return result;
+    //   }
+    // },
+
+
         methods: {
             info() {
                 

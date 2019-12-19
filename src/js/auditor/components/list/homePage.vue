@@ -213,8 +213,8 @@
                   </el-form>
               </div>
             <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="postCheck(4)">审核通过</el-button>
-              <el-button type="danger" @click="postCheck(5)">审核不通过</el-button>
+              <el-button type="primary" @click="dialogVisible1=false">确定</el-button>
+              <!-- <el-button type="danger" @click="postCheck(5)">审核不通过</el-button> -->
             </span>
         </el-dialog>
 

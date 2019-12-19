@@ -3,7 +3,7 @@
     <el-form ref="form" :model="form" :rules="rules" label-position="top" label-width="80px">
       <el-form-item>
         <h2 class="t-tt" v-if="type === 1">登录</h2>
-        <h2 class="t-tt" v-else>注册</h2>
+        <h2 class="t-tt" v-else>公费医疗报销系统</h2>
       </el-form-item>
       <el-form-item label="用户名" prop="userName">
         <el-input v-model="form.userName"></el-input>
@@ -14,11 +14,11 @@
       <el-form-item>
         <el-row :gutter="40">
           <el-col :span="16">
-            <el-button type="primary" @click="toSubmit" style="width: 100%">提 交</el-button>
+            <el-button type="primary" @click="toSubmit" style="width: 158%">登   录</el-button>
           </el-col>
-          <el-col :span="8">
+          <!-- <el-col :span="8">
             <span class="t-cell" v-if="type == 2" @click="type = 1">登 录</span>
-          </el-col>
+          </el-col> -->
         </el-row>
       </el-form-item>
     </el-form>
@@ -47,9 +47,21 @@
             callback();
           }
         };
+        const validateUsername = (rule, value, callback) => {
+           // var reg=/^[\u4E00-\u9FA5]{2,4}$/; 
+           if (value === '') {
+            callback(new Error('请输入用户名'));
+          } 
+          // else if (reg.test(value)==false) {
+          //   callback(new Error('请输入2-4位中文用户名'));
+          // } 
+          else {
+            callback();
+          }
+        };
         const result = {
           userName: [
-            { required: true, message: '请输入用户名', trigger: 'blur' }
+            { required: true, validator: validateUsername, trigger: 'blur' }
           ],
           password: [
             { required: true, validator: validatePassword, trigger: 'blur' },
